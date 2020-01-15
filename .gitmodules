@@ -1,0 +1,16 @@
+[submodule "doxygen/geometric_shapes"]
+	path = doxygen/geometric_shapes
+	url = https://github.com/ros-planning/geometric_shapes.git
+	branch = melodic-devel
+[submodule "doxygen/moveit"]
+	path = doxygen/moveit
+	url = https://github.com/ros-planning/moveit.git
+	branch = melodic-devel
+[submodule "doxygen/moveit_msgs"]
+	path = doxygen/moveit_msgs
+	url = https://github.com/ros-planning/moveit_msgs.git
+	branch = melodic-devel
+[submodule "doxygen/moveit_visual_tools"]
+	path = doxygen/moveit_visual_tools
+	url = https://github.com/ros-planning/moveit_visual_tools.git
+	branch = melodic-devel
