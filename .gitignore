@@ -1,2 +1,4 @@
 doxygen/html
 doxygen/xml
+.venv
+build
