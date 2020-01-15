@@ -10,6 +10,7 @@ sphinx = "*"
 breathe = "*"
 doc8 = "*"
 sphinxcontrib-ros = "*"
+sphinxcontrib-plantuml = "*"
 
 [requires]
 python_version = "3"
