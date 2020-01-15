@@ -9,6 +9,7 @@ verify_ssl = true
 sphinx = "*"
 breathe = "*"
 doc8 = "*"
+sphinxcontrib-ros = "*"
 
 [requires]
 python_version = "3"
