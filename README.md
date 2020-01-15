@@ -1,4 +1,4 @@
-# MoveIt! detailed deesign documentation
+# MoveIt! detailed design documentation
 
 This document provide a detailed software design document about MoveIt!.
 
