@@ -14,3 +14,6 @@
 	path = doxygen/moveit_visual_tools
 	url = https://github.com/ros-planning/moveit_visual_tools.git
 	branch = melodic-devel
+[submodule "source/moveit.ros.org"]
+	path = source/moveit.ros.org
+	url = https://github.com/ros-planning/moveit.ros.org.git
