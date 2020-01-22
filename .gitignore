@@ -2,3 +2,4 @@ doxygen/html
 doxygen/xml
 .venv
 build
+*.mo

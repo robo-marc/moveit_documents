@@ -1,5 +1,5 @@
-MoveIt Commander
-=======================================
+Python用ユーザライブラリ（MoveIt Commander）の仕様
+====================================================
 
 .. doxygenclass:: moveit_commander::robot::RobotCommander
    :members:
