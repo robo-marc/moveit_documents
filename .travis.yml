@@ -12,7 +12,7 @@ install:
 
 script:
     - cd doxygen && doxygen Doxyfile && cd ..
-    - pipenv run travis-sphinx build --source=source
+    - pipenv run travis-sphinx build --source=source --nowarn
 
 after_success:
     - pipenv run travis-sphinx deploy
