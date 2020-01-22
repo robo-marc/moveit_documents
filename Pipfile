@@ -12,6 +12,7 @@ doc8 = "*"
 sphinxcontrib-ros = "*"
 sphinxcontrib-plantuml = "*"
 travis-sphinx = "*"
+sphinx-rtd-theme = "*"
 
 [requires]
 python_version = "3"
