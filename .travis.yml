@@ -4,7 +4,7 @@ python:
 
 before_install:
     - sudo apt-get update
-    - sudo apt-get -y install doxygen
+    - sudo apt-get -y install doxygen graphviz plantuml
     - sudo pip install pipenv
 
 install:
