@@ -13,9 +13,11 @@ sphinxcontrib-ros = "*"
 sphinxcontrib-plantuml = "*"
 travis-sphinx = "*"
 sphinx-rtd-theme = "*"
+sphinx-intl = "*"
 
 [requires]
 python_version = "3"
 
 [scripts]
-build = "sphinx-build -b html source build"
+build = "sphinx-build -b html source build/html"
+gettext = "sphinx-build -b gettext source build/locale"
