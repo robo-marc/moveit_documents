@@ -42,7 +42,7 @@ ros_base_path = ['../doxygen']
 # sphinx intl
 locale_dirs = ['locale/']   # path is example but recommended.
 gettext_compact = False
-gettext_additional_targets = ['literal-block']
+gettext_additional_targets = ['index', 'literal-block', 'doctest-block', 'raw']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
