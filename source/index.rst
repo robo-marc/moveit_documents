@@ -7,6 +7,6 @@
 
    overview
    moveit_commander
-
+   planning_interface
 
 
