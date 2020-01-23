@@ -16,7 +16,18 @@ import sys, os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../doxygen/moveit/moveit_commander/src'))
+autodoc_mock_imports = [
+  'rospy',
+  'geometry_msgs',
+  'moveit_msgs',
+  'sensor_msgs',
+  'shape_msgs',
+  'visualization_msgs',
+  'tf',
+  'moveit_ros_planning_interface',
+  '_moveit_roscpp_initializer'
+]
 
 import sphinx_rtd_theme
 
@@ -29,6 +40,7 @@ import sphinx_rtd_theme
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
   'sphinx_rtd_theme',
+  'sphinx.ext.autodoc',
   'sphinxcontrib.plantuml',
   'breathe',
   'sphinxcontrib.ros'

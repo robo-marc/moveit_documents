@@ -23,17 +23,17 @@ MoveGroupInterfaceは、ROS通信（ROS Action）を使って、プランニン�
 RobotCommander
 ---------------
 
-.. doxygenclass:: moveit_commander::robot::RobotCommander
+.. autoclass:: moveit_commander.RobotCommander
    :members:
 
 MoveGroupCommander
 -------------------
 
-.. doxygenclass:: moveit_commander::move_group::MoveGroupCommander
+.. autoclass:: moveit_commander.MoveGroupCommander
    :members:
 
 PlanningSceneInterface
 ------------------------
 
-.. doxygenclass:: moveit_commander::planning_scene_interface::PlanningSceneInterface
+.. autoclass:: moveit_commander.PlanningSceneInterface
    :members:
