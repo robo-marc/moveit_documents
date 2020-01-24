@@ -10,3 +10,4 @@
    move_group_interface
    planner_manager
    kinematics_base
+   move_group
