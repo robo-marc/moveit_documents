@@ -9,5 +9,5 @@
    moveit_commander
    planning_interface
    planner_manager
-
+   kinematics_base
 
