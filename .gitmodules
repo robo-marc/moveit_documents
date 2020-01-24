@@ -17,3 +17,6 @@
 [submodule "source/moveit.ros.org"]
 	path = source/moveit.ros.org
 	url = https://github.com/ros-planning/moveit.ros.org.git
+[submodule "sphinxcontrib-ros"]
+	path = sphinxcontrib-ros
+	url = https://github.com/yosuke/sphinxcontrib-ros.git

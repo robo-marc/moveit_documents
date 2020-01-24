@@ -29,6 +29,8 @@ autodoc_mock_imports = [
   '_moveit_roscpp_initializer'
 ]
 
+sys.path.insert(0, os.path.abspath('../sphinxcontrib-ros/src/sphinxcontrib'))
+
 import sphinx_rtd_theme
 
 # -- General configuration -----------------------------------------------------
@@ -43,7 +45,7 @@ extensions = [
   'sphinx.ext.autodoc',
   'sphinxcontrib.plantuml',
   'breathe',
-  'sphinxcontrib.ros'
+  'ros'
 ]
 
 breathe_projects = { "moveit": "../doxygen/xml/" }
