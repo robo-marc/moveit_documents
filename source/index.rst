@@ -7,7 +7,6 @@
 
    overview
    moveit_commander
-   planning_interface
+   move_group_interface
    planner_manager
    kinematics_base
-
