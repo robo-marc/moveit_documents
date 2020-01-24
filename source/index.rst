@@ -11,3 +11,4 @@
    planner_manager
    kinematics_base
    move_group
+   ros_messages
