@@ -8,7 +8,7 @@ move_groupサーバの仕様
    Above image is from http://moveit.ros.org/
 
 
-プランニングの実行
+ROS Action一覧
 ---------------------
 
 .. ros:autoaction:: moveit_msgs/MoveGroup
@@ -16,16 +16,10 @@ move_groupサーバの仕様
    :field-comment: up
    :description: 0:0
 
-プランニング結果の実行
------------------------
-
 .. ros:autoaction:: moveit_msgs/ExecuteTrajectory
    :base: ../doxygen/
    :field-comment: up
    :description: 0:0
-
-高レベルのプランニング命令
----------------------------
 
 .. ros:autoaction:: moveit_msgs/Pickup
    :base: ../doxygen/
@@ -37,7 +31,7 @@ move_groupサーバの仕様
    :field-comment: up
    :description: 0:0
 
-サービス一覧
+ROSサービス一覧
 ----------------
 
 .. ros:autoservice:: moveit_msgs/ApplyPlanningScene
