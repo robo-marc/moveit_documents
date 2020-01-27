@@ -12,17 +12,19 @@ sphinxcontrib-plantuml = "*"
 travis-sphinx = "*"
 sphinx-rtd-theme = "*"
 sphinx-intl = "*"
-breathe = {ref = "breathe-gettext",git = "https://github.com/tgregory/breathe.git",editable = true}
+breathe = {editable = true,git = "https://github.com/tgregory/breathe.git",ref = "breathe-gettext"}
 catkin-pkg = "*"
 polib = "*"
 goslate = "*"
 langdetect = "*"
 google-cloud-translate = "*"
+sphinx-autobuild = "*"
 
 [requires]
 python_version = "3"
 
 [scripts]
 build = "sphinx-build -b html source build/html"
+watch = "sphinx-autobuild -H 0.0.0.0 -b html source build/html"
 gettext = "sphinx-build -b gettext source build/locale"
 intl = "sphinx-intl update -p build/locale -l ja"
