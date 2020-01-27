@@ -39,8 +39,12 @@ MoveGroupCommander
 .. autoclass:: moveit_commander.MoveGroupCommander
    :members:
 
+   .. automethod:: __init__
+
 PlanningSceneInterface
 ------------------------
 
 .. autoclass:: moveit_commander.PlanningSceneInterface
    :members:
+
+   .. automethod:: __init__
