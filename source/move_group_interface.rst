@@ -8,7 +8,7 @@ MoveGroupInterfaceは、ROS通信を使って、プランニング命令をROS�
 
 .. uml::
 
-   [moveit_commander(MoveGroupInterface)] -right-> [move_group] : ROS通信
+   [MoveGroupInterface] -right-> [move_group] : ROS通信
 
 
 move_groupサーバで提供されている各サービスとROS通信の詳細については、 :doc:`move_group` を参照してください。
