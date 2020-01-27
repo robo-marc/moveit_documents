@@ -1,24 +1,31 @@
 Python用ユーザライブラリ（moveit_commander）の仕様
 ====================================================
 
-クラス図、コンポーネント図
---------------------------
+クラス図
+------------
 
 moveit_commanderは、boost::pythonを使って、C++のMoveGroupInterfaceを呼び出します。
 その際に、MoveGroupInterfaceWrapperクラスを用います。
 
 .. uml::
 
-   planning_interface::MoveGroupInterface <|-- planning_interface::MoveGroupInterfaceWrapper
-   planning_interface::MoveGroupInterfaceWrapper .. moveit_commander
+   MoveGroupInterface <|-- MoveGroupInterfaceWrapper
+   MoveGroupInterfaceWrapper .. moveit_commander
+
+C++で実装されたMoveGroupInterfaceの詳細については、 :doc:`move_group_interface` を参照してください。
 
 
-MoveGroupInterfaceは、ROS通信（ROS Action）を使って、プランニング命令をROSのmove_groupサービスに送信します。
+コンポーネント図
+-------------------
+
+MoveGroupInterfaceは、ROS通信を使って、プランニング命令をROSのmove_groupサーバに送信します。
 
 .. uml::
 
-   [MoveGroupInterface] .. [move_group] : ROS Action
+   [moveit_commander(MoveGroupInterface)] -right-> [move_group] : ROS通信
 
+
+move_groupサーバで提供されている各サービスとROS通信の詳細については、 :doc:`move_group` を参照してください。
 
 RobotCommander
 ---------------
