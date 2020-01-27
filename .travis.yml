@@ -4,7 +4,7 @@ python:
 
 before_install:
     - sudo apt-get update
-    - sudo apt-get -y install doxygen graphviz plantuml
+    - sudo apt-get -y install doxygen graphviz plantuml fonts-takao
     - sudo pip install pipenv
 
 install:
