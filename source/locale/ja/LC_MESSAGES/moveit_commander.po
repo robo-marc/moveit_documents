@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-23 21:55+0900\n"
-"PO-Revision-Date: ('2020-01-26 19:55+0900',)\n"
+"PO-Revision-Date: 2020-01-27 12:23+0900\n"
 "Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -63,6 +63,7 @@ msgid ""
 "@param name str: Name of movegroup @rtype: "
 "moveit_commander.MoveGroupCommander"
 msgstr ""
+"@param name str：movegroupの名前@rtype：moveit_commander.MoveGroupCommander"
 
 #: moveit_commander.RobotCommander.get_group_names:1 of
 msgid "Get the names of the groups defined for the robot"
@@ -73,6 +74,8 @@ msgid ""
 "@param name str: Name of movegroup @rtype: moveit_commander.robot.Joint "
 "@raise exception: MoveItCommanderException"
 msgstr ""
+"@param name str：movegroupの名前@rtype：moveit_commander.robot.Joint "
+"@raise例外：MoveItCommanderException"
 
 #: moveit_commander.RobotCommander.get_joint_names:1 of
 msgid ""
@@ -87,6 +90,8 @@ msgid ""
 "@param name str: Name of movegroup @rtype: moveit_commander.robot.Link "
 "@raise exception: MoveItCommanderException"
 msgstr ""
+"@param name str：movegroupの名前@rtype：moveit_commander.robot.Link "
+"@raise例外：MoveItCommanderException"
 
 #: moveit_commander.RobotCommander.get_link_names:1 of
 msgid ""
@@ -129,7 +134,7 @@ msgstr "ロボットモデルのルートリンクの名前を取得します。
 
 #: moveit_commander.RobotCommander.has_group:1 of
 msgid "@param name str: Name of movegroup @rtype: bool"
-msgstr ""
+msgstr "@param name str：movegroupの名前@rtype：bool"
 
 #: /home/yosuke/moveit_document/source/moveit_commander.rst:30
 msgid "MoveGroupCommander"
@@ -157,13 +162,8 @@ msgid ""
 "succesfully sent to the move_group node. This does not verify that the "
 "attach request also was successfuly applied by move_group."
 msgstr ""
-"planning scene内に存在するオブジェクトの名前を指定しリンクに固定します。"
-"固定対象のリンクは、第2引数で指定します。"
-"対象のリンクを指定しない場合、エンドエフェクタのリンクが使用されます。"
-"エンドエフェクタのリンクが存在しない場合、グループ内の最初のリンクが使用されます。"
-"どのリンクも選択できない場合、リクエストが失敗します。"
-"要求が正常にmove_groupノードに送信された場合、Trueが返されます。"
-"ただし、Trueが返った場合でも、move_groupによって固定が実際に適用されたかどうかは確認されません。"
+"planning "
+"scene内に存在するオブジェクトの名前を指定しリンクに固定します。固定対象のリンクは、第2引数で指定します。対象のリンクを指定しない場合、エンドエフェクタのリンクが使用されます。エンドエフェクタのリンクが存在しない場合、グループ内の最初のリンクが使用されます。どのリンクも選択できない場合、リクエストが失敗します。要求が正常にmove_groupノードに送信された場合、Trueが返されます。ただし、Trueが返った場合でも、move_groupによって固定が実際に適用されたかどうかは確認されません。"
 
 #: moveit_commander.MoveGroupCommander.clear_path_constraints:1 of
 msgid "Specify that no path constraints are to be used during motion planning"
@@ -193,12 +193,8 @@ msgid ""
 "partial solution will be returned. The return value is a tuple: a fraction "
 "of how much of the path was followed, the actual RobotTrajectory."
 msgstr ""
-"ウェイポイントとして指定されたポーズ列を線形補完した動きをエンドエフェクタにさせるための動作計画を行います。"
-"eef_stepで指定された間隔（メートル単位）毎に動作が計算されます。"
-"jump_thresholdは、計画結果の軌跡を構成する連続する各点の間のコンフィギュレーション空間上での最大距離を指定します。 "
-"path_constraintsによって指定された制約を軌道の全ての点で満たすように動作計画が行われます。"
-"制約を全点で満たすことができなかった場合、部分的な動作計画が返されます。"
-"関数の戻り値は、指定されたポーズ列をどれだけ忠実に追跡することができたかの評価値と、計画された軌跡（RobotTrajectory形式）のタプルです。"
+"ウェイポイントとして指定されたポーズ列を線形補完した動きをエンドエフェクタにさせるための動作計画を行います。eef_stepで指定された間隔（メートル単位）毎に動作が計算されます。jump_thresholdは、計画結果の軌跡を構成する連続する各点の間のコンフィギュレーション空間上での最大距離を指定します。"
+"path_constraintsによって指定された制約を軌道の全ての点で満たすように動作計画が行われます。制約を全点で満たすことができなかった場合、部分的な動作計画が返されます。関数の戻り値は、指定されたポーズ列をどれだけ忠実に追跡することができたかの評価値と、計画された軌跡（RobotTrajectory形式）のタプルです。"
 
 #: moveit_commander.MoveGroupCommander.detach_object:1 of
 msgid ""
@@ -207,51 +203,49 @@ msgid ""
 "specified, an attempt is made to detach all objects attached to any link in "
 "the group."
 msgstr ""
-"リンクの名前を指定すると、そのリンクからオブジェクト（複数可）を取り外します。"
-"指定されたリンク名が存在しない場合、名前は、オブジェクト名として解釈されます。"
-"名前が指定されない場合、グループ内の全てのリンクに接続されている全てのオブジェクトが取り外されます。"
+"リンクの名前を指定すると、そのリンクからオブジェクト（複数可）を取り外します。指定されたリンク名が存在しない場合、名前は、オブジェクト名として解釈されます。名前が指定されない場合、グループ内の全てのリンクに接続されている全てのオブジェクトが取り外されます。"
 
 #: moveit_commander.MoveGroupCommander.execute:1 of
 msgid "Execute a previously planned path"
-msgstr ""
+msgstr "計画したパスを実行する。"
 
 #: moveit_commander.MoveGroupCommander.forget_joint_values:1 of
 msgid "Forget a stored joint configuration"
-msgstr ""
+msgstr "保存された関節角を消去する。"
 
 #: moveit_commander.MoveGroupCommander.get_active_joints:1 of
 msgid "Get the active joints of this group"
-msgstr ""
+msgstr "このグループの有効な関節リストを取得します"
 
 #: moveit_commander.MoveGroupCommander.get_current_joint_values:1 of
 msgid ""
 "Get the current configuration of the group as a list (these are values "
 "published on /joint_states)"
-msgstr ""
+msgstr "グループの現在の関節角リストとして取得します（/joint_statesトピックで公開されているのと同じ値です）"
 
 #: moveit_commander.MoveGroupCommander.get_current_pose:1 of
 msgid ""
 "Get the current pose of the end-effector of the group. Throws an exception "
 "if there is not end-effector."
-msgstr ""
+msgstr "グループのエンドエフェクタの現在の姿勢を取得します。エンドエフェクタが無い場合、例外をスローします。"
 
 #: moveit_commander.MoveGroupCommander.get_current_rpy:1 of
 msgid ""
 "Get a list of 3 elements defining the [roll, pitch, yaw] of the end-"
 "effector. Throws an exception if there is not end-effector."
-msgstr ""
+msgstr "エンドエフェクタの[ロール、ピッチ、ヨー]を定義する3つの要素のリストを取得します。エンドエフェクタが無い場合、例外をスローします。"
 
 #: moveit_commander.MoveGroupCommander.get_end_effector_link:1 of
 msgid ""
 "Get the name of the link that is considered to be an end-effector. Return an"
 " empty string if there is no end-effector."
-msgstr ""
+msgstr "エンドエフェクタとして定義されたリンクの名前を取得します。エンドエフェクタが無い場合、空の文字列を返します。"
 
 #: moveit_commander.MoveGroupCommander.get_goal_joint_tolerance:1 of
 msgid ""
 "Get the tolerance for achieving a joint goal (distance for each joint "
 "variable)"
-msgstr ""
+msgstr "関節角目標を達成するための許容値を取得します（各関節角の許容値）"
 
 #: moveit_commander.MoveGroupCommander.get_goal_orientation_tolerance:1 of
 msgid ""
@@ -259,145 +253,146 @@ msgid ""
 "goal orientation is specified as the distance (roll, pitch, yaw) to the "
 "target origin of the end-effector"
 msgstr ""
+"姿勢目標または位置姿勢目標に移動する際の許容値を取得する。許容値は、エンドエフェクタの目標点までの姿勢誤差（ロール、ピッチ、ヨー）として設定されます。"
 
 #: moveit_commander.MoveGroupCommander.get_goal_position_tolerance:1 of
 msgid ""
 "When moving to a position goal or to a pose goal, the tolerance for the goal"
 " position is specified as the radius a sphere around the target origin of "
 "the end-effector"
-msgstr ""
+msgstr "位置目標または姿勢目標に移動する際の許容値を取得する。許容値は、エンドエフェクタのターゲット原点を中心とする球の半径として設定されます。"
 
 #: moveit_commander.MoveGroupCommander.get_goal_tolerance:1 of
 msgid "Return a tuple of goal tolerances: joint, position and orientation."
-msgstr ""
+msgstr "目標からの誤差を（関節角誤差、位置誤差、方向誤差）のタプル形式で取得する。"
 
 #: moveit_commander.MoveGroupCommander.get_interface_description:1 of
 msgid "Get the description of the planner interface (list of planner ids)"
-msgstr ""
+msgstr "プランナーインターフェースの説明（プランナーIDのリスト）を取得します"
 
 #: moveit_commander.MoveGroupCommander.get_jacobian_matrix:1 of
 msgid "Get the jacobian matrix of the group as a list"
-msgstr ""
+msgstr "グループのヤコビ行列をリスト形式で取得します"
 
 #: moveit_commander.MoveGroupCommander.get_joints:1 of
 msgid "Get the joints of this group"
-msgstr ""
+msgstr "このグループの関節をリストとして取得"
 
 #: moveit_commander.MoveGroupCommander.get_known_constraints:1 of
 msgid ""
 "Get a list of names for the constraints specific for this group, as read "
 "from the warehouse"
-msgstr ""
+msgstr "データベース（warehouse）から、このグループに固有の制約の名前リストを取得します"
 
 #: moveit_commander.MoveGroupCommander.get_name:1 of
 msgid "Get the name of the group this instance was initialized for"
-msgstr ""
+msgstr "初期化の際に設定したグループの名前を取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_named_target_values:1 of
 msgid "Get a dictionary of joint values of a named target"
-msgstr ""
+msgstr "名前付きターゲットの関節値を辞書形式で取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_named_targets:1 of
 msgid "Get a list of all the names of joint configurations."
-msgstr ""
+msgstr "名前付きターゲットの全ての名前リストを取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_path_constraints:1 of
 msgid ""
 "Get the acutal path constraints in form of a moveit_msgs.msgs.Constraints"
-msgstr ""
+msgstr "現在設定されているパス制約をmoveit_msgs.msgs.Constraints形式で取得します"
 
 #: moveit_commander.MoveGroupCommander.get_planner_id:1 of
 msgid "Get the current planner_id"
-msgstr ""
+msgstr "現在設定されているプランナーのplanner_idを取得します"
 
 #: moveit_commander.MoveGroupCommander.get_planning_frame:1 of
 msgid "Get the name of the frame where all planning is performed"
-msgstr ""
+msgstr "計画が実行される基準座標の名前を取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_planning_time:1
 #: moveit_commander.MoveGroupCommander.set_planning_time:1 of
 msgid "Specify the amount of time to be used for motion planning."
-msgstr ""
+msgstr "動作計画に使用する時間を設定します。"
 
 #: moveit_commander.MoveGroupCommander.get_pose_reference_frame:1 of
 msgid "Get the reference frame assumed for poses of end-effectors"
-msgstr ""
+msgstr "エンドエフェクタの姿勢の計算に使われる基準座標を取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_remembered_joint_values:1 of
 msgid "Get a dictionary that maps names to joint configurations for the group"
-msgstr ""
+msgstr "remember_joint_valuesで記録された関節角情報を名前と関節角が対応付けられた辞書形式で取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_trajectory_constraints:1 of
 msgid ""
 "Get the actual trajectory constraints in form of a "
 "moveit_msgs.msgs.Constraints"
-msgstr ""
+msgstr "現在設定されている軌道制約をmoveit_msgs.msgs.Constraints形式で取得します。"
 
 #: moveit_commander.MoveGroupCommander.get_variable_count:1 of
 msgid ""
 "Return the number of variables used to parameterize a state in this group "
 "(larger or equal to number of DOF)"
-msgstr ""
+msgstr "このグループの状態をパラメーター化する際に使用される変数の数を返します（自由度の数以上の値になります）。"
 
 #: moveit_commander.MoveGroupCommander.go:1 of
 msgid ""
 "Set the target of the group and then move the group to the specified target"
-msgstr ""
+msgstr "目標を設定し、グループを指定された目標に移動します。"
 
 #: moveit_commander.MoveGroupCommander.has_end_effector_link:1 of
 msgid ""
 "Check if this group has a link that is considered to be an end effector"
-msgstr ""
+msgstr "このグループにエンドエフェクタと見なされるリンクがあるかどうかを確認します。"
 
 #: moveit_commander.MoveGroupCommander.pick:1 of
 msgid ""
 "Pick the named object. A grasp message, or a list of Grasp messages can also"
 " be specified as argument."
-msgstr ""
+msgstr "名前付きオブジェクトをピックします。Graspメッセージ、またはGraspメッセージのリストを引数として指定します。"
 
 #: moveit_commander.MoveGroupCommander.place:1 of
 msgid ""
 "Place the named object at a particular location in the environment or "
 "somewhere safe in the world if location is not provided"
-msgstr ""
+msgstr "指定されたオブジェクトを環境内の特定の場所に配置するか、場所が指定されていない場合はワールドのどこかに安全な場所に配置します。"
 
 #: moveit_commander.MoveGroupCommander.plan:1 of
 msgid ""
 "Return a motion plan (a RobotTrajectory) to the set goal state (or specified"
 " by the joints argument)"
-msgstr ""
+msgstr "設定済みの目標状態、または、引数で指定される関節角を達成する動作計画を行う。戻り値は、RobotTrajectory形式。"
 
 #: moveit_commander.MoveGroupCommander.remember_joint_values:1 of
 msgid ""
 "Record the specified joint configuration of the group under the specified "
 "name. If no values are specified, the current state of the group is "
 "recorded."
-msgstr ""
+msgstr "名前で指定された関節角の状態を記録します。値が指定されていない場合、グループの全体の関節角の状態が記録されます。"
 
 #: moveit_commander.MoveGroupCommander.set_constraints_database:1 of
 msgid ""
 "Specify which database to connect to for loading possible path constraints"
-msgstr ""
+msgstr "パス制約をロードするために接続するデータベースを指定します。"
 
 #: moveit_commander.MoveGroupCommander.set_end_effector_link:1 of
 msgid "Set the name of the link to be considered as an end effector"
-msgstr ""
+msgstr "エンドエフェクタと見なすリンクの名前を設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_goal_joint_tolerance:1 of
 msgid "Set the tolerance for a target joint configuration"
-msgstr ""
+msgstr "目標関節角の許容値を設定する。"
 
 #: moveit_commander.MoveGroupCommander.set_goal_orientation_tolerance:1 of
 msgid "Set the tolerance for a target end-effector orientation"
-msgstr ""
+msgstr "エンドエフェクタの目標姿勢の許容値を設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_goal_position_tolerance:1 of
 msgid "Set the tolerance for a target end-effector position"
-msgstr ""
+msgstr "エンドエフェクタの目標位置の許容値を設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_goal_tolerance:1 of
 msgid "Set the joint, position and orientation goal tolerances simultaneously"
-msgstr ""
+msgstr "関節角、位置、および姿勢の許容値を同時に設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_joint_value_target:1 of
 msgid ""
@@ -419,19 +414,30 @@ msgid ""
 "planner will do no IK. Instead, one IK solution will be computed first, and "
 "that will be sent to the planner."
 msgstr ""
+"関節角目標を指定します。 "
+"-第一引数の型がdict、list、JointStateメッセージのいずれかである場合、他の引数は設定できません。 "
+"dict型の場合、関節名とその目標角度のペアを指定する必要があり、list型の場合、グループのすべての関節の角度値を指定する必要があります。 "
+"JointStateメッセージの場合は、関節角度をの選択的に指定できます。 \n\n"
+"-第一引数の型が文字列の場合、第二引数には、関節角度または関節角度のリストのいずれかを設定します。これは、特定の関節を特定の角度に設定する命令として解釈されます。\n\n"
+"-第一引数の型がPoseまたはPoseStampedの場合、第二引数と第三引数の両方を定義できます。"
+"第二引数または第三引数が定義されている場合、それらの型は文字列またはbool型でなければなりません。"
+"文字列型の引数は、Pose目標が指定されたエンドエフェクタ名として解釈されます（指定されない場合、デフォルトのエンドエフェクタが使用されます）。"
+"第三引数のboolは、指定されたPoseが近似であるかどうかを決定するために使用されます（デフォルトはfalse）。"
+"この設定を用いると、逆運動学を用いることで関節目標を設定できます。"
+"この設定では、プランナーで逆運動学を計算するわけではありません。Poseから計算されたある1つの逆運動学の解がプランナーに送信されます。"
 
 #: moveit_commander.MoveGroupCommander.set_max_acceleration_scaling_factor:1
 #: of
 msgid ""
 "Set a scaling factor for optionally reducing the maximum joint acceleration."
 " Allowed values are in (0,1]."
-msgstr ""
+msgstr "最大関節加速度を減らすためのスケーリング係数を設定します。許可される値は（0,1]です。"
 
 #: moveit_commander.MoveGroupCommander.set_max_velocity_scaling_factor:1 of
 msgid ""
 "Set a scaling factor for optionally reducing the maximum joint velocity. "
 "Allowed values are in (0,1]."
-msgstr ""
+msgstr "最大関節速度を下げるためのスケーリング係数を設定します。許可される値は（0,1]です。"
 
 #: moveit_commander.MoveGroupCommander.set_named_target:1 of
 msgid ""
@@ -439,37 +445,39 @@ msgid ""
 "remembered with remember_joint_values() or a configuration specified in the "
 "SRDF."
 msgstr ""
+"関節角目標を名前で設定します。あらかじめremember_joint_valuesで記憶された名前、またはSRDFで設定された名前を指定できます。"
 
 #: moveit_commander.MoveGroupCommander.set_num_planning_attempts:1 of
 msgid ""
 "Set the number of times the motion plan is to be computed from scratch "
 "before the shortest solution is returned. The default value is 1."
-msgstr ""
+msgstr "最適解が返されるまでに動作計画を最初から繰り返す回数を設定します。デフォルト値は1回です。"
 
 #: moveit_commander.MoveGroupCommander.set_orientation_target:1
 #: moveit_commander.MoveGroupCommander.set_rpy_target:1 of
 msgid ""
 "Specify a target orientation for the end-effector. Any position of the end-"
 "effector is acceptable."
-msgstr ""
+msgstr "エンドエフェクタの目標姿勢を指定します。位置については任意の位置が許容されます。"
 
 #: moveit_commander.MoveGroupCommander.set_path_constraints:1 of
 msgid "Specify the path constraints to be used (as read from the database)"
-msgstr ""
+msgstr "使用するパス制約を指定します（制約はデータベースからの読み取られます）。"
 
 #: moveit_commander.MoveGroupCommander.set_planner_id:1 of
 msgid "Specify which planner to use when motion planning"
-msgstr ""
+msgstr "動作計画時に使用するプランナーを指定します。"
 
 #: moveit_commander.MoveGroupCommander.set_pose_reference_frame:1 of
 msgid "Set the reference frame to assume for poses of end-effectors"
-msgstr ""
+msgstr "エンドエフェクタの位置姿勢を設定する際に用いられる基準座標を設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_pose_target:1 of
 msgid ""
 "Set the pose of the end-effector, if one is available. The expected input is"
 " a Pose message, a PoseStamped message or a list of 6 floats:"
 msgstr ""
+"エンドエフェクタの位置姿勢を設定します。Poseメッセージ、PoseStampedメッセージ、または6次元のリストで指定してください。"
 
 #: moveit_commander.MoveGroupCommander.set_pose_targets:1 of
 msgid ""
@@ -477,24 +485,25 @@ msgid ""
 " a list of poses. Each pose can be a Pose message, a list of 6 floats: [x, "
 "y, z, rot_x, rot_y, rot_z] or a list of 7 floats [x, y, z, qx, qy, qz, qw]"
 msgstr ""
+"エンドエフェクタの位置姿勢を設定します。予想される入力は位置姿勢のリストです。Poseメッセージ、[x、y、z、rot_x、rot_y、rot_z]形式の6次元のリスト、または[x、y、z、qx、qy、qz、qw]形式の7次元のリストで指定してください。"
 
 #: moveit_commander.MoveGroupCommander.set_position_target:1 of
 msgid ""
 "Specify a target position for the end-effector. Any orientation of the end-"
 "effector is acceptable."
-msgstr ""
+msgstr "エンドエフェクタの目標位置を指定します。姿勢は任意として解釈されます。"
 
 #: moveit_commander.MoveGroupCommander.set_random_target:1 of
 msgid "Set a random joint configuration target"
-msgstr ""
+msgstr "角関節角度をランダムに設定する"
 
 #: moveit_commander.MoveGroupCommander.set_start_state:1 of
 msgid "Specify a start state for the group."
-msgstr ""
+msgstr "開始状態を指定します。"
 
 #: moveit_commander.MoveGroupCommander.set_start_state:5 of
 msgid "msg : moveit_msgs/RobotState"
-msgstr ""
+msgstr "msg ：moveit_msgs/RobotState"
 
 #: moveit_commander.MoveGroupCommander.set_start_state:18 of
 msgid ""
@@ -512,67 +521,71 @@ msgstr ""
 
 #: moveit_commander.MoveGroupCommander.set_support_surface_name:1 of
 msgid "Set the support surface name for a place operation"
-msgstr ""
+msgstr "配置操作の支持平面名を設定します"
 
 #: moveit_commander.MoveGroupCommander.set_trajectory_constraints:1 of
 msgid "Specify the trajectory constraints to be used"
-msgstr ""
+msgstr "軌道制約を設定します。"
 
 #: moveit_commander.MoveGroupCommander.set_workspace:1 of
 msgid ""
 "Set the workspace for the robot as either [], [minX, minY, maxX, maxY] or "
 "[minX, minY, minZ, maxX, maxY, maxZ]"
 msgstr ""
+"ロボットのワークスペースを[]、[minX、minY、maxX、maxY]または[minX、minY、minZ、maxX、maxY、maxZ]形式で設定します。"
 
 #: moveit_commander.MoveGroupCommander.shift_pose_target:1 of
 msgid ""
 "Get the current pose of the end effector, add value to the corresponding "
 "axis (0..5: X, Y, Z, R, P, Y) and set the new pose as the pose target"
 msgstr ""
+"エンドエフェクタの現在の位置姿勢を取得し、対応する要素（X、Y、Z、R、P、Yの6次元の形式）に指定された値を加算し、新しい目標姿勢として設定します。"
 
 #: moveit_commander.MoveGroupCommander.stop:1 of
 msgid "Stop the current execution, if any"
-msgstr ""
+msgstr "現在の実行を停止します。"
 
 #: /home/yosuke/moveit_document/source/moveit_commander.rst:36
 msgid "PlanningSceneInterface"
-msgstr ""
+msgstr "PlanningSceneInterface"
 
 #: moveit_commander.PlanningSceneInterface:1 of
 msgid "Simple interface to making updates to a planning scene"
-msgstr ""
+msgstr "計画シーンを更新するためのシンプルなインターフェース"
 
 #: moveit_commander.PlanningSceneInterface.add_box:1 of
 msgid "Add a box to the planning scene"
-msgstr ""
+msgstr "計画シーンにボックスを追加します。"
 
 #: moveit_commander.PlanningSceneInterface.add_cylinder:1 of
 msgid "Add a cylinder to the planning scene"
-msgstr ""
+msgstr "計画シーンに円柱を追加します。"
 
 #: moveit_commander.PlanningSceneInterface.add_mesh:1 of
 msgid "Add a mesh to the planning scene"
-msgstr ""
+msgstr "計画シーンにメッシュを追加します。"
 
 #: moveit_commander.PlanningSceneInterface.add_plane:1 of
 msgid "Add a plane to the planning scene"
-msgstr ""
+msgstr "計画シーンに平面を追加します。"
 
 #: moveit_commander.PlanningSceneInterface.add_sphere:1 of
 msgid "Add a sphere to the planning scene"
-msgstr ""
+msgstr "計画シーンに球体を追加します。"
 
 #: moveit_commander.PlanningSceneInterface.get_attached_objects:1 of
 msgid ""
 "Get the attached objects identified by the given object ids list. If no ids "
 "are provided, return all the attached objects."
 msgstr ""
+"指定されたオブジェクトIDリストで指定される接続オブジェクトを取得します。 IDが指定されていない場合、接続されているすべてのオブジェクトを返します。"
 
 #: moveit_commander.PlanningSceneInterface.get_known_object_names:1 of
 msgid ""
 "Get the names of all known objects in the world. If with_type is set to "
 "true, only return objects that have a known type."
 msgstr ""
+"ワールドの全オブジェクトの名前を取得します。 with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。"
 
 #: moveit_commander.PlanningSceneInterface.get_known_object_names_in_roi:1 of
 msgid ""
@@ -580,295 +593,26 @@ msgid ""
 "bounding region (specified in the frame reported by get_planning_frame()). "
 "If with_type is set to true, only return objects that have a known type."
 msgstr ""
+"指定範囲（get_planning_frameによって設定される基準座標で指定）内にあるオブジェクトの名前を取得します。 "
+"with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。"
 
 #: moveit_commander.PlanningSceneInterface.get_object_poses:1 of
 msgid ""
 "Get the poses from the objects identified by the given object ids list."
-msgstr ""
+msgstr "指定されたオブジェクトIDリストで識別されるオブジェクトの位置姿勢を取得します。"
 
 #: moveit_commander.PlanningSceneInterface.get_objects:1 of
 msgid ""
 "Get the objects identified by the given object ids list. If no ids are "
 "provided, return all the known objects."
-msgstr ""
+msgstr "指定されたオブジェクトIDリストで識別されるオブジェクトを取得します。 IDが提供されない場合、すべての既知のオブジェクトを返します。"
 
 #: moveit_commander.PlanningSceneInterface.remove_attached_object:1 of
 msgid ""
 "Remove an attached object from planning scene, or all objects attached to "
 "this link if no name is provided"
-msgstr ""
+msgstr "計画シーンから接続オブジェクトを削除するか、名前が指定されていない場合はリンクに接続されているすべてのオブジェクトを削除します。"
 
 #: moveit_commander.PlanningSceneInterface.remove_world_object:1 of
 msgid "Remove an object from planning scene, or all if no name is provided"
-msgstr ""
-
-#~ msgid "Python用ユーザライブラリ（MoveIt Commander）の仕様"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get the frame of reference in which planning is done (and environment\n"
-#~ "is maintained)"
-#~ msgstr ""
-
-#~ msgid "Get the name of the root link of the robot model"
-#~ msgstr "ロボットモデルのルートリンク名を取得する。"
-
-#~ msgid ""
-#~ "Get the names of all the movable joints that make up a group\n"
-#~ "(mimic joints and fixed joints are excluded). If no group name is\n"
-#~ "specified, all joints in the robot model are returned, including\n"
-#~ "fixed and mimic joints."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get the links that make up a group. If no group name is specified,\n"
-#~ "all the links in the robot model are returned."
-#~ msgstr ""
-
-#~ msgid "Get the names of the groups defined for the robot"
-#~ msgstr "ロボットモデルに定義されたすべてのグループ名を取得する。"
-
-#~ msgid "Get a RobotState message describing the current state of the robot"
-#~ msgstr "現在のロボットの状態（関節角など）をRobotStateメッセージ形式で取得する。"
-
-#~ msgid "プランニングの実行に用いられる基準座標を取得する。"
-#~ msgstr ""
-
-#~ msgid "ロボットモデルのルートリンク名を取得する。"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "グループ内のすべての駆動可能な関節名（mimic関節や固定関節を除く）を取得する。\n"
-#~ "グループ名が指定されなかった場合、ロボットモデル内すべての駆動可能な関節名（mimic関節や固定関節を含む）を取得する。"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "グループ内のすべてのリンク名を取得する。\n"
-#~ "グループ名が指定されなかった場合、ロボットモデル内すべてのリンク名を取得する。"
-#~ msgstr ""
-
-#~ msgid "ロボットモデルに定義されたすべてのグループ名を取得する。"
-#~ msgstr ""
-
-#~ msgid "現在のロボットの状態（関節角など）をRobotStateメッセージ形式で取得する。"
-#~ msgstr ""
-
-#~ msgid "Inherits from object"
-#~ msgstr ""
-
-#~ msgid "Public Functions"
-#~ msgstr "Public関数"
-
-#~ msgid ""
-#~ "Get a MarkerArray of the markers that make up this robot  Usage:     (): "
-#~ "get's all markers for current state     state (RobotState): gets markers for"
-#~ " a particular state     values (dict): get markers with given values     "
-#~ "values, links (dict, list): get markers with given values and these links"
-#~ "     group (string):  get all markers for a group     group, values (string,"
-#~ " dict): get all markers for a group with desired values"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get a MarkerArray of the markers that make up this robot\n"
-#~ "\n"
-#~ "Usage:\n"
-#~ "    (): get's all markers for current state\n"
-#~ "    state (RobotState): gets markers for a particular state\n"
-#~ "    values (dict): get markers with given values\n"
-#~ "    values, links (dict, list): get markers with given values and these links\n"
-#~ "    group (string):  get all markers for a group\n"
-#~ "    group, values (string, dict): get all markers for a group with desired values"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get a dictionary mapping variable names to values.\n"
-#~ "Note that a joint may consist of one or more variables."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param name str: Name of movegroup\n"
-#~ "@rtype: moveit_commander.robot.Joint\n"
-#~ "@raise exception: MoveItCommanderException"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param name str: Name of movegroup\n"
-#~ "@rtype: moveit_commander.robot.Link\n"
-#~ "@raise exception: MoveItCommanderException"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param name str: Name of movegroup\n"
-#~ "@rtype: moveit_commander.MoveGroupCommander"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param name str: Name of movegroup\n"
-#~ "@rtype: bool"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get the name of the smallest group (fewest joints) that includes\n"
-#~ "the joint name specified as argument."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "We catch the names of groups, joints and links to allow easy access to their"
-#~ " properties."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "We catch the names of groups, joints and links to allow easy access\n"
-#~ "to their properties."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return number of the list that _Joint__get_joint_limits         methods "
-#~ "returns. @see: "
-#~ "http://docs.ros.org/indigo/api/moveit_core/html/classmoveit_1_1core_1_1JointModel.html#details"
-#~ "       for more about variable."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return number of the list that _Joint__get_joint_limits\n"
-#~ "        methods returns.\n"
-#~ "@see: http://docs.ros.org/indigo/api/moveit_core/html/classmoveit_1_1core_1_1JointModel.html#details\n"
-#~ "      for more about variable."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single list of min and max joint limits, or          a set"
-#~ " of those lists, depending on the number of variables          available in "
-#~ "this joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single list of min and max joint limits, or\n"
-#~ "         a set of those lists, depending on the number of variables\n"
-#~ "         available in this joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single min joint limit value, or          a set of min "
-#~ "values, depending on the number of variables          available in this "
-#~ "joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single min joint limit value, or\n"
-#~ "         a set of min values, depending on the number of variables\n"
-#~ "         available in this joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single max joint limit value, or          a set of max "
-#~ "values, depending on the number of variables          available in this "
-#~ "joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@return: Either a single max joint limit value, or\n"
-#~ "         a set of max values, depending on the number of variables\n"
-#~ "         available in this joint."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@rtype float  (Editor's comment by @130s) I doubt there's a case where this "
-#~ "method goes into \"else\" block, because get_current_joint_values always "
-#~ "return a single list.  cf. getCurrentJointValues https://github.com/ros-"
-#~ "planning/moveit_ros/blob/8e819dda2b19462b8d0c5aacc69706c8a9d8d883/planning_interface/robot_interface/src/wrap_python_robot_interface.cpp#L176"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@rtype float\n"
-#~ "\n"
-#~ "(Editor's comment by @130s) I doubt there's a case where this method goes into\n"
-#~ "\"else\" block, because get_current_joint_values always return a single list.\n"
-#~ "\n"
-#~ "cf. getCurrentJointValues https://github.com/ros-planning/moveit_ros/blob/8e819dda2b19462b8d0c5aacc69706c8a9d8d883/planning_interface/robot_interface/src/wrap_python_robot_interface.cpp#L176"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param position [float]: List of joint angles to achieve. @param wait bool: "
-#~ "If false, the commands gets operated asynchronously."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "@param position [float]: List of joint angles to achieve.\n"
-#~ "@param wait bool: If false, the commands gets operated asynchronously."
-#~ msgstr ""
-
-#~ msgid "@rtype: geometry_msgs.Pose"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Specify the group name for which to construct this commander instance. "
-#~ "Throws an exception if there is an initialization error."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Specify a start state for the group.  Parameters ---------- msg : "
-#~ "moveit_msgs/RobotState  Examples -------- >>> from moveit_msgs.msg import "
-#~ "RobotState >>> from sensor_msgs.msg import JointState >>> joint_state = "
-#~ "JointState() >>> joint_state.header = Header() >>> joint_state.header.stamp "
-#~ "= rospy.Time.now() >>> joint_state.name = ['joint_a', 'joint_b'] >>> "
-#~ "joint_state.position = [0.17, 0.34] >>> moveit_robot_state = RobotState() "
-#~ ">>> moveit_robot_state.joint_state = joint_state >>> "
-#~ "group.set_start_state(moveit_robot_state)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Specify a start state for the group.\n"
-#~ "\n"
-#~ "Parameters\n"
-#~ "----------\n"
-#~ "msg : moveit_msgs/RobotState\n"
-#~ "\n"
-#~ "Examples\n"
-#~ "--------\n"
-#~ ">>> from moveit_msgs.msg import RobotState\n"
-#~ ">>> from sensor_msgs.msg import JointState\n"
-#~ ">>> joint_state = JointState()\n"
-#~ ">>> joint_state.header = Header()\n"
-#~ ">>> joint_state.header.stamp = rospy.Time.now()\n"
-#~ ">>> joint_state.name = ['joint_a', 'joint_b']\n"
-#~ ">>> joint_state.position = [0.17, 0.34]\n"
-#~ ">>> moveit_robot_state = RobotState()\n"
-#~ ">>> moveit_robot_state.joint_state = joint_state\n"
-#~ ">>> group.set_start_state(moveit_robot_state)"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Specify a target joint configuration for the group.\n"
-#~ "- if the type of arg1 is one of the following: dict, list, JointState message, then no other arguments should be provided.\n"
-#~ "The dict should specify pairs of joint variable names and their target values, the list should specify all the variable values\n"
-#~ "for the group. The JointState message specifies the positions of some single-dof joints.\n"
-#~ "- if the type of arg1 is string, then arg2 is expected to be defined and be either a real value or a list of real values. This is\n"
-#~ "interpreted as setting a particular joint to a particular value.\n"
-#~ "- if the type of arg1 is Pose or PoseStamped, both arg2 and arg3 could be defined. If arg2 or arg3 are defined, their types must\n"
-#~ "be either string or bool. The string type argument is interpreted as the end-effector the pose is specified for (default is to use\n"
-#~ "the default end-effector), and the bool is used to decide whether the pose specified is approximate (default is false). This situation\n"
-#~ "allows setting the joint target of the group by calling IK. This does not send a pose to the planner and the planner will do no IK.\n"
-#~ "Instead, one IK solution will be computed first, and that will be sent to the planner."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Set the pose of the end-effector, if one is available. The expected input is"
-#~ " a Pose message, a PoseStamped message or a list of 6 floats:[x, y, z, "
-#~ "rot_x, rot_y, rot_z] or a list of 7 floats [x, y, z, qx, qy, qz, qw]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "[x, y, z, rot_x, rot_y, rot_z] or a list of 7 floats [x, y, z, qx, qy, qz, "
-#~ "qw]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Create a planning scene interface; it uses both C++ wrapped methods and "
-#~ "scene manipulation topics."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Get the names of known objects in the world that are located within a bounding region (specified in the frame reported by\n"
-#~ "get_planning_frame()). If with_type is set to true, only return objects that have a known type."
-#~ msgstr ""
+msgstr "計画シーンからオブジェクトを削除します。名前が指定されていない場合はすべて削除します。"
