@@ -1,0 +1,943 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, National Institute of Advanced Industrial Science and
+# Technology
+# This file is distributed under the same license as the NEDO ROBO-MARC
+# MoveIt! Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-24 21:58+0900\n"
+"PO-Revision-Date: 2020-01-28 14:47+0900\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../source/ros_messages.rst:2
+msgid "ROSメッセージ一覧"
+msgstr ""
+
+#: ../../source/ros_messages.rst
+msgid "Field"
+msgstr "フィールド"
+
+#: ../../doxygen/moveit_msgs/msg/AllowedCollisionEntry.msg:1
+msgid "whether or not collision checking is enabled"
+msgstr "衝突チェックが有効かどうか"
+
+#: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:1
+msgid "The list of entry names in the matrix"
+msgstr "マトリックス内のエントリ名のリスト"
+
+#: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:4
+msgid ""
+"The individual entries in the allowed collision matrix square, symmetric, "
+"with same order as entry_names"
+msgstr "許可された衝突行列の個々のエントリは、entry_namesと同じ順序の正方形、対称です"
+
+#: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:11
+msgid ""
+"If the allowed collision flag is queried for a pair of names (n1, n2) that "
+"is not found in the collision matrix itself, the value of the collision flag"
+" is considered to be that of the entry (n1 or n2) specified in the list "
+"below. If both n1 and n2 are found in the list of defaults, the result is "
+"computed with an AND operation"
+msgstr ""
+"衝突マトリックス自体にない名前のペア（n1、n2）に対して許可された衝突フラグが照会された場合、衝突フラグの値はリストで指定されたエントリ（n1またはn2）の値と見なされます未満。デフォルトのリストにn1とn2の両方が見つかった場合、結果はAND演算で計算されます"
+
+#: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:1
+msgid "The CollisionObject will be attached with a fixed joint to this link"
+msgstr "CollisionObjectは、このリンクに固定ジョイントでアタッチされます"
+
+#: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:4
+msgid ""
+"This contains the actual shapes and poses for the CollisionObject to be "
+"attached to the link If action is remove and no object.id is set, all "
+"objects attached to the link indicated by link_name will be removed"
+msgstr ""
+"これには、リンクにアタッチされるCollisionObjectの実際の形状とポーズが含まれます。アクションが削除され、object.idが設定されていない場合、link_nameで示されるリンクにアタッチされたすべてのオブジェクトが削除されます"
+
+#: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:10
+msgid ""
+"The set of links that the attached objects are allowed to touch by default -"
+" the link_name is already considered by default"
+msgstr "添付オブジェクトがデフォルトでタッチできるリンクのセット-link_nameはデフォルトですでに考慮されています"
+
+#: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:14
+msgid ""
+"If certain links were placed in a particular posture for this object to "
+"remain attached (e.g., an end effector closing around an object), the "
+"posture necessary for releasing the object is stored here"
+msgstr ""
+"このオブジェクトがアタッチされたままになる特定の姿勢に特定のリンクが置かれた場合（たとえば、エンドエフェクタがオブジェクトの周りを閉じる）、オブジェクトを解放するために必要な姿勢がここに格納されます"
+
+#: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:19
+msgid "The weight of the attached object, if known"
+msgstr "接続されているオブジェクトの重量（わかっている場合）"
+
+#: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:3
+msgid ""
+"A set of solid geometric primitives that make up the volume to define (as a "
+"union)"
+msgstr "（ユニオンとして）定義するボリュームを構成するソリッドジオメトリックプリミティブのセット"
+
+#: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:6
+msgid "The poses at which the primitives are located"
+msgstr "プリミティブが配置されているポーズ"
+
+#: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:9
+msgid ""
+"In addition to primitives, meshes can be specified to add to the bounding "
+"volume (again, as union)"
+msgstr "プリミティブに加えて、メッシュを指定して境界ボリュームに追加することができます（再び、結合として）"
+
+#: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:12
+msgid "The poses at which the meshes are located"
+msgstr "メッシュが配置されているポーズ"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:1
+msgid "A header, used for interpreting the poses"
+msgstr "ポーズを解釈するために使用されるヘッダー"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:4
+msgid "The id of the object (name used in MoveIt)"
+msgstr "オブジェクトのID（MoveItで使用される名前）"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:7
+msgid "The object type in a database of known objects"
+msgstr "既知のオブジェクトのデータベース内のオブジェクトタイプ"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:13
+msgid "Solid geometric primitives"
+msgstr "ソリッドジオメトリックプリミティブ"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:17
+msgid "Meshes"
+msgstr "メッシュ"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:21
+msgid ""
+"Bounding planes (equation is specified, but the plane can be oriented using "
+"an additional pose)"
+msgstr "境界平面（方程式は指定されていますが、追加のポーズを使用して平面を方向付けることができます）"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:25
+msgid ""
+"Named subframes on the object. Use these to define points of interest on the"
+" object that you want to plan with (e.g. \"tip\", \"spout\", \"handle\"). "
+"The id of the object will be prepended to the subframe. If an object with "
+"the id \"screwdriver\" and a subframe \"tip\" is in the scene, you can use "
+"the frame \"screwdriver/tip\" for planning. The length of the subframe_names"
+" and subframe_poses has to be identical."
+msgstr ""
+"オブジェクトの名前付きサブフレーム。これらを使用して、計画するオブジェクト上の関心のあるポイントを定義します（例： &quot;tip&quot;、 "
+"&quot;spout&quot;、 &quot;handle&quot;）。オブジェクトのIDはサブフレームの先頭に追加されます。 "
+"idが「driver」でサブフレームが「tip」であるオブジェクトがシーンにある場合、計画にフレーム「screwdriver / "
+"tip」を使用できます。 subframe_namesとsubframe_posesの長さは同じでなければなりません。"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:46
+msgid "Operation to be performed"
+msgstr "実行する操作"
+
+#: ../../source/ros_messages.rst
+msgid "Constant"
+msgstr "定数"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:33
+msgid ""
+"Adds the object to the planning scene. If the object previously existed, it "
+"is replaced."
+msgstr "オブジェクトを計画シーンに追加します。オブジェクトが以前に存在していた場合、置き換えられます。"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:36
+msgid ""
+"Removes the object from the environment entirely (everything that matches "
+"the specified id)"
+msgstr "オブジェクトを環境から完全に削除します（指定されたIDに一致するものすべて）"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:39
+msgid ""
+"Append to an object that already exists in the planning scene. If the object"
+" does not exist, it is added."
+msgstr "計画シーンにすでに存在するオブジェクトに追加します。オブジェクトが存在しない場合は追加されます。"
+
+#: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:42
+msgid ""
+"If an object already exists in the scene, new poses can be sent (the "
+"geometry arrays must be left empty) if solely moving the object is desired"
+msgstr ""
+"オブジェクトがシーンに既に存在する場合、オブジェクトの移動のみが必要な場合は、新しいポーズを送信できます（ジオメトリ配列は空のままにする必要があります）"
+
+#: ../../doxygen/moveit_msgs/msg/ConstraintEvalResult.msg:1
+msgid ""
+"This message contains result from constraint evaluation result specifies the"
+" result of constraint evaluation (true indicates state satisfies constraint,"
+" false indicates state violates constraint) if false, distance specifies a "
+"measure of the distance of the state from the constraint if true, distance "
+"is set to zero"
+msgstr ""
+"このメッセージには、制約評価の結果が含まれます。falseの場合、制約評価の結果を指定します（trueは状態が制約を満たすことを示し、falseは状態が制約に違反することを示します）。trueの場合、distanceは制約からの状態の距離の尺度を指定します。ゼロ"
+
+#: ../../doxygen/moveit_msgs/msg/Constraints.msg:1
+msgid ""
+"This message contains a list of motion planning constraints. All constraints"
+" must be satisfied for a goal to be considered valid"
+msgstr "このメッセージには、運動計画の制約のリストが含まれています。目標が有効と見なされるには、すべての制約が満たされている必要があります"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:1
+msgid ""
+"Standard ROS header contains information about the frame in which this "
+"contact is specified"
+msgstr "標準ROSヘッダーには、この連絡先が指定されているフレームに関する情報が含まれています"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:6
+msgid "Position of the contact point"
+msgstr "接点の位置"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:9
+msgid "Normal corresponding to the contact point"
+msgstr "接点に対応する法線"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:12
+msgid "Depth of contact point"
+msgstr "接触点の深さ"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:15
+msgid ""
+"Name of the first body that is in contact This could be a link or a "
+"namespace that represents a body"
+msgstr "連絡している最初の本文の名前これは、本文を表すリンクまたは名前空間です"
+
+#: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:20
+msgid ""
+"Name of the second body that is in contact This could be a link or a "
+"namespace that represents a body"
+msgstr "連絡している2番目の本文の名前。これは、本文を表すリンクまたは名前空間です。"
+
+#: ../../doxygen/moveit_msgs/msg/CostSource.msg:1
+msgid "The density of the cost source"
+msgstr "コストソースの密度"
+
+#: ../../doxygen/moveit_msgs/msg/CostSource.msg:4
+msgid ""
+"The volume of the cost source is represented as an axis-aligned bounding box"
+" (AABB) The AABB is specified by two of its opposite corners"
+msgstr "コストソースのボリュームは、軸に合わせた境界ボックス（AABB）として表されます。AABBは、その反対側の2つのコーナーで指定されます。"
+
+#: ../../doxygen/moveit_msgs/msg/DisplayRobotState.msg:1
+msgid "The robot state to display"
+msgstr "表示するロボットの状態"
+
+#: ../../doxygen/moveit_msgs/msg/DisplayRobotState.msg:4
+msgid "Optionally, various links can be highlighted"
+msgstr "オプションで、さまざまなリンクを強調表示できます"
+
+#: ../../doxygen/moveit_msgs/msg/DisplayTrajectory.msg:1
+msgid "The model id for which this path has been generated"
+msgstr "このパスが生成されたモデルID"
+
+#: ../../doxygen/moveit_msgs/msg/DisplayTrajectory.msg:4
+msgid ""
+"The representation of the path contains position values for all the joints "
+"that are moving along the path; a sequence of trajectories may be specified"
+msgstr "パスの表現には、パスに沿って移動するすべてのジョイントの位置値が含まれます。一連の軌跡を指定できます"
+
+#: ../../doxygen/moveit_msgs/msg/DisplayTrajectory.msg:7
+msgid ""
+"The robot state is used to obtain positions for all/some of the joints of "
+"the robot. It is used by the path display node to determine the positions of"
+" the joints that are not specified in the joint path message above. If the "
+"robot state message contains joint position information for joints that are "
+"also mentioned in the joint path message, the positions in the joint path "
+"message will overwrite the positions specified in the robot state message."
+msgstr ""
+"ロボットの状態は、ロボットのすべて/一部の関節の位置を取得するために使用されます。これは、上記のジョイントパスメッセージで指定されていないジョイントの位置を決定するために、パス表示ノードによって使用されます。ロボット状態メッセージに、ジョイントパスメッセージにも記載されているジョイントのジョイント位置情報が含まれている場合、ジョイントパスメッセージの位置は、ロボット状態メッセージで指定された位置を上書きします。"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:9
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:1
+msgid "A name for this grasp"
+msgstr "この把握の名前"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:12
+msgid ""
+"The internal posture of the hand for the pre-grasp only positions are used"
+msgstr "把持前のみの位置の手の内部姿勢が使用されます"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:16
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:4
+msgid ""
+"The internal posture of the hand for the grasp positions and efforts are "
+"used"
+msgstr "握り位置と努力のための手の内部姿勢が使用されます"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:20
+msgid ""
+"The position of the end-effector for the grasp.  This is the pose of the "
+"\"parent_link\" of the end-effector, not actually the pose of any link *in* "
+"the end-effector.  Typically this would be the pose of the most distal wrist"
+" link before the hand (end-effector) links began."
+msgstr ""
+"把握のためのエンドエフェクタの位置。これはエンドエフェクタの「parent_link」のポーズであり、実際にはエンドエフェクタ内のリンクのポーズではありません。通常、これは手（エンドエフェクタ）リンクが始まる前の最も遠位の手首リンクのポーズです。"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:26
+msgid ""
+"The estimated probability of success for this grasp, or some other measure "
+"of how \"good\" it is."
+msgstr "この把握の推定成功確率、またはそれがどの程度「良い」かを示す他の尺度。"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:30
+msgid "The approach direction to take before picking an object"
+msgstr "オブジェクトを選ぶ前に取るアプローチ方向"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:33
+msgid ""
+"The retreat direction to take after a grasp has been completed (object is "
+"attached)"
+msgstr "把握が完了した後に取る後退方向（オブジェクトがアタッチされています）"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:36
+msgid ""
+"The retreat motion to perform when releasing the object; this information is"
+" not necessary for the grasp itself, but when releasing the object, the "
+"information will be necessary. The grasp used to perform a pickup is "
+"returned as part of the result, so this information is available for later "
+"use."
+msgstr ""
+"オブジェクトを解放するときに実行する後退動作。この情報は把握自体には必要ありませんが、オブジェクトを解放するときは情報が必要になります。ピックアップの実行に使用された把握は結果の一部として返されるため、この情報は後で使用できます。"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:43
+msgid "the maximum contact force to use while grasping (<=0 to disable)"
+msgstr "把持中に使用する最大接触力（&lt;= 0の場合は無効）"
+
+#: ../../doxygen/moveit_msgs/msg/Grasp.msg:46
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:18
+msgid ""
+"an optional list of obstacles that we have semantic information about and "
+"that can be touched/pushed/moved in the course of grasping"
+msgstr "意味情報を持っている障害物のオプションのリストであり、把握の過程でタッチ/プッシュ/移動できる障害物"
+
+#: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:4
+msgid "the direction of the translation"
+msgstr "翻訳の方向"
+
+#: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:7
+msgid "the desired translation distance"
+msgstr "希望する平行移動距離"
+
+#: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:10
+msgid ""
+"the min distance that must be considered feasible before the grasp is even "
+"attempted"
+msgstr "把握が試行される前に実現可能と見なされる最小距離"
+
+#: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:1
+msgid "Constrain the position of a joint to be within a certain bound"
+msgstr "ジョイントの位置を特定の範囲内に制限する"
+
+#: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:4
+msgid ""
+"the bound to be achieved is [position - tolerance_below, position + "
+"tolerance_above]"
+msgstr "達成される境界は[position-tolerance_below、position + tolerance_above]です"
+
+#: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:9
+#: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:16
+#: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:14
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:54
+msgid ""
+"A weighting factor for this constraint (denotes relative importance to other"
+" constraints. Closer to zero means less important)"
+msgstr "この制約の重み係数（他の制約に対する相対的な重要度を示します。ゼロに近いほど重要度は低くなります）"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:1
+msgid ""
+"This message contains information about limits of a particular joint (or "
+"control dimension)"
+msgstr "このメッセージには、特定のジョイント（または制御寸法）の制限に関する情報が含まれています"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:4
+msgid "true if the joint has position limits"
+msgstr "ジョイントに位置制限がある場合はtrue"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:7
+msgid "min and max position limits"
+msgstr "最小および最大位置制限"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:11
+msgid "true if joint has velocity limits"
+msgstr "ジョイントに速度制限がある場合はtrue"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:14
+msgid "max velocity limit"
+msgstr "最大速度制限"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:18
+msgid "true if joint has acceleration limits"
+msgstr "ジョイントに加速制限がある場合はtrue"
+
+#: ../../doxygen/moveit_msgs/msg/JointLimits.msg:20
+msgid "max acceleration limit"
+msgstr "最大加速限界"
+
+#: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:1
+msgid "A list of joints in the kinematic tree"
+msgstr "キネマティックツリーのジョイントのリスト"
+
+#: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:3
+msgid "A list of joint limits corresponding to the joint names"
+msgstr "ジョイント名に対応するジョイント制限のリスト"
+
+#: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:5
+msgid "A list of links that the kinematics node provides solutions for"
+msgstr "キネマティクスノードがソリューションを提供するリンクのリスト"
+
+#: ../../doxygen/moveit_msgs/msg/LinkPadding.msg:1
+#: ../../doxygen/moveit_msgs/msg/LinkScale.msg:1
+msgid "name for the link"
+msgstr "リンクの名前"
+
+#: ../../doxygen/moveit_msgs/msg/LinkPadding.msg:4
+msgid "padding to apply to the link"
+msgstr "リンクに適用するパディング"
+
+#: ../../doxygen/moveit_msgs/msg/LinkScale.msg:4
+msgid "scaling to apply to the link"
+msgstr "リンクに適用するスケーリング"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:3
+msgid "The starting state considered for the robot solution path"
+msgstr "ロボットのソリューションパスで考慮される開始状態"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:6
+#: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:6
+msgid "The group used for planning (usually the same as in the request)"
+msgstr "計画に使用されるグループ（通常はリクエストと同じ）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:11
+msgid "The list of reported trajectories"
+msgstr "報告された軌跡のリスト"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:14
+msgid "Description of the reported trajectories (name of processing step)"
+msgstr "報告された軌跡の説明（処理ステップの名前）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:17
+msgid ""
+"The amount of time spent computing a particular step in motion plan "
+"computation"
+msgstr "モーションプラン計算の特定のステップの計算に費やした時間"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:20
+msgid "Status at the end of this plan"
+msgstr "この計画の最後のステータス"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:4
+msgid "Parameters for the workspace that the planner should work inside"
+msgstr "プランナーが内部で作業するワークスペースのパラメーター"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:7
+msgid ""
+"Starting state updates. If certain joints should be considered at positions "
+"other than the current ones, these positions should be set here"
+msgstr ""
+"状態の更新を開始しています。特定のジョイントを現在のジョイント以外の位置で考慮する必要がある場合、これらの位置をここで設定する必要があります"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:12
+msgid ""
+"The possible goal states for the model to plan for. Each element of the "
+"array defines a goal region. The goal is achieved if the constraints for a "
+"particular region are satisfied"
+msgstr "モデルが計画する可能性のある目標の状態。配列の各要素は、目標領域を定義します。特定の地域の制約が満たされると、目標が達成されます"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:17
+msgid ""
+"No state at any point along the path in the produced motion plan will "
+"violate these constraints (this applies to all points, not just waypoints)"
+msgstr ""
+"作成されたモーションプランのパスに沿ったどの点でも、これらの制約に違反する状態はありません（これはウェイポイントだけでなく、すべてのポイントに適用されます）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:20
+msgid "The constraints the resulting trajectory must satisfy"
+msgstr "結果の軌道が満たさなければならない制約"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:23
+msgid ""
+"The name of the motion planner to use. If no name is specified, a default "
+"motion planner will be used"
+msgstr "使用するモーションプランナーの名前。名前が指定されていない場合、デフォルトのモーションプランナーが使用されます"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:27
+msgid "The name of the group of joints on which this planner is operating"
+msgstr "このプランナーが動作しているジョイントのグループの名前"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:30
+msgid ""
+"The number of times this plan is to be computed. Shortest solution will be "
+"reported."
+msgstr "この計画が計算される回数。最短の解決策が報告されます。"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:34
+msgid ""
+"The maximum amount of time the motion planner is allowed to plan for (in "
+"seconds)"
+msgstr "モーションプランナーが計画できる最大時間（秒単位）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:37
+msgid ""
+"Scaling factors for optionally reducing the maximum joint velocities and "
+"accelerations.  Allowed values are in (0,1].  The maximum joint velocity and"
+" acceleration specified in the robot model are multiplied by thier "
+"respective factors.  If either are outside their valid ranges (importantly, "
+"this includes being set to 0.0), the factor is set to the default value of "
+"1.0 internally (i.e., maximum joint velocity or maximum joint acceleration)."
+msgstr ""
+"オプションで最大関節速度と加速度を減らすためのスケーリング係数。許容値は（0,1）です。ロボットモデルで指定された最大関節速度と加速度にそれぞれの係数が乗算されます。いずれかが有効範囲外の場合（重要なことには、0.0に設定されることも含まれます）、係数が設定されます内部でデフォルト値の1.0（つまり、最大関節速度または最大関節加速度）。"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:3
+msgid "The corresponding robot state"
+msgstr "対応するロボットの状態"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:9
+msgid "A solution trajectory, if found"
+msgstr "ソリューションの軌跡（見つかった場合）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:12
+msgid "Planning time (seconds)"
+msgstr "計画時間（秒）"
+
+#: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:15
+msgid "Error code - encodes the overall reason for failure"
+msgstr "エラーコード-失敗の全体的な理由をエンコードします"
+
+#: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:3
+msgid "overall behavior"
+msgstr "全体的な行動"
+
+#: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:15
+msgid "planning & kinematics request errors"
+msgstr "計画と運動学のリクエストエラー"
+
+#: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:29
+msgid "system errors"
+msgstr "システムエラー"
+
+#: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:35
+msgid "kinematics errors"
+msgstr "運動学エラー"
+
+#: ../../doxygen/moveit_msgs/msg/ObjectColor.msg:1
+msgid "The object id for which we specify color"
+msgstr "色を指定するオブジェクトID"
+
+#: ../../doxygen/moveit_msgs/msg/ObjectColor.msg:4
+msgid "The value of the color"
+msgstr "色の値"
+
+#: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:1
+msgid "This message contains the definition of an orientation constraint."
+msgstr "このメッセージには、方向制約の定義が含まれています。"
+
+#: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:5
+msgid "The desired orientation of the robot link specified as a quaternion"
+msgstr "クォータニオンとして指定されたロボットリンクの望ましい方向"
+
+#: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:8
+#: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:5
+msgid "The robot link this constraint refers to"
+msgstr "この制約が参照するロボットリンク"
+
+#: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:11
+msgid "optional axis-angle error tolerances specified"
+msgstr "オプションの軸角度誤差許容値を指定"
+
+#: ../../doxygen/moveit_msgs/msg/OrientedBoundingBox.msg:1
+msgid "the pose of the box"
+msgstr "箱のポーズ"
+
+#: ../../doxygen/moveit_msgs/msg/OrientedBoundingBox.msg:4
+msgid "the extents of the box, assuming the center is at the origin"
+msgstr "中心が原点にあると仮定した場合のボックスの範囲"
+
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:8
+msgid ""
+"The position of the end-effector for the grasp relative to a reference frame"
+" (that is always specified elsewhere, not in this message)"
+msgstr "参照フレームに対する把持のエンドエフェクタの位置（このメッセージではなく、常に他の場所で指定されます）"
+
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:12
+msgid "The approach motion"
+msgstr "アプローチモーション"
+
+#: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:15
+msgid "The retreat motion"
+msgstr "後退運動"
+
+#: ../../doxygen/moveit_msgs/msg/PlannerInterfaceDescription.msg:1
+msgid "The name of the planner interface"
+msgstr "プランナーインターフェースの名前"
+
+#: ../../doxygen/moveit_msgs/msg/PlannerInterfaceDescription.msg:4
+msgid "The names of the planner ids within the interface"
+msgstr "インターフェース内のプランナーIDの名前"
+
+#: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:1
+msgid "parameter names (same size as values)"
+msgstr "パラメーター名（値と同じサイズ）"
+
+#: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:4
+msgid "parameter values (same size as keys)"
+msgstr "パラメータ値（キーと同じサイズ）"
+
+#: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:7
+msgid "parameter description (can be empty)"
+msgstr "パラメーターの説明（空でも可）"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:2
+msgid "The diff to consider for the planning scene (optional)"
+msgstr "計画シーンで考慮する差分（オプション）"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:5
+msgid ""
+"If this flag is set to true, the action returns an executable plan in the "
+"response but does not attempt execution"
+msgstr "このフラグがtrueに設定されている場合、アクションは応答で実行可能プランを返しますが、実行は試行しません"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:9
+msgid ""
+"If this flag is set to true, the action of planning & executing is allowed "
+"to look around  (move sensors) if it seems that not enough information is "
+"available about the environment"
+msgstr ""
+"このフラグがtrueに設定されている場合、環境に関する十分な情報が利用できないと思われる場合は、計画と実行のアクションが見回す（センサーを移動する）ことが許可されます"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:15
+msgid ""
+"If this value is positive, the action of planning & executing is allowed to "
+"look around for a maximum number of attempts; If the value is left as 0, the"
+" default value is used, as set with dynamic_reconfigure"
+msgstr ""
+"この値が正の場合、計画と実行のアクションは、最大試行回数を確認できます。値を0のままにすると、dynamic_reconfigureで設定されたデフォルト値が使用されます"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:21
+msgid ""
+"If set and if look_around is true, this value is used as the maximum cost "
+"allowed for a path to be considered executable. If the cost of a path is "
+"higher than this value, more sensing or a new plan needed. If left as 0.0 "
+"but look_around is true, then the default value set via dynamic_reconfigure "
+"is used"
+msgstr ""
+"設定され、look_aroundがtrueの場合、この値は、パスが実行可能と見なされるために許可される最大コストとして使用されます。パスのコストがこの値よりも高い場合は、より多くの検知または新しい計画が必要です。"
+" 0.0のままにして、look_aroundがtrueの場合、dynamic_reconfigureで設定されたデフォルト値が使用されます"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:28
+msgid ""
+"If the plan becomes invalidated during execution, it is possible to have "
+"that plan recomputed and execution restarted. This flag enables this "
+"functionality"
+msgstr "実行中にプランが無効になった場合、そのプランを再計算して実行を再開することができます。このフラグはこの機能を有効にします"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:33
+msgid "The maximum number of replanning attempts"
+msgstr "再計画の最大試行回数"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:36
+msgid "The amount of time to wait in between replanning attempts (in seconds)"
+msgstr "再計画の試行間の待機時間（秒）"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:1
+msgid "name of planning scene"
+msgstr "計画シーンの名前"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:4
+msgid "full robot state"
+msgstr "完全なロボット状態"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:7
+msgid "The name of the robot model this scene is for"
+msgstr "このシーンの対象となるロボットモデルの名前"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:10
+msgid ""
+"additional frames for duplicating tf (with respect to the planning frame)"
+msgstr "tfを複製するための追加フレーム（計画フレームに関して）"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:13
+msgid "full allowed collision matrix"
+msgstr "完全に許可された衝突行列"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:16
+msgid "all link paddings"
+msgstr "すべてのリンクパディング"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:19
+msgid "all link scales"
+msgstr "すべてのリンクスケール"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:22
+msgid ""
+"Attached objects, collision objects, even the octomap or collision map can "
+"have colors associated to them. This array specifies them."
+msgstr ""
+"アタッチされたオブジェクト、コリジョンオブジェクト、オクトマップやコリジョンマップにも色を関連付けることができます。この配列はそれらを指定します。"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:26
+msgid "the collision map"
+msgstr "衝突マップ"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:29
+msgid ""
+"Flag indicating whether this scene is to be interpreted as a diff with "
+"respect to some other scene"
+msgstr "このシーンが他のシーンとの差分として解釈されるかどうかを示すフラグ"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:5
+msgid "Scene name, model name, model root"
+msgstr "シーン名、モデル名、モデルルート"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:8
+msgid "Joint values of the robot state"
+msgstr "ロボット状態の共同値"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:11
+msgid "Attached objects (including geometry) for the robot state"
+msgstr "ロボット状態の添付オブジェクト（ジオメトリを含む）"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:14
+msgid "The names of the world objects"
+msgstr "ワールドオブジェクトの名前"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:17
+msgid "The geometry of the world objects"
+msgstr "ワールドオブジェクトのジオメトリ"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:20
+msgid "The maintained octomap"
+msgstr "維持されたオクトマップ"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:23
+msgid "The maintained list of transforms"
+msgstr "維持されている変換のリスト"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:26
+msgid "The allowed collision matrix"
+msgstr "許可された衝突行列"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:29
+msgid "The default link padding and link scaling"
+msgstr "デフォルトのリンクパディングとリンクスケーリング"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:32
+msgid "The stored object colors"
+msgstr "保存されたオブジェクトの色"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:35
+msgid "Bitfield combining options indicated above"
+msgstr "上記のビットフィールド結合オプション"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneWorld.msg:1
+msgid "collision objects"
+msgstr "衝突オブジェクト"
+
+#: ../../doxygen/moveit_msgs/msg/PlanningSceneWorld.msg:4
+msgid "The octomap that represents additional collision data"
+msgstr "追加の衝突データを表すオクトマップ"
+
+#: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:1
+msgid "This message contains the definition of a position constraint."
+msgstr "このメッセージには、位置制約の定義が含まれています。"
+
+#: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:8
+msgid ""
+"The offset (in the link frame) for the target point on the link we are "
+"planning for"
+msgstr "計画しているリンク上のターゲットポイントのオフセット（リンクフレーム内）"
+
+#: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:11
+msgid "The volume this constraint refers to"
+msgstr "この制約が参照するボリューム"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:3
+msgid ""
+"The name of the group which will be used to compute IK e.g. \"right_arm\", "
+"or \"arms\" - see IK specification for multiple-groups below Information "
+"from the SRDF will be used to automatically determine which link to solve IK"
+" for, unless ik_link_name is also specified"
+msgstr ""
+"IKの計算に使用されるグループの名前。たとえば、「right_arm」または「arms」-以下の複数グループのIK仕様を参照してください。SRDFからの情報は、ik_link_nameがなければIKを解決するリンクを自動的に決定するために使用されますまた指定"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:9
+msgid ""
+"A RobotState consisting of hint/seed positions for the IK computation and "
+"positions for all the other joints in the robot. Additional state "
+"information provided here is used to specify starting positions for other "
+"joints/links on the robot. This state MUST contain state for all joints to "
+"be used by the IK solver to compute IK. The list of joints that the IK "
+"solver deals with can be found using the SRDF for the corresponding group"
+msgstr ""
+"IK計算のヒント/シード位置と、ロボット内の他のすべてのジョイントの位置で構成されるRobotState。ここで提供される追加の状態情報は、ロボット上の他のジョイント/リンクの開始位置を指定するために使用されます。この状態には、IKソルバーがIKを計算するために使用するすべてのジョイントの状態が含まれている必要があります。"
+" IKソルバーが処理するジョイントのリストは、対応するグループのSRDFを使用して見つけることができます"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:17
+msgid ""
+"A set of constraints that the IK must obey; by default, this set of "
+"constraints is empty"
+msgstr "IKが従わなければならない制約のセット。デフォルトでは、この制約のセットは空です"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:20
+msgid "Find an IK solution that avoids collisions. By default, this is false"
+msgstr "衝突を回避するIKソリューションを見つけます。デフォルトでは、これはfalseです"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:23
+msgid ""
+"(OPTIONAL) The name of the link for which we are computing IK If not "
+"specified, the link name will be inferred from a combination of the group "
+"name and the SRDF. If any values are specified for ik_link_names, this value"
+" is ignored"
+msgstr ""
+"（オプション）IKを計算しているリンクの名前指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます。 "
+"ik_link_namesに値が指定されている場合、この値は無視されます"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:29
+msgid ""
+"The stamped pose of the link, when the IK solver computes the joint values "
+"for all the joints in a group. This value is ignored if pose_stamped_vector "
+"has any elements specified."
+msgstr ""
+"IKソルバーがグループ内のすべてのジョイントのジョイント値を計算するときのリンクのスタンプポーズ。 "
+"pose_stamped_vectorに指定された要素がある場合、この値は無視されます。"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:36
+msgid ""
+"(OPTIONAL) The names of the links for which we are computing IK If not "
+"specified, the link name will be inferred from a combination of the group "
+"name and the SRDF"
+msgstr "（オプション）IKを計算しているリンクの名前指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:41
+msgid ""
+"(OPTIONAL) The (stamped) poses of the links we are computing IK for (when a "
+"group has more than one end effector) e.g. The \"arms\" group might consist "
+"of both the \"right_arm\" and the \"left_arm\" The order of the groups "
+"referred to is the same as the order setup in the SRDF"
+msgstr ""
+"（オプション）IKを計算するリンクの（スタンプ付き）ポーズ（グループに複数のエンドエフェクタがある場合）。たとえば、「arms」グループは、「right_arm」と「left_arm」の両方で構成される場合があります。参照されるグループは、SRDFで設定された順序と同じです"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:46
+msgid "Maximum allowed time for IK calculation"
+msgstr "IK計算の最大許容時間"
+
+#: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:49
+msgid ""
+"Maximum number of IK attempts (if using random seeds; leave as 0 for the "
+"default value specified on the param server to be used)"
+msgstr "IKの最大試行回数（ランダムシードを使用する場合、使用するparamサーバーで指定されたデフォルト値は0のままにします）"
+
+#: ../../doxygen/moveit_msgs/msg/RobotState.msg:1
+msgid ""
+"This message contains information about the robot state, i.e. the positions "
+"of its joints and links"
+msgstr "このメッセージには、ロボットの状態、つまり関節とリンクの位置に関する情報が含まれています"
+
+#: ../../doxygen/moveit_msgs/msg/RobotState.msg:4
+msgid "Joints that may have multiple DOF are specified here"
+msgstr "複数のDOFを持つ関節がここで指定されます"
+
+#: ../../doxygen/moveit_msgs/msg/RobotState.msg:7
+msgid "Attached collision objects (attached to some link on the robot)"
+msgstr "アタッチされたコリジョンオブジェクト（ロボットのリンクにアタッチ）"
+
+#: ../../doxygen/moveit_msgs/msg/RobotState.msg:10
+msgid ""
+"Flag indicating whether this scene is to be interpreted as a diff with "
+"respect to some other scene This is mostly important for handling the "
+"attached bodies (whether or not to clear the attached bodies of a "
+"moveit::core::RobotState before updating it with this message)"
+msgstr ""
+"このシーンを他のシーンとの差分として解釈するかどうかを示すフラグこれは、アタッチされたボディを処理するために最も重要です（これで更新する前にmoveit"
+" :: core :: RobotStateのアタッチされたボディをクリアするかどうか）メッセージ）"
+
+#: ../../doxygen/moveit_msgs/msg/TrajectoryConstraints.msg:1
+msgid "The array of constraints to consider along the trajectory"
+msgstr "軌道に沿って考慮する制約の配列"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:9
+msgid "The radius of the disc that should be maintained visible"
+msgstr "可視状態を維持する必要があるディスクの半径"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:12
+msgid ""
+"The pose of the disc; as the robot moves, the pose of the disc may change as"
+" well This can be in the frame of a particular robot link, for example"
+msgstr ""
+"ディスクのポーズ。ロボットが動くと、ディスクのポーズも変わる場合があります。これは、たとえば、特定のロボットリンクのフレーム内にある可能性があります。"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:16
+msgid ""
+"From the sensor origin towards the target, the disc forms a visibility cone "
+"This cone is approximated using many sides. For example, when using 4 sides,"
+" that in fact makes the visibility region be a pyramid. This value should "
+"always be 3 or more."
+msgstr ""
+"センサーの原点からターゲットに向かって、ディスクは可視コーンを形成します。このコーンは多くの側面を使用して近似されます。たとえば、4辺を使用する場合、実際には可視領域がピラミッドになります。この値は常に3以上でなければなりません。"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:22
+msgid ""
+"The pose in which visibility is to be maintained. The frame id should "
+"represent the robot link to which the sensor is attached. It is assumed the "
+"sensor can look directly at the target, in any direction. This assumption is"
+" usually not true, but additional PositionConstraints can resolve this "
+"issue."
+msgstr ""
+"可視性を維持するポーズ。フレームIDは、センサーが接続されているロボットリンクを表す必要があります。センサーは、あらゆる方向からターゲットを直接見ることができると想定されています。通常、この仮定は正しくありませんが、追加のPositionConstraintsによりこの問題を解決できます。"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:29
+msgid ""
+"Even though the disc is maintained visible, the visibility cone can be very "
+"small because of the orientation of the disc with respect to the sensor. It "
+"is possible for example to view the disk almost from a side, in which case "
+"the visibility cone can end up having close to 0 volume. The view angle is "
+"defined to be the angle between the normal to the visibility disc and the "
+"direction vector from the sensor origin. The value below represents the "
+"minimum desired view angle. For a perfect view, this value will be 0 (the "
+"two vectors are exact opposites). For a completely obstructed view this "
+"value will be Pi/2 (the vectors are perpendicular). This value defined below"
+" is the maximum view angle to be maintained. This should be a value in the "
+"open interval (0, Pi/2). If 0 is set, the view angle is NOT enforced."
+msgstr ""
+"たとえディスクが見えるように維持されていても、センサーに対するディスクの向きのため、視界円錐は非常に小さくなります。たとえば、ディスクをほぼ横から見ることができます。その場合、可視性コーンのボリュームは0に近くなります。ビュー角度は、可視性ディスクの法線とセンサーの原点からの方向ベクトルの間の角度になるように定義されます。以下の値は、必要な最小ビュー角度を表します。完全なビューの場合、この値は0になります（2つのベクトルは正反対です）。完全に遮られたビューの場合、この値はPi"
+" / 2になります（ベクトルは垂直です）。以下で定義されるこの値は、維持される最大視野角です。これは、オープン間隔（0、Pi / "
+"2）の値でなければなりません。 0が設定されている場合、視野角は強制されません。"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:41
+msgid ""
+"This angle is used similarly to max_view_angle but limits the maximum angle "
+"between the sensor origin direction vector and the axis that connects the "
+"sensor origin to the target frame origin. The value is again in the range "
+"(0, Pi/2) and is NOT enforced if set to 0."
+msgstr ""
+"この角度はmax_view_angleと同様に使用されますが、センサーの原点方向ベクトルとセンサーの原点をターゲットフレームの原点に接続する軸の間の最大角度を制限します。値は再び範囲（0、Pi"
+" / 2）にあり、0に設定されている場合は強制されません。"
+
+#: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:47
+msgid ""
+"The axis that is assumed to indicate the direction of view for the sensor X "
+"= 2, Y = 1, Z = 0"
+msgstr "センサーのビューの方向を示すと想定される軸X = 2、Y = 1、Z = 0"
+
+#: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:6
+msgid "Define the frame of reference for the box corners"
+msgstr "ボックスコーナーの参照フレームを定義する"
+
+#: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:9
+msgid "The minumum corner of the box, with respect to the robot starting pose"
+msgstr "ロボットの開始ポーズに関するボックスの最小コーナー"
+
+#: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:12
+msgid "The maximum corner of the box, with respect to the robot starting pose"
+msgstr "ロボットの開始ポーズに関するボックスの最大角"
