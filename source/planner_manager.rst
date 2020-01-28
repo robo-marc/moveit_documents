@@ -42,10 +42,10 @@ OMPLPlannerManager
 .. doxygenclass:: ompl_interface::OMPLPlannerManager
    :members:
 
-OMPLPlanningContext
-------------------------
+ModelBasedPlanningContext
+--------------------------
 
-.. doxygenclass:: ompl_interface::OMPLPlanningContext
+.. doxygenclass:: ompl_interface::ModelBasedPlanningContext
    :members:
 
 -----------------

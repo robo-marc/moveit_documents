@@ -1,0 +1,209 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, National Institute of Advanced Industrial Science and
+# Technology
+# This file is distributed under the same license as the NEDO ROBO-MARC
+# MoveIt! Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-24 21:58+0900\n"
+"PO-Revision-Date: 2020-01-28 13:23+0900\n"
+"Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../source/planner_manager.rst:2
+msgid "プランニングアルゴリズム基底クラス（PlannerManager）の仕様"
+msgstr ""
+
+#: ../../source/planner_manager.rst:6
+msgid "クラス図"
+msgstr ""
+
+#: ../../source/planner_manager.rst:21
+msgid "基底クラス"
+msgstr ""
+
+#: ../../source/planner_manager.rst:24
+msgid "PlannerManager"
+msgstr "PlannerManager"
+
+msgid "Base class for a MoveIt! planner."
+msgstr "MoveIt!プランナーの基底クラス。"
+
+msgid ""
+"Subclassed by chomp_interface::CHOMPPlannerManager, "
+"ompl_interface::OMPLPlannerManager"
+msgstr ""
+"chomp_interface::CHOMPPlannerManager、ompl_interface::"
+"OMPLPlannerManagerによってサブクラス化されます。"
+
+msgid "Public Functions"
+msgstr "パブリック関数"
+
+msgid ""
+"Initialize a planner. This function will be called after the construction of"
+" the plugin, before any other call is made. It is assumed that motion plans "
+"will be computed for the robot described by model and that any exposed ROS "
+"functionality or required ROS parameters are namespaced by ns"
+msgstr ""
+"プランナーを初期化します。"
+"この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。"
+"model引数に指定されたロボットモデルに対してモーションプランが計算されます。"
+"ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。"
+
+msgid "Get."
+msgstr "取得する。"
+
+msgid "a short string that identifies the planning interface"
+msgstr "プランニングインターフェースを識別する短い文字列を取得する。"
+
+msgid ""
+"Get the names of the known planning algorithms (values that can be filled as"
+" planner_id in the planning request)"
+msgstr "既知のプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します"
+
+msgid ""
+"Construct a planning context given the current scene and a planning request."
+" If a problem is encountered, error code is set and empty ptr is returned. "
+"The returned motion planner context is clean  the motion planner will start "
+"from scratch every time a context is constructed."
+msgstr ""
+"planning sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。"
+"問題が発生した場合、エラーコードが設定され、空のポインタが返されます。"
+"返されるモーションプランナーコンテキストは初期化された状態です。"
+"モーションプランナーは、コンテキストが構築されるたびにゼロから開始します。"
+
+msgid "Parameters"
+msgstr "パラメータ"
+
+msgid "planning_scene: A const planning scene to use for planning"
+msgstr "planning_scene：プランニングに使用するconst planning scene"
+
+msgid "req: The representation of the planning request"
+msgstr "req： プランニングリクエスト"
+
+msgid ""
+"error_code: This is where the error is set if constructing the planning "
+"context fails"
+msgstr "error_code：プランニングコンテキストの構築が失敗した場合にエラーが設定される変数"
+
+msgid "Calls the function above but ignores the error_code."
+msgstr "上記の関数を呼び出しますが、error_codeを無視します。"
+
+msgid ""
+"Determine whether this plugin instance is able to represent this planning "
+"request."
+msgstr "このプラグインインスタンスが指定されたプランニングリクエストを扱うことができるか判定します。"
+
+msgid "Specify the settings to be used for specific algorithms."
+msgstr "このアルゴリズムに適用される設定を設定します。"
+
+msgid "Get the settings for a specific algorithm."
+msgstr "このアルゴリズムに適用されている設定を取得します。"
+
+msgid ""
+"Request termination, if a solve() function is currently computing plans."
+msgstr "solve関数が現在プランニングを計算している場合、中断を要求します。"
+
+#: ../../source/planner_manager.rst:30
+msgid "PlanningContext"
+msgstr "PlanningContext"
+
+msgid ""
+"Representation of a particular planning context  the planning scene and the "
+"request are known, solution is not yet computed."
+msgstr "特定の計画コンテキストの表現、計画シーンと要求は既知であり、解決策はまだ計算されていません。"
+
+msgid ""
+"Subclassed by chomp_interface::CHOMPPlanningContext, "
+"ompl_interface::ModelBasedPlanningContext"
+msgstr ""
+"chomp_interface::CHOMPPlanningContext、ommpl_interface::"
+"ModelBasedPlanningContextによってサブクラス化されます"
+
+msgid "Construct a planning context named name for the group group."
+msgstr "グループ名groupに対するnameという名前のプランニングコンテキストを生成します。"
+
+msgid "Get the name of the group this planning context is for."
+msgstr "このプランニングコンテキストの対象となるグループの名前を取得します。"
+
+msgid "Get the name of this planning context."
+msgstr "このプランニングコンテキストの名前を取得します。"
+
+msgid "Get the planning scene associated to this planning context."
+msgstr "このプランニングコンテキストに関連付けられたplanning sceneを取得します。"
+
+msgid "Get the motion plan request associated to this planning context."
+msgstr "このプランニングコンテキストに関連付けられているモーションプランリクエストを取得します。"
+
+msgid "Set the planning scene for this context."
+msgstr "このコンテキストのplanning sceneを設定します。"
+
+msgid "Set the planning request for this context."
+msgstr "このコンテキストのプランニングリクエストを設定します。"
+
+msgid ""
+"Solve the motion planning problem and store the result in res. This function"
+" should not clear data structures before computing. The constructor and "
+"clear() do that."
+msgstr ""
+"モーションプランニングの問題を解決し、結果をresに保存します。"
+"この関数は、計算の前にデータ構造を初期化しません。"
+"コンストラクタとclear関数はデータ構造を初期化します。"
+
+msgid ""
+"Solve the motion planning problem and store the detailed result in res. This"
+" function should not clear data structures before computing. The constructor"
+" and clear() do that."
+msgstr ""
+"モーションプランニングの問題を解決し、結果をresに保存します。"
+"この関数は、計算の前にデータ構造を初期化しません。"
+"コンストラクタとclear関数はデータ構造を初期化します。"
+
+msgid ""
+"If solve() is running, terminate the computation. Return false if "
+"termination not possible. No-op if solve() is not running (returns true)."
+msgstr ""
+"solve関数が実行中の場合、プランニングを中断します。終了できない場合はfalseを返します。 "
+"solve関数が実行されていない場合は何もしません（trueを返します）。"
+
+msgid "Clear the data structures used by the planner."
+msgstr "プランナーが使用するデータ構造を初期化します。"
+
+#: ../../source/planner_manager.rst:37
+msgid "OMPLプランナー"
+msgstr ""
+
+#: ../../source/planner_manager.rst:40
+msgid "OMPLPlannerManager"
+msgstr "OMPLPlannerManager"
+
+msgid "Inherits from planning_interface::PlannerManager"
+msgstr "planning_interface::PlannerManagerから継承します"
+
+#: ../../source/planner_manager.rst:46
+msgid "OMPLPlanningContext"
+msgstr "OMPLPlanningContext"
+
+#: ../../source/planner_manager.rst:53
+msgid "CHOMPプランナー"
+msgstr ""
+
+#: ../../source/planner_manager.rst:56
+msgid "CHOMPPlannerManager"
+msgstr "CHOMPPlannerManager"
+
+#: ../../source/planner_manager.rst:62
+msgid "CHOMPPlanningContext"
+msgstr "CHOMPPlanningContext"
+
+msgid "Inherits from planning_interface::PlanningContext"
+msgstr "planning_interface::PlanningContextから継承します"
