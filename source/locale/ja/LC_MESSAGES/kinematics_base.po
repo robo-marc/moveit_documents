@@ -1,0 +1,589 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2020, National Institute of Advanced Industrial Science and
+# Technology
+# This file is distributed under the same license as the NEDO ROBO-MARC
+# MoveIt! Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-24 21:58+0900\n"
+"PO-Revision-Date: 2020-01-28 13:49+0900\n"
+"Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: ../../source/kinematics_base.rst:2
+msgid "運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:6
+msgid "クラス図"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:16
+msgid "基底クラス"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:19
+msgid "KinematicsBase"
+msgstr "KinematicsBase"
+
+msgid "Provides an interface for kinematics solvers."
+msgstr "運動学ソルバーのインターフェイスを提供します。"
+
+msgid ""
+"Subclassed by _NAMESPACE_::IKFastKinematicsPlugin, "
+"kdl_kinematics_plugin::KDLKinematicsPlugin, "
+"lma_kinematics_plugin::LMAKinematicsPlugin, "
+"pr2_arm_kinematics::PR2ArmKinematicsPlugin, "
+"srv_kinematics_plugin::SrvKinematicsPlugin"
+msgstr ""
+"IKFastKinematicsPlugin、kdl_kinematics_plugin::"
+"KDLKinematicsPlugin、lma_kinematics_plugin::"
+"LMAKinematicsPlugin、pr2_arm_kinematics::"
+"PR2ArmKinematicsPlugin、srv_kinematics_plugin::"
+"SrvKinematicsPluginによってサブクラス化"
+
+msgid "Public Types"
+msgstr "パブリックタイプ"
+
+msgid ""
+"Signature for a callback to validate an IK solution. Typically used for "
+"collision checking."
+msgstr "逆運動学の解を検証するコールバックのシグネチャ。通常、衝突チェックに使用されます。"
+
+msgid "Public Functions"
+msgstr "パブリック関数"
+
+msgid ""
+"Given a desired pose of the end-effector, compute the joint angles to reach "
+"it."
+msgstr "エンドエフェクタの位置姿勢を入力として、それに実現するための関節角度を計算します。"
+
+msgid ""
+"In contrast to the searchPositionIK methods, this one is expected to return "
+"the solution closest to the seed state. Randomly re-seeding is explicitly "
+"not allowed."
+msgstr ""
+"searchPositionIK関数とは違い、この関数はシード状態に最も近い解を返すことが期待されています。"
+"ランダムな再シードは明示的に許可されていません。"
+
+msgid "Return"
+msgstr "戻り値"
+
+msgid "True if a valid solution was found, false otherwise"
+msgstr "有効な解が見つかった場合はtrue、そうでない場合はfalse"
+
+msgid "Parameters"
+msgstr "パラメータ"
+
+msgid "ik_pose: the desired pose of the link"
+msgstr "ik_pose：リンクの位置姿勢"
+
+msgid "ik_seed_state: an initial guess solution for the inverse kinematics"
+msgstr "ik_seed_state：逆運動学計算の初期値"
+
+msgid "solution: the solution vector"
+msgstr "solution：解ベクトル"
+
+msgid ""
+"error_code: an error code that encodes the reason for failure or success"
+msgstr "error_code：失敗または成功の理由を示すエラーコード"
+
+msgid ""
+"options: container for other IK options. See definition of "
+"KinematicsQueryOptions for details."
+msgstr "options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。"
+
+msgid ""
+"Given the desired poses of all end-effectors, compute joint angles that are "
+"able to reach it."
+msgstr "複数のエンドエフェクタの目的の位置姿勢を入力として、それに到達できる関節角度を計算します。"
+
+msgid ""
+"This is a default implementation that returns only one solution and so its "
+"result is equivalent to calling 'getPositionIK(...)' with a zero initialized"
+" seed."
+msgstr ""
+"これは、1つの解のみを返すデフォルトの実装であるため、結果は、初期化されたゼロのシードで"
+"getPositionIK関数を呼び出すことと同等です。"
+
+msgid "True if a valid set of solutions was found, false otherwise."
+msgstr "有効な解のセットが見つかった場合はtrue、そうでない場合はfalse。"
+
+msgid "ik_poses: The desired pose of each tip link"
+msgstr "ik_poses：各エンドエフェクタの位置姿勢"
+
+msgid ""
+"solutions: A vector of vectors where each entry is a valid joint solution"
+msgstr "solutions：有効な関節角を格納したベクトルのベクトル"
+
+msgid "result: A struct that reports the results of the query"
+msgstr "result：クエリの結果を格納する構造体"
+
+msgid ""
+"options: An option struct which contains the type of redundancy "
+"discretization used. This default implementation only supports the "
+"KinematicSearches::NO_DISCRETIZATION method; requesting any other will "
+"result in failure."
+msgstr ""
+"options：使用される冗長性の離散化のタイプを含むオプションを設定する構造体。"
+"デフォルトの実装では、KinematicSearches::NO_DISCRETIZATIONタイプのみがサポートされており、他のタイプを設定すると失敗します。"
+
+msgid ""
+"Given a desired pose of the end-effector, search for the joint angles "
+"required to reach it. This particular method is intended for \"searching\" "
+"for a solution by stepping through the redundancy (or other numerical "
+"routines)."
+msgstr ""
+"エンドエフェクタの望ましい姿勢が与えられたら、それに到達するために必要な関節角度を検索します。"
+"この特定の方法は、冗長性（または他の数値ルーチン）をステップスルーすることにより、ソリューションを「検索」することを目的としています。"
+
+msgid "timeout: The amount of time (in seconds) available to the solver"
+msgstr "タイムアウト：ソルバーが使用できる時間（秒単位）"
+
+msgid ""
+"consistency_limits: the distance that any joint in the solution can be from "
+"the corresponding joints in the current seed state"
+msgstr "consistent_limits：ソリューション内の任意のジョイントが、現在のシード状態の対応するジョイントからの距離"
+
+msgid "solution_callback: A callback to validate an IK solution"
+msgstr "solution_callback：IKソリューションを検証するためのコールバック"
+
+msgid ""
+"Given a set of desired poses for a planning group with multiple end-"
+"effectors, search for the joint angles required to reach them. This is "
+"useful for e.g. biped robots that need to perform whole-body IK. Not "
+"necessary for most robots that have kinematic chains. This particular method"
+" is intended for \"searching\" for a solution by stepping through the "
+"redundancy (or other numerical routines)."
+msgstr ""
+"複数のエンドエフェクタを持つプランニンググループに必要な一連のポーズが与えられたら、それらに到達するために必要な関節角度を検索します。これは、たとえば全身IKを実行する必要がある二足歩行ロボットに役立ちます。キネマティックチェーンを備えたほとんどのロボットには必要ありません。この特定の方法は、冗長性（または他の数値ルーチン）をステップスルーすることにより、ソリューションを「検索」することを目的としています。"
+
+msgid ""
+"ik_poses: the desired pose of each tip link, in the same order as the "
+"getTipFrames() vector"
+msgstr "ik_poses：各チップリンクの目的のポーズ。getTipFrames（）ベクトルと同じ順序"
+
+msgid ""
+"context_state: (optional) the context in which this request is being made. "
+"The position values corresponding to joints in the current group may not "
+"match those in ik_seed_state. The values in ik_seed_state are the ones to "
+"use. The state is passed to provide the other joint values, in case they are"
+" needed for context, like with an IK solver that computes a balanced result "
+"for a biped."
+msgstr ""
+"context_state：（オプション）このリクエストが行われているコンテキスト。現在のグループのジョイントに対応する位置値は、ik_seed_stateの位置値と一致しない場合があります。"
+"ik_seed_stateの値は使用するものです。状態は、他のジョイント値を提供するために渡されます。これは、Bipedのバランスの取れた結果を計算するIKソルバーのように、コンテキストに必要な場合に使用されます。"
+
+msgid "Given a set of joint angles and a set of links, compute their pose."
+msgstr "関節角度のセットとリンクのセットが与えられたら、それらのポーズを計算します。"
+
+msgid "link_names: A set of links for which FK needs to be computed"
+msgstr "link_names：FKを計算する必要があるリンクのセット"
+
+msgid "joint_angles: The state for which FK is being computed"
+msgstr "joint_angles：FKが計算されている状態"
+
+msgid ""
+"poses: The resultant set of poses (in the frame returned by getBaseFrame())"
+msgstr "ポーズ：結果のポーズのセット（getBaseFrame（）によって返されるフレーム内）"
+
+msgid ""
+"Set the parameters for the solver, for use with kinematic chain IK solvers."
+msgstr "キネマティックチェーンIKソルバで使用するために、ソルバのパラメータを設定します。"
+
+msgid ""
+"robot_description: This parameter can be used as an identifier for the robot"
+" kinematics it is computed for; For example, the name of the ROS parameter "
+"that contains the robot description;"
+msgstr ""
+"robot_description：このパラメーターは、計算対象のロボット運動学の識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。"
+
+msgid "group_name: The group for which this solver is being configured"
+msgstr "group_name：このソルバーが構成されているグループ"
+
+msgid ""
+"base_frame: The base frame in which all input poses are expected. This may "
+"(or may not) be the root frame of the chain that the solver operates on"
+msgstr ""
+"base_frame：すべての入力ポーズが期待されるベースフレーム。これは、ソルバーが操作するチェーンのルートフレームである場合とそうでない場合があります"
+
+msgid "tip_frame: The tip of the chain"
+msgstr "tip_frame：チェーンの先端"
+
+msgid ""
+"search_discretization: The discretization of the search when the solver "
+"steps through the redundancy"
+msgstr "search_discretization：ソルバーが冗長性をステップスルーするときの検索の離散化"
+
+msgid "Set the parameters for the solver, for use with non-chain IK solvers."
+msgstr "非チェーンIKソルバーで使用するために、ソルバーのパラメーターを設定します。"
+
+msgid "tip_frames: A vector of tips of the kinematic tree"
+msgstr "tip_frames：キネマティックツリーのヒントのベクトル"
+
+msgid ""
+"Initialization function for the kinematics, for use with kinematic chain IK "
+"solvers."
+msgstr "キネマティクスの初期化関数。キネマティックチェーンIKソルバーで使用します。"
+
+msgid ""
+"Instead of this method, use the method passing in a RobotModel! Default "
+"implementation returns false, indicating that this API is not supported. "
+"Return  True if initialization was successful, false otherwise  Parameters  "
+"robot_description: This parameter can be used as an identifier for the robot"
+" kinematics it is computed for; For example, the name of the ROS parameter "
+"that contains the robot description;   group_name: The group for which this "
+"solver is being configured   base_frame: The base frame in which all input "
+"poses are expected. This may (or may not) be the root frame of the chain "
+"that the solver operates on   tip_frame: The tip of the chain   "
+"search_discretization: The discretization of the search when the solver "
+"steps through the redundancy"
+msgstr ""
+"このメソッドの代わりに、RobotModelで渡すメソッドを使用してください！デフォルトの実装はfalseを返し、このAPIがサポートされていないことを示します。初期化が成功した場合はTrue、それ以外の場合はfalseを返します。robot_description：このパラメーターは、計算対象のロボット運動の識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。"
+" "
+"group_name：このソルバーが構成されているグループbase_frame：すべての入力ポーズが期待されるベースフレーム。これは、ソルバーがtip_frameで操作するチェーンのルートフレームである場合とそうでない場合があります。チェーンの先端search_discretization：ソルバーが冗長性をステップスルーするときの検索の離散化"
+
+msgid "True if initialization was successful, false otherwise"
+msgstr "初期化が成功した場合はtrue、そうでない場合はfalse"
+
+msgid ""
+"Initialization function for the kinematics, for use with non-chain IK "
+"solvers."
+msgstr "キネマティクスの初期化関数。非チェーンIKソルバーで使用します。"
+
+msgid ""
+"Instead of this method, use the method passing in a RobotModel! Default "
+"implementation calls initialize() for tip_frames[0] and reports an error if "
+"tip_frames.size() != 1. Return  True if initialization was successful, false"
+" otherwise  Parameters  robot_description: This parameter can be used as an "
+"identifier for the robot kinematics is computed for; For example, rhe name "
+"of the ROS parameter that contains the robot description;   group_name: The "
+"group for which this solver is being configured   base_frame: The base frame"
+" in which all input poses are expected. This may (or may not) be the root "
+"frame of the chain that the solver operates on   tip_frames: A vector of "
+"tips of the kinematic tree   search_discretization: The discretization of "
+"the search when the solver steps through the redundancy"
+msgstr ""
+"このメソッドの代わりに、RobotModelで渡すメソッドを使用してください！デフォルト実装は、tip_frames "
+"[0]に対してinitialize（）を呼び出し、tip_frames.size（）！= "
+"1の場合はエラーを報告します。初期化が成功した場合はtrueを返し、そうでない場合はfalseを返します。robot_description：このパラメーターは、ロボット運動学の識別子として使用できます計算対象;たとえば、ロボットの説明を含むROSパラメーターの名前。"
+" "
+"group_name：このソルバーが構成されているグループbase_frame：すべての入力ポーズが期待されるベースフレーム。これは、ソルバーがtip_framesで操作するチェーンのルートフレームである場合とそうでない場合があります。キネマティックツリーのヒントのベクトルsearch_discretization：ソルバーが冗長性をステップスルーするときの検索の離散化"
+
+msgid ""
+"robot_description: This parameter can be used as an identifier for the robot"
+" kinematics is computed for; For example, rhe name of the ROS parameter that"
+" contains the robot description;"
+msgstr ""
+"robot_description：このパラメーターは、ロボットの運動学が計算される識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。"
+
+msgid ""
+"When returning false, the KinematicsPlugingLoader will use the old method, "
+"passing a robot_description. Default implementation returns false and issues"
+" a warning to implement this new API. TODO: Make this method purely virtual "
+"after some soaking time, replacing the fallback. Return  true if "
+"initialization was successful, false otherwise  Parameters  robot_model: - "
+"allow the URDF to be loaded much quicker by passing in a pre-parsed model of"
+" the robot   group_name: The group for which this solver is being configured"
+"   base_frame: The base frame in which all input poses are expected. This "
+"may (or may not) be the root frame of the chain that the solver operates on"
+"   tip_frames: The tip of the chain   search_discretization: The "
+"discretization of the search when the solver steps through the redundancy"
+msgstr ""
+"falseを返す場合、KinematicsPlugingLoaderは古いメソッドを使用し、robot_descriptionを渡します。デフォルトの実装はfalseを返し、この新しいAPIを実装するための警告を発行します。"
+" "
+"TODO：フォールバックを置き換えて、しばらく浸漬した後、このメソッドを純粋に仮想化します。初期化が成功した場合はtrue、そうでない場合はfalseを返します。robot_model：-ロボットの事前解析モデルを渡すことで、URDFをより速くロードできるようにしますgroup_name：このソルバーが構成されているグループbase_frame：ベースフレームすべての入力ポーズが期待されます。これは、ソルバーがtip_framesで操作するチェーンのルートフレームである場合とそうでない場合があります。チェーンの先端search_discretization：ソルバーが冗長性をステップスルーするときの検索の離散化"
+
+msgid "true if initialization was successful, false otherwise"
+msgstr "初期化が成功した場合はtrue、そうでない場合はfalse"
+
+msgid ""
+"robot_model: - allow the URDF to be loaded much quicker by passing in a pre-"
+"parsed model of the robot"
+msgstr "robot_model：-事前に解析されたロボットのモデルを渡すことにより、URDFをより迅速にロードできます。"
+
+msgid "tip_frames: The tip of the chain"
+msgstr "tip_frames：チェーンの先端"
+
+msgid "Return the name of the group that the solver is operating on."
+msgstr "ソルバーが操作しているグループの名前を返します。"
+
+msgid "Return  The string name of the group that the solver is operating on"
+msgstr "ソルバーが操作しているグループの文字列名"
+
+msgid "The string name of the group that the solver is operating on"
+msgstr "ソルバーが動作しているグループの文字列名"
+
+msgid ""
+"Return the name of the frame in which the solver is operating. This is "
+"usually a link name. No namespacing (e.g., no \"/\" prefix) should be used."
+msgstr ""
+"ソルバーが動作しているフレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
+
+msgid "Return  The string name of the frame in which the solver is operating"
+msgstr "ソルバーが動作しているフレームの文字列名"
+
+msgid "The string name of the frame in which the solver is operating"
+msgstr "ソルバーが動作しているフレームの文字列名"
+
+msgid ""
+"Return the name of the tip frame of the chain on which the solver is "
+"operating. This is usually a link name. No namespacing (e.g., no \"/\" "
+"prefix) should be used."
+msgstr ""
+"ソルバーが動作しているチェーンのチップフレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
+
+msgid ""
+"Return  The string name of the tip frame of the chain on which the solver is"
+" operating"
+msgstr "ソルバーが動作しているチェーンの先端フレームの文字列名"
+
+msgid ""
+"The string name of the tip frame of the chain on which the solver is "
+"operating"
+msgstr "ソルバーが動作しているチェーンの先端フレームの文字列名"
+
+msgid ""
+"Return the names of the tip frames of the kinematic tree on which the solver"
+" is operating. This is usually a link name. No namespacing (e.g., no \"/\" "
+"prefix) should be used."
+msgstr ""
+"ソルバーが動作しているキネマティックツリーの先端フレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
+
+msgid ""
+"Return  The vector of names of the tip frames of the kinematic tree on which"
+" the solver is operating"
+msgstr "ソルバーが動作しているキネマティックツリーの先端フレームの名前のベクトル"
+
+msgid ""
+"The vector of names of the tip frames of the kinematic tree on which the "
+"solver is operating"
+msgstr "ソルバーが動作しているキネマティックツリーの先端フレームの名前のベクトル"
+
+msgid ""
+"Set a set of redundant joints for the kinematics solver to use. This can "
+"fail, depending on the IK solver and choice of redundant joints!. Also, it "
+"sets the discretization values for each redundant joint to a default value."
+msgstr ""
+"運動学ソルバーが使用する冗長ジョイントのセットを設定します。 "
+"IKソルバーと冗長ジョイントの選択によっては、これが失敗する可能性があります！。また、各冗長ジョイントの離散化値をデフォルト値に設定します。"
+
+msgid ""
+"Return  False if any of the input joint indices are invalid (exceed number "
+"of joints)   Parameters  redundant_joint_indices: The set of redundant joint"
+" indices (corresponding to the list of joints you get from getJointNames())."
+msgstr ""
+"入力ジョイントインデックスのいずれかが無効（ジョイントの数を超えている）の場合、Falseを返します。パラメータredundancy_joint_indices：冗長ジョイントインデックスのセット（getJointNames（）から取得するジョイントのリストに対応）。"
+
+msgid ""
+"False if any of the input joint indices are invalid (exceed number of "
+"joints)"
+msgstr "入力ジョイントインデックスのいずれかが無効である（ジョイントの数を超えている）場合はfalse"
+
+msgid ""
+"redundant_joint_indices: The set of redundant joint indices (corresponding "
+"to the list of joints you get from getJointNames())."
+msgstr ""
+"redundancy_joint_indices：冗長ジョイントインデックスのセット（getJointNames（）から取得するジョイントのリストに対応）。"
+
+msgid ""
+"Set a set of redundant joints for the kinematics solver to use. This "
+"function is just a convenience function that calls the previous definition "
+"of setRedundantJoints()"
+msgstr ""
+"運動学ソルバーが使用する冗長ジョイントのセットを設定します。この関数は、setRedundantJoints（）の以前の定義を呼び出す便利な関数です"
+
+msgid ""
+"Return  False if any of the input joint indices are invalid (exceed number "
+"of joints)   Parameters  redundant_joint_names: The set of redundant joint "
+"names."
+msgstr ""
+"入力ジョイントインデックスのいずれかが無効な場合（ジョイントの数を超えている場合）、Falseを返します。パラメータredundancy_joint_names：冗長ジョイント名のセット。"
+
+msgid "redundant_joint_names: The set of redundant joint names."
+msgstr "redundancy_joint_names：冗長なジョイント名のセット。"
+
+msgid "Get the set of redundant joints."
+msgstr "冗長ジョイントのセットを取得します。"
+
+msgid "Return all the joint names in the order they are used internally."
+msgstr "内部で使用される順序ですべてのジョイント名を返します。"
+
+msgid ""
+"Return all the link names in the order they are represented internally."
+msgstr "すべてのリンク名を、それらが内部的に表される順序で返します。"
+
+msgid "Check if this solver supports a given JointModelGroup."
+msgstr "このソルバーが特定のJointModelGroupをサポートしているかどうかを確認します。"
+
+msgid ""
+"Override this function to check if your kinematics solver implementation "
+"supports the given group."
+msgstr "キネマティクスソルバーの実装が指定されたグループをサポートしているかどうかを確認するには、この関数をオーバーライドします。"
+
+msgid ""
+"The default implementation just returns jmg->isChain(), since solvers "
+"written before this function was added all supported only chain groups."
+msgstr ""
+"この関数が追加される前に記述されたソルバーはすべてチェーングループのみをサポートするため、デフォルトの実装ではjmg-&gt; "
+"isChain（）が返されます。"
+
+msgid "True if the group is supported, false if not."
+msgstr "グループがサポートされている場合はtrue、サポートされていない場合はfalse。"
+
+msgid "jmg: the planning group being proposed to be solved by this IK solver"
+msgstr "jmg：このIKソルバーによる解決が提案されている計画グループ"
+
+msgid ""
+"error_text_out: If this pointer is non-null and the group is not supported, "
+"this is filled with a description of why it's not supported."
+msgstr ""
+"error_text_out：このポインターがヌルではなく、グループがサポートされていない場合、サポートされていない理由の説明で埋められます。"
+
+msgid "Set the search discretization value for all the redundant joints."
+msgstr "すべての冗長ジョイントの検索離散化値を設定します。"
+
+msgid "Sets individual discretization values for each redundant joint."
+msgstr "冗長ジョイントごとに個別の離散化値を設定します。"
+
+msgid "Calling this method replaces previous discretization settings."
+msgstr "このメソッドを呼び出すと、以前の離散化設定が置き換えられます。"
+
+msgid ""
+"Parameters  discretization: a map of joint indices and discretization value "
+"pairs."
+msgstr "パラメータの離散化：ジョイントインデックスと離散化値のペアのマップ。"
+
+msgid "discretization: a map of joint indices and discretization value pairs."
+msgstr "離散化：ジョイントインデックスと離散化値のペアのマップ。"
+
+msgid "Get the value of the search discretization."
+msgstr "検索の離散化の値を取得します。"
+
+msgid ""
+"Returns the set of supported kinematics discretization search types. This "
+"implementation only supports the DiscretizationMethods::ONE search."
+msgstr ""
+"サポートされている運動学離散化検索タイプのセットを返します。この実装は、DiscretizationMethods :: "
+"ONE検索のみをサポートします。"
+
+msgid ""
+"For functions that require a timeout specified but one is not specified "
+"using arguments, a default timeout is used, as set by this function (and "
+"initialized to KinematicsBase::DEFAULT_TIMEOUT)"
+msgstr ""
+"指定されたタイムアウトを必要とするが、引数を使用して指定されていない関数の場合、この関数で設定された（およびKinematicsBase :: "
+"DEFAULT_TIMEOUTに初期化された）デフォルトのタイムアウトが使用されます"
+
+msgid ""
+"For functions that require a timeout specified but one is not specified "
+"using arguments, this default timeout is used."
+msgstr "指定されたタイムアウトを必要とするが、引数を使用して指定されていない関数の場合、このデフォルトのタイムアウトが使用されます。"
+
+msgid "Virtual destructor for the interface."
+msgstr "インターフェイスの仮想デストラクタ。"
+
+#: ../../source/kinematics_base.rst:26
+msgid "KDL運動学計算プラグイン"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:29
+msgid "KDLKinematicsPlugin"
+msgstr "KDLKinematicsPlugin"
+
+msgid ""
+"Specific implementation of kinematics using KDL. This version supports any "
+"kinematic chain, also including mimic joints."
+msgstr "KDLを使用した運動学の特定の実装。このバージョンでは、模倣ジョイントも含め、あらゆる運動連鎖をサポートしています。"
+
+msgid "Inherits from kinematics::KinematicsBase"
+msgstr "kinematics::KinematicsBaseから継承"
+
+msgid "Default constructor."
+msgstr "デフォルトのコンストラクタ。"
+
+#: ../../source/kinematics_base.rst:36
+msgid "IKFast運動学計算プラグイン"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:39
+msgid "IKFastKinematicsPlugin"
+msgstr "IKFastKinematicsPlugin"
+
+msgid ""
+"Given a desired pose of the end-effector, compute the set joint angles "
+"solutions that are able to reach it."
+msgstr "エンドエフェクタの望ましい姿勢が与えられたら、それに到達できる関節角度の設定解を計算します。"
+
+msgid ""
+"options: An option struct which contains the type of redundancy "
+"discretization used. This default implementation only supports the "
+"KinmaticSearches::NO_DISCRETIZATION method; requesting any other will result"
+" in failure."
+msgstr ""
+"options：使用される冗長性の離散化のタイプを含むオプション構造体。このデフォルトの実装では、KinmaticSearches :: "
+"NO_DISCRETIZATIONメソッドのみがサポートされます。他のものを要求すると失敗します。"
+
+msgid ""
+"Given a desired pose of the end-effector, search for the joint angles "
+"required to reach it. This particular method is intended for \"searching\" "
+"for a solutions by stepping through the redundancy (or other numerical "
+"routines)."
+msgstr ""
+"エンドエフェクタの望ましい姿勢が与えられたら、それに到達するために必要な関節角度を検索します。この特定の方法は、冗長性（または他の数値ルーチン）をステップスルーすることにより、ソリューションを「検索」することを目的としています。"
+
+msgid "the: distance that the redundancy can be from the current position"
+msgstr "the：冗長性が現在の位置からできる距離"
+
+msgid ""
+"Given a desired pose of the end-effector, search for the joint angles "
+"required to reach it. This particular method is intended for \"searching\" "
+"for a solutions by stepping through the redundancy (or other numerical "
+"routines). The consistency_limit specifies that only certain redundancy "
+"positions around those specified in the seed state are admissible and need "
+"to be searched."
+msgstr ""
+"エンドエフェクタの望ましい姿勢が与えられたら、それに到達するために必要な関節角度を検索します。この特定の方法は、冗長性（または他の数値ルーチン）をステップスルーすることにより、ソリューションを「検索」することを目的としています。"
+" consistent_limitは、シード状態で指定された位置の周りの特定の冗長位置のみが許容され、検索する必要があることを指定します。"
+
+msgid ""
+"consistency_limit: the distance that the redundancy can be from the current "
+"position"
+msgstr "integrity_limit：冗長性が現在の位置から離れることができる距離"
+
+msgid "Sets the discretization value for the redundant joint."
+msgstr "冗長ジョイントの離散化値を設定します。"
+
+msgid ""
+"Since this ikfast implementation allows for one redundant joint then only "
+"the first entry will be in the discretization map will be used. Calling this"
+" method replaces previous discretization settings."
+msgstr ""
+"このikfast実装では1つの冗長ジョイントが許可されるため、離散化マップ内の最初のエントリのみが使用されます。このメソッドを呼び出すと、以前の離散化設定が置き換えられます。"
+
+msgid "Overrides the default method to prevent changing the redundant joints."
+msgstr "デフォルトの方法をオーバーライドして、冗長ジョイントの変更を防ぎます。"
+
+#: ../../source/kinematics_base.rst:46
+msgid "LMA運動学計算プラグイン"
+msgstr ""
+
+#: ../../source/kinematics_base.rst:49
+msgid "LMAKinematicsPlugin"
+msgstr "LMAKinematicsPlugin"
+
+msgid ""
+"Implementation of kinematics using Levenberg-Marquardt (LMA) solver from "
+"KDL. This version supports any kinematic chain without mimic joints."
+msgstr ""
+"KDLのLevenberg-"
+"Marquardt（LMA）ソルバーを使用した運動学の実装。このバージョンは、模倣ジョイントなしであらゆる運動連鎖をサポートします。"
