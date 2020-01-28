@@ -33,6 +33,12 @@ RobotCommander
 .. autoclass:: moveit_commander.RobotCommander
    :members:
 
+.. autoclass:: moveit_commander.RobotCommander.Joint
+   :members:
+
+.. autoclass:: moveit_commander.RobotCommander.Link
+   :members:
+
 MoveGroupCommander
 -------------------
 
