@@ -38,13 +38,6 @@ msgstr "PlannerManager"
 msgid "Base class for a MoveIt! planner."
 msgstr "MoveIt!プランナーの基底クラス。"
 
-msgid ""
-"Subclassed by chomp_interface::CHOMPPlannerManager, "
-"ompl_interface::OMPLPlannerManager"
-msgstr ""
-"chomp_interface::CHOMPPlannerManager、ompl_interface::"
-"OMPLPlannerManagerによってサブクラス化されます。"
-
 msgid "Public Functions"
 msgstr "パブリック関数"
 
@@ -60,7 +53,7 @@ msgstr ""
 "ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。"
 
 msgid "Get."
-msgstr "取得する。"
+msgstr "。"
 
 msgid "a short string that identifies the planning interface"
 msgstr "プランニングインターフェースを識別する短い文字列を取得する。"
@@ -122,13 +115,6 @@ msgid ""
 "request are known, solution is not yet computed."
 msgstr "特定の計画コンテキストの表現、計画シーンと要求は既知であり、解決策はまだ計算されていません。"
 
-msgid ""
-"Subclassed by chomp_interface::CHOMPPlanningContext, "
-"ompl_interface::ModelBasedPlanningContext"
-msgstr ""
-"chomp_interface::CHOMPPlanningContext、ommpl_interface::"
-"ModelBasedPlanningContextによってサブクラス化されます"
-
 msgid "Construct a planning context named name for the group group."
 msgstr "グループ名groupに対するnameという名前のプランニングコンテキストを生成します。"
 
@@ -186,9 +172,6 @@ msgstr ""
 msgid "OMPLPlannerManager"
 msgstr "OMPLPlannerManager"
 
-msgid "Inherits from planning_interface::PlannerManager"
-msgstr "planning_interface::PlannerManagerから継承します"
-
 #: ../../source/planner_manager.rst:46
 msgid "OMPLPlanningContext"
 msgstr "OMPLPlanningContext"
@@ -204,6 +187,3 @@ msgstr "CHOMPPlannerManager"
 #: ../../source/planner_manager.rst:62
 msgid "CHOMPPlanningContext"
 msgstr "CHOMPPlanningContext"
-
-msgid "Inherits from planning_interface::PlanningContext"
-msgstr "planning_interface::PlanningContextから継承します"
