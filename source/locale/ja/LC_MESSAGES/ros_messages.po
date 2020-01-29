@@ -258,7 +258,9 @@ msgid ""
 "also mentioned in the joint path message, the positions in the joint path "
 "message will overwrite the positions specified in the robot state message."
 msgstr ""
-"ロボットの状態は、ロボットのすべて/一部の関節の位置を取得するために使用されます。これは、上記のジョイントパスメッセージで指定されていないジョイントの位置を決定するために、パス表示ノードによって使用されます。ロボット状態メッセージに、ジョイントパスメッセージにも記載されているジョイントのジョイント位置情報が含まれている場合、ジョイントパスメッセージの位置は、ロボット状態メッセージで指定された位置を上書きします。"
+"RobotStateは、ロボットのすべて/一部の関節の位置を取得するために使用されます。"
+"これは、上記のパスで指定されていない関節の位置を推定するために使用されます。"
+"RobotStateメッセージに、パスにも記載されている関節の位置情報が含まれている場合、パスメッセージの位置は、RobotStateで指定された位置を上書きします。"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:9
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:1
@@ -268,14 +270,14 @@ msgstr "この把握の名前"
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:12
 msgid ""
 "The internal posture of the hand for the pre-grasp only positions are used"
-msgstr "把持前のみの位置の手の内部姿勢が使用されます"
+msgstr "把持前の手の内部姿勢です。位置のみが使用されます"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:16
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:4
 msgid ""
 "The internal posture of the hand for the grasp positions and efforts are "
 "used"
-msgstr "握り位置と努力のための手の内部姿勢が使用されます"
+msgstr "把持時の手の内部姿勢です。位置とトルクのみが使用されます"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:20
 msgid ""
@@ -284,7 +286,9 @@ msgid ""
 "the end-effector.  Typically this would be the pose of the most distal wrist"
 " link before the hand (end-effector) links began."
 msgstr ""
-"把握のためのエンドエフェクタの位置。これはエンドエフェクタの「parent_link」のポーズであり、実際にはエンドエフェクタ内のリンクのポーズではありません。通常、これは手（エンドエフェクタ）リンクが始まる前の最も遠位の手首リンクのポーズです。"
+"把握のためのエンドエフェクタの位置です。"
+"これはエンドエフェクタの「親リンク」の位置姿勢であり、実際は「エンドエフェクタ内」のリンクの位置姿勢ではありません。"
+"通常、これは手（エンドエフェクタ）リンクから最も遠い手首リンクの位置姿勢です。"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:26
 msgid ""
@@ -300,7 +304,7 @@ msgstr "オブジェクトを選ぶ前に取るアプローチ方向"
 msgid ""
 "The retreat direction to take after a grasp has been completed (object is "
 "attached)"
-msgstr "把握が完了した後に取る後退方向（オブジェクトがアタッチされています）"
+msgstr "把握が完了した後に取る後退方向（この際、オブジェクトは手に接続されています）"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:36
 msgid ""
@@ -310,42 +314,45 @@ msgid ""
 "returned as part of the result, so this information is available for later "
 "use."
 msgstr ""
-"オブジェクトを解放するときに実行する後退動作。この情報は把握自体には必要ありませんが、オブジェクトを解放するときは情報が必要になります。ピックアップの実行に使用された把握は結果の一部として返されるため、この情報は後で使用できます。"
+"オブジェクトを放すときに実行する後退動作。"
+"この情報は把握自体には必要ありませんが、オブジェクトを放すときは必要になります。"
+"ピックアップの実行に使用された把握姿勢は結果の一部として返されるため、後で利用できます。"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:43
 msgid "the maximum contact force to use while grasping (<=0 to disable)"
-msgstr "把持中に使用する最大接触力（&lt;= 0の場合は無効）"
+msgstr "把持中に使用する最大接触力（<=0の場合は無効）"
 
 #: ../../doxygen/moveit_msgs/msg/Grasp.msg:46
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:18
 msgid ""
 "an optional list of obstacles that we have semantic information about and "
 "that can be touched/pushed/moved in the course of grasping"
-msgstr "意味情報を持っている障害物のオプションのリストであり、把握の過程でタッチ/プッシュ/移動できる障害物"
+msgstr "付加情報を持っている障害物のリスト（オプション）。"
+"把握の過程で触って/押して/移動できる障害物"
 
 #: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:4
 msgid "the direction of the translation"
-msgstr "翻訳の方向"
+msgstr "移動の方向"
 
 #: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:7
 msgid "the desired translation distance"
-msgstr "希望する平行移動距離"
+msgstr "希望する移動距離"
 
 #: ../../doxygen/moveit_msgs/msg/GripperTranslation.msg:10
 msgid ""
 "the min distance that must be considered feasible before the grasp is even "
 "attempted"
-msgstr "把握が試行される前に実現可能と見なされる最小距離"
+msgstr "把握が試行されるのに十分と見なされる最小距離"
 
 #: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:1
 msgid "Constrain the position of a joint to be within a certain bound"
-msgstr "ジョイントの位置を特定の範囲内に制限する"
+msgstr "関節の位置を特定の範囲内に制限する"
 
 #: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:4
 msgid ""
 "the bound to be achieved is [position - tolerance_below, position + "
 "tolerance_above]"
-msgstr "達成される境界は[position-tolerance_below、position + tolerance_above]です"
+msgstr "制限される範囲は、[position - tolerance_below, position + tolerance_above]"
 
 #: ../../doxygen/moveit_msgs/msg/JointConstraint.msg:9
 #: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:16
@@ -360,11 +367,11 @@ msgstr "この制約の重み係数（他の制約に対する相対的な重要
 msgid ""
 "This message contains information about limits of a particular joint (or "
 "control dimension)"
-msgstr "このメッセージには、特定のジョイント（または制御寸法）の制限に関する情報が含まれています"
+msgstr "指定した関節の可動制限（または制御寸法）を保存するメッセージ"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:4
 msgid "true if the joint has position limits"
-msgstr "ジョイントに位置制限がある場合はtrue"
+msgstr "関節に位置制限がある場合はtrue"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:7
 msgid "min and max position limits"
@@ -372,7 +379,7 @@ msgstr "最小および最大位置制限"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:11
 msgid "true if joint has velocity limits"
-msgstr "ジョイントに速度制限がある場合はtrue"
+msgstr "関節に速度制限がある場合はtrue"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:14
 msgid "max velocity limit"
@@ -380,7 +387,7 @@ msgstr "最大速度制限"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:18
 msgid "true if joint has acceleration limits"
-msgstr "ジョイントに加速制限がある場合はtrue"
+msgstr "関節に加速制限がある場合はtrue"
 
 #: ../../doxygen/moveit_msgs/msg/JointLimits.msg:20
 msgid "max acceleration limit"
@@ -388,15 +395,15 @@ msgstr "最大加速限界"
 
 #: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:1
 msgid "A list of joints in the kinematic tree"
-msgstr "キネマティックツリーのジョイントのリスト"
+msgstr "キネマティックツリーの関節リスト"
 
 #: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:3
 msgid "A list of joint limits corresponding to the joint names"
-msgstr "ジョイント名に対応するジョイント制限のリスト"
+msgstr "関節名に対応する制限のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/KinematicSolverInfo.msg:5
 msgid "A list of links that the kinematics node provides solutions for"
-msgstr "キネマティクスノードがソリューションを提供するリンクのリスト"
+msgstr "運動学サーバが解を提供するリンク名のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/LinkPadding.msg:1
 #: ../../doxygen/moveit_msgs/msg/LinkScale.msg:1
@@ -413,55 +420,57 @@ msgstr "リンクに適用するスケーリング"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:3
 msgid "The starting state considered for the robot solution path"
-msgstr "ロボットのソリューションパスで考慮される開始状態"
+msgstr "ロボットの開始状態"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:6
 #: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:6
 msgid "The group used for planning (usually the same as in the request)"
-msgstr "計画に使用されるグループ（通常はリクエストと同じ）"
+msgstr "プランニングに使用されるグループ名（通常はリクエスト時と同じ）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:11
 msgid "The list of reported trajectories"
-msgstr "報告された軌跡のリスト"
+msgstr "計算された軌跡のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:14
 msgid "Description of the reported trajectories (name of processing step)"
-msgstr "報告された軌跡の説明（処理ステップの名前）"
+msgstr "計算された軌跡の説明（処理ステップの名前）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:17
 msgid ""
 "The amount of time spent computing a particular step in motion plan "
 "computation"
-msgstr "モーションプラン計算の特定のステップの計算に費やした時間"
+msgstr "モーションプランの各ステップの計算にかかった時間"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanDetailedResponse.msg:20
 msgid "Status at the end of this plan"
-msgstr "この計画の最後のステータス"
+msgstr "このプランの最終ステータス"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:4
 msgid "Parameters for the workspace that the planner should work inside"
-msgstr "プランナーが内部で作業するワークスペースのパラメーター"
+msgstr "プランナーがプラン範囲として利用するワークスペースのパラメータ"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:7
 msgid ""
 "Starting state updates. If certain joints should be considered at positions "
 "other than the current ones, these positions should be set here"
 msgstr ""
-"状態の更新を開始しています。特定のジョイントを現在のジョイント以外の位置で考慮する必要がある場合、これらの位置をここで設定する必要があります"
+"開始状態の更新。"
+"関節を現在の角度以外で考慮する必要がある場合、角度をここで設定する必要があります"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:12
 msgid ""
 "The possible goal states for the model to plan for. Each element of the "
 "array defines a goal region. The goal is achieved if the constraints for a "
 "particular region are satisfied"
-msgstr "モデルが計画する可能性のある目標の状態。配列の各要素は、目標領域を定義します。特定の地域の制約が満たされると、目標が達成されます"
+msgstr "プランの対象となる目標状態候補。配列の各要素は、目標領域を定義します。"
+"いずれかの制約が満たされると、目標が達成されます"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:17
 msgid ""
 "No state at any point along the path in the produced motion plan will "
 "violate these constraints (this applies to all points, not just waypoints)"
 msgstr ""
-"作成されたモーションプランのパスに沿ったどの点でも、これらの制約に違反する状態はありません（これはウェイポイントだけでなく、すべてのポイントに適用されます）"
+"モーションプラン結果上どの点でも、ここで設定された制約に違反しないようにします（この制約はウェイポイントだけでなく、すべての点に適用されます）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:20
 msgid "The constraints the resulting trajectory must satisfy"
@@ -475,19 +484,19 @@ msgstr "使用するモーションプランナーの名前。名前が指定さ
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:27
 msgid "The name of the group of joints on which this planner is operating"
-msgstr "このプランナーが動作しているジョイントのグループの名前"
+msgstr "このプランナーが動作している関節グループの名前"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:30
 msgid ""
 "The number of times this plan is to be computed. Shortest solution will be "
 "reported."
-msgstr "この計画が計算される回数。最短の解決策が報告されます。"
+msgstr "このプランが計算される回数。複数試行した上で、最短の解が返されます。"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:34
 msgid ""
 "The maximum amount of time the motion planner is allowed to plan for (in "
 "seconds)"
-msgstr "モーションプランナーが計画できる最大時間（秒単位）"
+msgstr "モーションプランナーのタイムアウト時間（秒単位）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanRequest.msg:37
 msgid ""
@@ -498,31 +507,34 @@ msgid ""
 "this includes being set to 0.0), the factor is set to the default value of "
 "1.0 internally (i.e., maximum joint velocity or maximum joint acceleration)."
 msgstr ""
-"オプションで最大関節速度と加速度を減らすためのスケーリング係数。許容値は（0,1）です。ロボットモデルで指定された最大関節速度と加速度にそれぞれの係数が乗算されます。いずれかが有効範囲外の場合（重要なことには、0.0に設定されることも含まれます）、係数が設定されます内部でデフォルト値の1.0（つまり、最大関節速度または最大関節加速度）。"
+"最大関節速度と加速度を減らすためのスケーリング係数（オプション）。"
+"許容値は0～1です。"
+"ロボットモデルで指定された最大関節速度と加速度にそれぞれの係数が乗算されます。"
+"いずれかが有効範囲外の場合（重要：係数が0.0に設定された場合も含まれます）、係数は内部でデフォルト値の1.0（つまり、最大関節速度または最大関節加速度）に設定されます。"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:3
 msgid "The corresponding robot state"
-msgstr "対応するロボットの状態"
+msgstr "ロボットの状態"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:9
 msgid "A solution trajectory, if found"
-msgstr "ソリューションの軌跡（見つかった場合）"
+msgstr "軌跡（解が見つかった場合）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:12
 msgid "Planning time (seconds)"
-msgstr "計画時間（秒）"
+msgstr "プランニングにかかった時間（秒）"
 
 #: ../../doxygen/moveit_msgs/msg/MotionPlanResponse.msg:15
 msgid "Error code - encodes the overall reason for failure"
-msgstr "エラーコード-失敗の全体的な理由をエンコードします"
+msgstr "エラーコード-失敗の理由をエンコードします"
 
 #: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:3
 msgid "overall behavior"
-msgstr "全体的な行動"
+msgstr "全般"
 
 #: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:15
 msgid "planning & kinematics request errors"
-msgstr "計画と運動学のリクエストエラー"
+msgstr "プランニングと運動学のリクエストエラー"
 
 #: ../../doxygen/moveit_msgs/msg/MoveItErrorCodes.msg:29
 msgid "system errors"
@@ -542,34 +554,34 @@ msgstr "色の値"
 
 #: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:1
 msgid "This message contains the definition of an orientation constraint."
-msgstr "このメッセージには、方向制約の定義が含まれています。"
+msgstr "このメッセージでは、姿勢制約の定義を格納します。"
 
 #: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:5
 msgid "The desired orientation of the robot link specified as a quaternion"
-msgstr "クォータニオンとして指定されたロボットリンクの望ましい方向"
+msgstr "クォータニオンとして指定されたロボットリンクの望ましい姿勢"
 
 #: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:8
 #: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:5
 msgid "The robot link this constraint refers to"
-msgstr "この制約が参照するロボットリンク"
+msgstr "この制約が適用されるロボットリンク名"
 
 #: ../../doxygen/moveit_msgs/msg/OrientationConstraint.msg:11
 msgid "optional axis-angle error tolerances specified"
-msgstr "オプションの軸角度誤差許容値を指定"
+msgstr "軸角度ベースの誤差許容値（オプション）"
 
 #: ../../doxygen/moveit_msgs/msg/OrientedBoundingBox.msg:1
 msgid "the pose of the box"
-msgstr "箱のポーズ"
+msgstr "境界の位置姿勢"
 
 #: ../../doxygen/moveit_msgs/msg/OrientedBoundingBox.msg:4
 msgid "the extents of the box, assuming the center is at the origin"
-msgstr "中心が原点にあると仮定した場合のボックスの範囲"
+msgstr "中心が原点にあると仮定した場合の境界の範囲"
 
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:8
 msgid ""
 "The position of the end-effector for the grasp relative to a reference frame"
 " (that is always specified elsewhere, not in this message)"
-msgstr "参照フレームに対する把持のエンドエフェクタの位置（このメッセージではなく、常に他の場所で指定されます）"
+msgstr "基準座標に対する把持時のエンドエフェクタの位置（このメッセージ自身ではなく、常に他の場所で指定されます）"
 
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:12
 msgid "The approach motion"
@@ -577,7 +589,7 @@ msgstr "アプローチモーション"
 
 #: ../../doxygen/moveit_msgs/msg/PlaceLocation.msg:15
 msgid "The retreat motion"
-msgstr "後退運動"
+msgstr "後退モーション"
 
 #: ../../doxygen/moveit_msgs/msg/PlannerInterfaceDescription.msg:1
 msgid "The name of the planner interface"
@@ -585,15 +597,15 @@ msgstr "プランナーインターフェースの名前"
 
 #: ../../doxygen/moveit_msgs/msg/PlannerInterfaceDescription.msg:4
 msgid "The names of the planner ids within the interface"
-msgstr "インターフェース内のプランナーIDの名前"
+msgstr "インターフェース内で定義されるプランナーIDの名前"
 
 #: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:1
 msgid "parameter names (same size as values)"
-msgstr "パラメーター名（値と同じサイズ）"
+msgstr "パラメーター名（配列のサイズはパラメータ値と同じ）"
 
 #: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:4
 msgid "parameter values (same size as keys)"
-msgstr "パラメータ値（キーと同じサイズ）"
+msgstr "パラメータ値（配列のサイズはパラメータ名と同じ）"
 
 #: ../../doxygen/moveit_msgs/msg/PlannerParams.msg:7
 msgid "parameter description (can be empty)"
@@ -601,13 +613,13 @@ msgstr "パラメーターの説明（空でも可）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:2
 msgid "The diff to consider for the planning scene (optional)"
-msgstr "計画シーンで考慮する差分（オプション）"
+msgstr "planning sceneで考慮する差分（オプション）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:5
 msgid ""
 "If this flag is set to true, the action returns an executable plan in the "
 "response but does not attempt execution"
-msgstr "このフラグがtrueに設定されている場合、アクションは応答で実行可能プランを返しますが、実行は試行しません"
+msgstr "このフラグがtrueに設定された場合、実行可能なプランを応答として返しますが、実行はしません"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:9
 msgid ""
@@ -615,7 +627,7 @@ msgid ""
 "to look around  (move sensors) if it seems that not enough information is "
 "available about the environment"
 msgstr ""
-"このフラグがtrueに設定されている場合、環境に関する十分な情報が利用できないと思われる場合は、計画と実行のアクションが見回す（センサーを移動する）ことが許可されます"
+"このフラグがtrueに設定された場合、環境に関する十分な情報が利用できないと思われる場合は、周囲を見回す（センサーを移動する）計画と実行が行うことが許可されます"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:15
 msgid ""
@@ -623,7 +635,7 @@ msgid ""
 "look around for a maximum number of attempts; If the value is left as 0, the"
 " default value is used, as set with dynamic_reconfigure"
 msgstr ""
-"この値が正の場合、計画と実行のアクションは、最大試行回数を確認できます。値を0のままにすると、dynamic_reconfigureで設定されたデフォルト値が使用されます"
+"この値が正の場合、周囲を見回す最大試行回数を設定します。値を0のままにすると、dynamic_reconfigureで設定されたデフォルト値が使用されます"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:21
 msgid ""
@@ -633,8 +645,9 @@ msgid ""
 "but look_around is true, then the default value set via dynamic_reconfigure "
 "is used"
 msgstr ""
-"設定され、look_aroundがtrueの場合、この値は、パスが実行可能と見なされるために許可される最大コストとして使用されます。パスのコストがこの値よりも高い場合は、より多くの検知または新しい計画が必要です。"
-" 0.0のままにして、look_aroundがtrueの場合、dynamic_reconfigureで設定されたデフォルト値が使用されます"
+"この値が設定され、look_aroundがtrueの場合、パスが実行可能と見なされるために許容される最大コストとして使用されます。"
+"パスのコストがこの値よりも高い場合は、より多くの環境に関する情報収集または新しいプランニングが必要です。"
+"0.0のままにして、look_aroundがtrueの場合、dynamic_reconfigureで設定されたデフォルト値が使用されます"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningOptions.msg:28
 msgid ""
@@ -653,11 +666,11 @@ msgstr "再計画の試行間の待機時間（秒）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:1
 msgid "name of planning scene"
-msgstr "計画シーンの名前"
+msgstr "planning sceneの名前"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:4
 msgid "full robot state"
-msgstr "完全なロボット状態"
+msgstr "ロボット状態"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:7
 msgid "The name of the robot model this scene is for"
@@ -666,30 +679,31 @@ msgstr "このシーンの対象となるロボットモデルの名前"
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:10
 msgid ""
 "additional frames for duplicating tf (with respect to the planning frame)"
-msgstr "tfを複製するための追加フレーム（計画フレームに関して）"
+msgstr "tfを複製するための基準座標（プランニング用の基準座標から複製する）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:13
 msgid "full allowed collision matrix"
-msgstr "完全に許可された衝突行列"
+msgstr "干渉行列（ACM）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:16
 msgid "all link paddings"
-msgstr "すべてのリンクパディング"
+msgstr "各リンクのパディング情報"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:19
 msgid "all link scales"
-msgstr "すべてのリンクスケール"
+msgstr "各リンクのスケール情報"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:22
 msgid ""
 "Attached objects, collision objects, even the octomap or collision map can "
 "have colors associated to them. This array specifies them."
 msgstr ""
-"アタッチされたオブジェクト、コリジョンオブジェクト、オクトマップやコリジョンマップにも色を関連付けることができます。この配列はそれらを指定します。"
+"接続されたオブジェクト、干渉オブジェクト、オクトマップや干渉マップにも色を付けることができます。"
+"この配列はそれらを指定します。"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:26
 msgid "the collision map"
-msgstr "衝突マップ"
+msgstr "干渉マップ"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningScene.msg:29
 msgid ""
@@ -703,11 +717,11 @@ msgstr "シーン名、モデル名、モデルルート"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:8
 msgid "Joint values of the robot state"
-msgstr "ロボット状態の共同値"
+msgstr "ロボット状態を表す各関節角度"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:11
 msgid "Attached objects (including geometry) for the robot state"
-msgstr "ロボット状態の添付オブジェクト（ジオメトリを含む）"
+msgstr "接続されたオブジェクト（ジオメトリを含む）"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:14
 msgid "The names of the world objects"
@@ -719,15 +733,15 @@ msgstr "ワールドオブジェクトのジオメトリ"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:20
 msgid "The maintained octomap"
-msgstr "維持されたオクトマップ"
+msgstr "オクトマップ"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:23
 msgid "The maintained list of transforms"
-msgstr "維持されている変換のリスト"
+msgstr "変換のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:26
 msgid "The allowed collision matrix"
-msgstr "許可された衝突行列"
+msgstr "ACM"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneComponents.msg:29
 msgid "The default link padding and link scaling"
@@ -743,25 +757,25 @@ msgstr "上記のビットフィールド結合オプション"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneWorld.msg:1
 msgid "collision objects"
-msgstr "衝突オブジェクト"
+msgstr "干渉オブジェクト"
 
 #: ../../doxygen/moveit_msgs/msg/PlanningSceneWorld.msg:4
 msgid "The octomap that represents additional collision data"
-msgstr "追加の衝突データを表すオクトマップ"
+msgstr "追加の干渉データを表すオクトマップ"
 
 #: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:1
 msgid "This message contains the definition of a position constraint."
-msgstr "このメッセージには、位置制約の定義が含まれています。"
+msgstr "このメッセージには、位置制約の定義が格納されます。"
 
 #: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:8
 msgid ""
 "The offset (in the link frame) for the target point on the link we are "
 "planning for"
-msgstr "計画しているリンク上のターゲットポイントのオフセット（リンクフレーム内）"
+msgstr "リンク上のターゲットポイントに適用するオフセット値（リンク座標を使用）"
 
 #: ../../doxygen/moveit_msgs/msg/PositionConstraint.msg:11
 msgid "The volume this constraint refers to"
-msgstr "この制約が参照するボリューム"
+msgstr "この制約が適用される領域"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:3
 msgid ""
