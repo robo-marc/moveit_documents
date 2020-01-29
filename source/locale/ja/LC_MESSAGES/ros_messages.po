@@ -784,7 +784,9 @@ msgid ""
 "from the SRDF will be used to automatically determine which link to solve IK"
 " for, unless ik_link_name is also specified"
 msgstr ""
-"IKの計算に使用されるグループの名前。たとえば、「right_arm」または「arms」-以下の複数グループのIK仕様を参照してください。SRDFからの情報は、ik_link_nameがなければIKを解決するリンクを自動的に決定するために使用されますまた指定"
+"逆運動学の計算に使用されるグループ名。"
+"たとえば、「right_arm」「arms」- 複数グループの逆運動学については以下の仕様を参照してください。"
+"ik_link_nameが指定されていない場合、SRDFからの情報が逆運動学を計算するリンクを自動的で決定するために使用されます"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:9
 msgid ""
@@ -795,18 +797,20 @@ msgid ""
 "be used by the IK solver to compute IK. The list of joints that the IK "
 "solver deals with can be found using the SRDF for the corresponding group"
 msgstr ""
-"IK計算のヒント/シード位置と、ロボット内の他のすべてのジョイントの位置で構成されるRobotState。ここで提供される追加の状態情報は、ロボット上の他のジョイント/リンクの開始位置を指定するために使用されます。この状態には、IKソルバーがIKを計算するために使用するすべてのジョイントの状態が含まれている必要があります。"
-" IKソルバーが処理するジョイントのリストは、対応するグループのSRDFを使用して見つけることができます"
+"逆運動学計算のシード位置として用いられるとともに、ロボット内の他のすべての関節角度で構成されるRobotState。"
+"ここで提供される追加の状態情報は、ロボット上の他の関節/リンクの開始位置を指定するために使用されます。"
+"この状態には、逆運動学ソルバーが逆運動学を計算する際に使用するすべての関節の状態を含む必要があります。"
+"逆運動学ソルバーが処理する関節のリストは、SRDF内で定義された対応するグループを使用します"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:17
 msgid ""
 "A set of constraints that the IK must obey; by default, this set of "
 "constraints is empty"
-msgstr "IKが従わなければならない制約のセット。デフォルトでは、この制約のセットは空です"
+msgstr "逆運動学が従わなければならない制約のセット。デフォルトでは空です"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:20
 msgid "Find an IK solution that avoids collisions. By default, this is false"
-msgstr "衝突を回避するIKソリューションを見つけます。デフォルトでは、これはfalseです"
+msgstr "干渉を回避する逆運動学解を見つけます。デフォルトではfalseです"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:23
 msgid ""
@@ -815,7 +819,7 @@ msgid ""
 "name and the SRDF. If any values are specified for ik_link_names, this value"
 " is ignored"
 msgstr ""
-"（オプション）IKを計算しているリンクの名前指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます。 "
+"（オプション）逆運動学を計算するリンクの名前。指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます。 "
 "ik_link_namesに値が指定されている場合、この値は無視されます"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:29
@@ -824,15 +828,15 @@ msgid ""
 "for all the joints in a group. This value is ignored if pose_stamped_vector "
 "has any elements specified."
 msgstr ""
-"IKソルバーがグループ内のすべてのジョイントのジョイント値を計算するときのリンクのスタンプポーズ。 "
-"pose_stamped_vectorに指定された要素がある場合、この値は無視されます。"
+"逆運動学ソルバーがグループ内のすべての関節の角度値を計算するときの各リンクの位置姿勢。 "
+"pose_stamped_vectorが設定されている場合、この値は無視されます。"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:36
 msgid ""
 "(OPTIONAL) The names of the links for which we are computing IK If not "
 "specified, the link name will be inferred from a combination of the group "
 "name and the SRDF"
-msgstr "（オプション）IKを計算しているリンクの名前指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます"
+msgstr "（オプション）逆運動学を計算しているリンクの名前。指定されていない場合、リンク名はSRDF上のグループ名から推測されます"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:41
 msgid ""
@@ -841,31 +845,33 @@ msgid ""
 "of both the \"right_arm\" and the \"left_arm\" The order of the groups "
 "referred to is the same as the order setup in the SRDF"
 msgstr ""
-"（オプション）IKを計算するリンクの（スタンプ付き）ポーズ（グループに複数のエンドエフェクタがある場合）。たとえば、「arms」グループは、「right_arm」と「left_arm」の両方で構成される場合があります。参照されるグループは、SRDFで設定された順序と同じです"
+"（オプション）逆運動学を計算する複数のリンクの位置姿勢（グループに複数のエンドエフェクタがある場合）。"
+"たとえば、「arms」グループは、「right_arm」と「left_arm」の両方で構成される場合があります。"
+"参照されるグループの順序は、SRDFの設定と同じです"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:46
 msgid "Maximum allowed time for IK calculation"
-msgstr "IK計算の最大許容時間"
+msgstr "逆運動学計算の最大許容時間"
 
 #: ../../doxygen/moveit_msgs/msg/PositionIKRequest.msg:49
 msgid ""
 "Maximum number of IK attempts (if using random seeds; leave as 0 for the "
 "default value specified on the param server to be used)"
-msgstr "IKの最大試行回数（ランダムシードを使用する場合、使用するparamサーバーで指定されたデフォルト値は0のままにします）"
+msgstr "逆運動学の最大試行回数（ランダムシードを使用する場合）（0に設定された場合、paramサーバーで指定された値が使われます）"
 
 #: ../../doxygen/moveit_msgs/msg/RobotState.msg:1
 msgid ""
 "This message contains information about the robot state, i.e. the positions "
 "of its joints and links"
-msgstr "このメッセージには、ロボットの状態、つまり関節とリンクの位置に関する情報が含まれています"
+msgstr "このメッセージには、ロボットの状態、つまり関節とリンクの位置に関する情報が格納されます"
 
 #: ../../doxygen/moveit_msgs/msg/RobotState.msg:4
 msgid "Joints that may have multiple DOF are specified here"
-msgstr "複数のDOFを持つ関節がここで指定されます"
+msgstr "複数の自由度を持つ関節はここに格納されます"
 
 #: ../../doxygen/moveit_msgs/msg/RobotState.msg:7
 msgid "Attached collision objects (attached to some link on the robot)"
-msgstr "アタッチされたコリジョンオブジェクト（ロボットのリンクにアタッチ）"
+msgstr "ロボットのリンクに接続された干渉オブジェクトのリスト"
 
 #: ../../doxygen/moveit_msgs/msg/RobotState.msg:10
 msgid ""
@@ -874,23 +880,25 @@ msgid ""
 "attached bodies (whether or not to clear the attached bodies of a "
 "moveit::core::RobotState before updating it with this message)"
 msgstr ""
-"このシーンを他のシーンとの差分として解釈するかどうかを示すフラグこれは、アタッチされたボディを処理するために最も重要です（これで更新する前にmoveit"
-" :: core :: RobotStateのアタッチされたボディをクリアするかどうか）メッセージ）"
+"このシーンを他のシーンとの差分として解釈するかどうかを示すフラグ。"
+"接続されたオブジェクトを処理するために主に使われます（更新する前にmoveit"
+"::core::RobotStateの接続されたオブジェクトをクリアするかどうか判断します）"
 
 #: ../../doxygen/moveit_msgs/msg/TrajectoryConstraints.msg:1
 msgid "The array of constraints to consider along the trajectory"
-msgstr "軌道に沿って考慮する制約の配列"
+msgstr "軌道に沿って考慮する制約のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:9
 msgid "The radius of the disc that should be maintained visible"
-msgstr "可視状態を維持する必要があるディスクの半径"
+msgstr "可視状態を維持する必要がある範囲の半径"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:12
 msgid ""
 "The pose of the disc; as the robot moves, the pose of the disc may change as"
 " well This can be in the frame of a particular robot link, for example"
 msgstr ""
-"ディスクのポーズ。ロボットが動くと、ディスクのポーズも変わる場合があります。これは、たとえば、特定のロボットリンクのフレーム内にある可能性があります。"
+"範囲の位置姿勢。ロボットが動くと、範囲の位置姿勢も変わる場合があります。"
+"この位置姿勢は、たとえば、あるロボットリンク座標上で定義される可能性があります。"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:16
 msgid ""
@@ -899,7 +907,10 @@ msgid ""
 " that in fact makes the visibility region be a pyramid. This value should "
 "always be 3 or more."
 msgstr ""
-"センサーの原点からターゲットに向かって、ディスクは可視コーンを形成します。このコーンは多くの側面を使用して近似されます。たとえば、4辺を使用する場合、実際には可視領域がピラミッドになります。この値は常に3以上でなければなりません。"
+"可視範囲は、センサーの原点からターゲットに向かってコーンを形成します。"
+"このコーンは複数の側面を使用して近似されます。"
+"たとえば、4辺を使用する場合、範囲はピラミッド形状になります。"
+"この値は常に3以上でなければなりません。"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:22
 msgid ""
@@ -909,7 +920,10 @@ msgid ""
 " usually not true, but additional PositionConstraints can resolve this "
 "issue."
 msgstr ""
-"可視性を維持するポーズ。フレームIDは、センサーが接続されているロボットリンクを表す必要があります。センサーは、あらゆる方向からターゲットを直接見ることができると想定されています。通常、この仮定は正しくありませんが、追加のPositionConstraintsによりこの問題を解決できます。"
+"可視性を維持する位置姿勢。"
+"基準座標IDは、センサーが接続されているロボットリンクを指す必要があります。"
+"センサーは、あらゆる方向からターゲットを直接見ることができると仮定されています。"
+"通常、この仮定は正しくありませんが、追加のPositionConstraintsによりこの問題を解決できます。"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:29
 msgid ""
@@ -925,9 +939,15 @@ msgid ""
 " is the maximum view angle to be maintained. This should be a value in the "
 "open interval (0, Pi/2). If 0 is set, the view angle is NOT enforced."
 msgstr ""
-"たとえディスクが見えるように維持されていても、センサーに対するディスクの向きのため、視界円錐は非常に小さくなります。たとえば、ディスクをほぼ横から見ることができます。その場合、可視性コーンのボリュームは0に近くなります。ビュー角度は、可視性ディスクの法線とセンサーの原点からの方向ベクトルの間の角度になるように定義されます。以下の値は、必要な最小ビュー角度を表します。完全なビューの場合、この値は0になります（2つのベクトルは正反対です）。完全に遮られたビューの場合、この値はPi"
-" / 2になります（ベクトルは垂直です）。以下で定義されるこの値は、維持される最大視野角です。これは、オープン間隔（0、Pi / "
-"2）の値でなければなりません。 0が設定されている場合、視野角は強制されません。"
+"たとえ範囲が見えるように維持されていても、センサーに対する範囲の向きによっては、可視コーンは非常に小さくなります。"
+"たとえば、範囲を真横から見たとすると、可視コーンの体積は0に近くなります。"
+"ビュー角度は、可視範囲の法線とセンサーの原点からの方向ベクトルの間の角度になるように定義されます。"
+"以下の値は、必要な最小ビュー角度を表します。"
+"完全なビューの場合、この値は0になります（2つのベクトルは対向します）。"
+"完全に遮られたビューの場合、この値はPi/2になります（ベクトルは垂直です）。"
+"この値は、維持される最大視野角を定義します。"
+"これは、開角度（0, Pi/2）の値でなければなりません。 "
+"0が設定されている場合、視野角は強制されません。"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:41
 msgid ""
@@ -936,23 +956,23 @@ msgid ""
 "sensor origin to the target frame origin. The value is again in the range "
 "(0, Pi/2) and is NOT enforced if set to 0."
 msgstr ""
-"この角度はmax_view_angleと同様に使用されますが、センサーの原点方向ベクトルとセンサーの原点をターゲットフレームの原点に接続する軸の間の最大角度を制限します。値は再び範囲（0、Pi"
-" / 2）にあり、0に設定されている場合は強制されません。"
+"この角度はmax_view_angleと同様に使用されますが、センサー原点の方向ベクトルとセンサー原点をターゲット座標原点に接続する軸の間の最大角度を制限します。"
+"値は（0、Pi/2）の範囲に設定でき、0に設定されている場合は強制されません。"
 
 #: ../../doxygen/moveit_msgs/msg/VisibilityConstraint.msg:47
 msgid ""
 "The axis that is assumed to indicate the direction of view for the sensor X "
 "= 2, Y = 1, Z = 0"
-msgstr "センサーのビューの方向を示すと想定される軸X = 2、Y = 1、Z = 0"
+msgstr "センサーのビューの方向を示すと想定される軸 X = 2, Y = 1, Z = 0"
 
 #: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:6
 msgid "Define the frame of reference for the box corners"
-msgstr "ボックスコーナーの参照フレームを定義する"
+msgstr "ワークスペースの範囲を定義する際の基準座標を設定する"
 
 #: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:9
 msgid "The minumum corner of the box, with respect to the robot starting pose"
-msgstr "ロボットの開始ポーズに関するボックスの最小コーナー"
+msgstr "ロボットの開始位置から相対的に定義されるワークスペースの対角点（最小コーナー）"
 
 #: ../../doxygen/moveit_msgs/msg/WorkspaceParameters.msg:12
 msgid "The maximum corner of the box, with respect to the robot starting pose"
-msgstr "ロボットの開始ポーズに関するボックスの最大角"
+msgstr "ロボットの開始位置から相対的に定義されるワークスペースの対角点（最大コーナー）"
