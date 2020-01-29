@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-24 21:58+0900\n"
 "PO-Revision-Date: 2020-01-28 14:47+0900\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -29,17 +29,17 @@ msgstr "フィールド"
 
 #: ../../doxygen/moveit_msgs/msg/AllowedCollisionEntry.msg:1
 msgid "whether or not collision checking is enabled"
-msgstr "衝突チェックが有効かどうか"
+msgstr "干渉チェックが有効かどうか"
 
 #: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:1
 msgid "The list of entry names in the matrix"
-msgstr "マトリックス内のエントリ名のリスト"
+msgstr "ACM内のエントリ名のリスト"
 
 #: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:4
 msgid ""
 "The individual entries in the allowed collision matrix square, symmetric, "
 "with same order as entry_names"
-msgstr "許可された衝突行列の個々のエントリは、entry_namesと同じ順序の正方形、対称です"
+msgstr "ACMの個々のエントリは、entry_namesと同じ順序で並んだ正方行列で対称です"
 
 #: ../../doxygen/moveit_msgs/msg/AllowedCollisionMatrix.msg:11
 msgid ""
@@ -49,11 +49,11 @@ msgid ""
 "below. If both n1 and n2 are found in the list of defaults, the result is "
 "computed with an AND operation"
 msgstr ""
-"衝突マトリックス自体にない名前のペア（n1、n2）に対して許可された衝突フラグが照会された場合、衝突フラグの値はリストで指定されたエントリ（n1またはn2）の値と見なされます未満。デフォルトのリストにn1とn2の両方が見つかった場合、結果はAND演算で計算されます"
+"ACMにない名前のペア（n1、n2）に対して干渉フラグが照会された場合、干渉フラグの値はこのリストで指定されたエントリ（n1またはn2）の値と見なされます。デフォルトのリストにn1とn2の両方が見つかった場合、結果はANDで計算されます"
 
 #: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:1
 msgid "The CollisionObject will be attached with a fixed joint to this link"
-msgstr "CollisionObjectは、このリンクに固定ジョイントでアタッチされます"
+msgstr "CollisionObjectは、このリンクに固定関節を使って接続されます"
 
 #: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:4
 msgid ""
@@ -61,13 +61,13 @@ msgid ""
 "attached to the link If action is remove and no object.id is set, all "
 "objects attached to the link indicated by link_name will be removed"
 msgstr ""
-"これには、リンクにアタッチされるCollisionObjectの実際の形状とポーズが含まれます。アクションが削除され、object.idが設定されていない場合、link_nameで示されるリンクにアタッチされたすべてのオブジェクトが削除されます"
+"このフィールドにはリンクに接続されるCollisionObjectの形状とポーズが含まれます。アクションが「削除」で、object.idが設定されていない場合、link_nameで示されるリンクに接続されたすべてのオブジェクトが削除されます"
 
 #: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:10
 msgid ""
 "The set of links that the attached objects are allowed to touch by default -"
 " the link_name is already considered by default"
-msgstr "添付オブジェクトがデフォルトでタッチできるリンクのセット-link_nameはデフォルトですでに考慮されています"
+msgstr "接続オブジェクトがデフォルトで接触判定されるリンクのセット-link_nameはデフォルトですでに追加されています"
 
 #: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:14
 msgid ""
@@ -75,35 +75,35 @@ msgid ""
 "remain attached (e.g., an end effector closing around an object), the "
 "posture necessary for releasing the object is stored here"
 msgstr ""
-"このオブジェクトがアタッチされたままになる特定の姿勢に特定のリンクが置かれた場合（たとえば、エンドエフェクタがオブジェクトの周りを閉じる）、オブジェクトを解放するために必要な姿勢がここに格納されます"
+"特定の姿勢に特定のリンクが置かれた場合（たとえば、エンドエフェクタがオブジェクトの周りを囲った場合）このオブジェクトの接続が維持されます。オブジェクトを解放するために必要な姿勢がここに格納されます"
 
 #: ../../doxygen/moveit_msgs/msg/AttachedCollisionObject.msg:19
 msgid "The weight of the attached object, if known"
-msgstr "接続されているオブジェクトの重量（わかっている場合）"
+msgstr "接続されているオブジェクトの重量（既知の場合）"
 
 #: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:3
 msgid ""
 "A set of solid geometric primitives that make up the volume to define (as a "
 "union)"
-msgstr "（ユニオンとして）定義するボリュームを構成するソリッドジオメトリックプリミティブのセット"
+msgstr "ボリュームを構成するプリミティブ形状のセット（重なる場合は融合されます）"
 
 #: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:6
 msgid "The poses at which the primitives are located"
-msgstr "プリミティブが配置されているポーズ"
+msgstr "プリミティブ形状の位置姿勢"
 
 #: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:9
 msgid ""
 "In addition to primitives, meshes can be specified to add to the bounding "
 "volume (again, as union)"
-msgstr "プリミティブに加えて、メッシュを指定して境界ボリュームに追加することができます（再び、結合として）"
+msgstr "プリミティブ形状に加えて、メッシュ形状を指定してボリュームに追加することができます（重なる場合は融合されます）"
 
 #: ../../doxygen/moveit_msgs/msg/BoundingVolume.msg:12
 msgid "The poses at which the meshes are located"
-msgstr "メッシュが配置されているポーズ"
+msgstr "メッシュ形状の位置姿勢"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:1
 msgid "A header, used for interpreting the poses"
-msgstr "ポーズを解釈するために使用されるヘッダー"
+msgstr "位置姿勢の基準座標を定義するヘッダー"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:4
 msgid "The id of the object (name used in MoveIt)"
@@ -111,21 +111,21 @@ msgstr "オブジェクトのID（MoveItで使用される名前）"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:7
 msgid "The object type in a database of known objects"
-msgstr "既知のオブジェクトのデータベース内のオブジェクトタイプ"
+msgstr "データベース内の既知のオブジェクトタイプ"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:13
 msgid "Solid geometric primitives"
-msgstr "ソリッドジオメトリックプリミティブ"
+msgstr "プリミティブ形状"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:17
 msgid "Meshes"
-msgstr "メッシュ"
+msgstr "メッシュ形状"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:21
 msgid ""
 "Bounding planes (equation is specified, but the plane can be oriented using "
 "an additional pose)"
-msgstr "境界平面（方程式は指定されていますが、追加のポーズを使用して平面を方向付けることができます）"
+msgstr "境界平面（poseを使用して平面を方向付けることができます）"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:25
 msgid ""
@@ -136,9 +136,8 @@ msgid ""
 "the frame \"screwdriver/tip\" for planning. The length of the subframe_names"
 " and subframe_poses has to be identical."
 msgstr ""
-"オブジェクトの名前付きサブフレーム。これらを使用して、計画するオブジェクト上の関心のあるポイントを定義します（例： &quot;tip&quot;、 "
-"&quot;spout&quot;、 &quot;handle&quot;）。オブジェクトのIDはサブフレームの先頭に追加されます。 "
-"idが「driver」でサブフレームが「tip」であるオブジェクトがシーンにある場合、計画にフレーム「screwdriver / "
+"オブジェクトの名前付きサブフレーム。これらを使用して、計画するオブジェクト上の関心のある部分に名前を付けられます（例： \"tip\", \"spout\", \"handle\"）。オブジェクトのIDはサブフレームの先頭に追加されます。 "
+"idが「driver」でサブフレームが「tip」であるオブジェクトがシーンにある場合、計画にフレーム「screwdriver/"
 "tip」を使用できます。 subframe_namesとsubframe_posesの長さは同じでなければなりません。"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:46
@@ -153,7 +152,7 @@ msgstr "定数"
 msgid ""
 "Adds the object to the planning scene. If the object previously existed, it "
 "is replaced."
-msgstr "オブジェクトを計画シーンに追加します。オブジェクトが以前に存在していた場合、置き換えられます。"
+msgstr "オブジェクトをplanning sceneに追加します。オブジェクトが以前に存在していた場合、置き換えられます。"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:36
 msgid ""
@@ -165,14 +164,14 @@ msgstr "オブジェクトを環境から完全に削除します（指定され
 msgid ""
 "Append to an object that already exists in the planning scene. If the object"
 " does not exist, it is added."
-msgstr "計画シーンにすでに存在するオブジェクトに追加します。オブジェクトが存在しない場合は追加されます。"
+msgstr "planning sceneにすでに存在するオブジェクトに追加します。オブジェクトが存在しない場合は追加されます。"
 
 #: ../../doxygen/moveit_msgs/msg/CollisionObject.msg:42
 msgid ""
 "If an object already exists in the scene, new poses can be sent (the "
 "geometry arrays must be left empty) if solely moving the object is desired"
 msgstr ""
-"オブジェクトがシーンに既に存在する場合、オブジェクトの移動のみが必要な場合は、新しいポーズを送信できます（ジオメトリ配列は空のままにする必要があります）"
+"オブジェクトがシーンに既に存在する場合に、新しい位置姿勢を送信できます（ジオメトリ配列は空のままにする必要があります）。オブジェクトの移動のみが必要な場合に使ってください。"
 
 #: ../../doxygen/moveit_msgs/msg/ConstraintEvalResult.msg:1
 msgid ""
@@ -182,19 +181,20 @@ msgid ""
 "measure of the distance of the state from the constraint if true, distance "
 "is set to zero"
 msgstr ""
-"このメッセージには、制約評価の結果が含まれます。falseの場合、制約評価の結果を指定します（trueは状態が制約を満たすことを示し、falseは状態が制約に違反することを示します）。trueの場合、distanceは制約からの状態の距離の尺度を指定します。ゼロ"
+"制約評価の結果を返します（trueは状態が制約を満たすことを示し、falseは状態が制約に違反することを示します）。"
+"distanceは制約からの状態の距離の尺度です。falseの場合、制約評価の結果を返します。trueの場合、ゼロになります。"
 
 #: ../../doxygen/moveit_msgs/msg/Constraints.msg:1
 msgid ""
 "This message contains a list of motion planning constraints. All constraints"
 " must be satisfied for a goal to be considered valid"
-msgstr "このメッセージには、運動計画の制約のリストが含まれています。目標が有効と見なされるには、すべての制約が満たされている必要があります"
+msgstr "このメッセージには、運動計画の制約のリストを格納します。プランニングが有効と見なされるには、すべての制約が満たされる必要があります"
 
 #: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:1
 msgid ""
 "Standard ROS header contains information about the frame in which this "
 "contact is specified"
-msgstr "標準ROSヘッダーには、この連絡先が指定されているフレームに関する情報が含まれています"
+msgstr "標準ROSヘッダーです。この接触情報を解釈するのに必要な基準座標に関する情報が含まれています"
 
 #: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:6
 msgid "Position of the contact point"
@@ -212,13 +212,13 @@ msgstr "接触点の深さ"
 msgid ""
 "Name of the first body that is in contact This could be a link or a "
 "namespace that represents a body"
-msgstr "連絡している最初の本文の名前これは、本文を表すリンクまたは名前空間です"
+msgstr "接触している最初の剛体の名前。これは、剛体を表すリンク名または名前空間です"
 
 #: ../../doxygen/moveit_msgs/msg/ContactInformation.msg:20
 msgid ""
 "Name of the second body that is in contact This could be a link or a "
 "namespace that represents a body"
-msgstr "連絡している2番目の本文の名前。これは、本文を表すリンクまたは名前空間です。"
+msgstr "接触している2番目の剛体の名前。これは、剛体を表すリンク名または名前空間です。"
 
 #: ../../doxygen/moveit_msgs/msg/CostSource.msg:1
 msgid "The density of the cost source"
@@ -228,7 +228,8 @@ msgstr "コストソースの密度"
 msgid ""
 "The volume of the cost source is represented as an axis-aligned bounding box"
 " (AABB) The AABB is specified by two of its opposite corners"
-msgstr "コストソースのボリュームは、軸に合わせた境界ボックス（AABB）として表されます。AABBは、その反対側の2つのコーナーで指定されます。"
+msgstr "コストソースの領域は、境界ボックス（AABB）として表されます。"
+"AABBは、対角線上の2点の座標で表されます。"
 
 #: ../../doxygen/moveit_msgs/msg/DisplayRobotState.msg:1
 msgid "The robot state to display"
@@ -246,7 +247,7 @@ msgstr "このパスが生成されたモデルID"
 msgid ""
 "The representation of the path contains position values for all the joints "
 "that are moving along the path; a sequence of trajectories may be specified"
-msgstr "パスの表現には、パスに沿って移動するすべてのジョイントの位置値が含まれます。一連の軌跡を指定できます"
+msgstr "パスの表現には、パスに沿って移動する各関節の角度値が含まれます。複数の軌跡を指定できます"
 
 #: ../../doxygen/moveit_msgs/msg/DisplayTrajectory.msg:7
 msgid ""

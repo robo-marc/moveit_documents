@@ -147,7 +147,7 @@ msgstr ""
 "この特定の方法は、冗長性（または他の数値ルーチン）をステップスルーすることにより、ソリューションを「検索」することを目的としています。"
 
 msgid "timeout: The amount of time (in seconds) available to the solver"
-msgstr "タイムアウト：ソルバーが使用できる時間（秒単位）"
+msgstr "timeout：ソルバーが使用できる時間（秒単位）"
 
 msgid ""
 "consistency_limits: the distance that any joint in the solution can be from "
@@ -194,7 +194,7 @@ msgstr "joint_angles：FKが計算されている状態"
 
 msgid ""
 "poses: The resultant set of poses (in the frame returned by getBaseFrame())"
-msgstr "ポーズ：結果のポーズのセット（getBaseFrame（）によって返されるフレーム内）"
+msgstr "poses：結果のポーズのセット（getBaseFrame（）によって返されるフレーム内）"
 
 msgid ""
 "Set the parameters for the solver, for use with kinematic chain IK solvers."
@@ -317,9 +317,6 @@ msgstr "tip_frames：チェーンの先端"
 msgid "Return the name of the group that the solver is operating on."
 msgstr "ソルバーが操作しているグループの名前を返します。"
 
-msgid "Return  The string name of the group that the solver is operating on"
-msgstr "ソルバーが操作しているグループの文字列名"
-
 msgid "The string name of the group that the solver is operating on"
 msgstr "ソルバーが動作しているグループの文字列名"
 
@@ -328,9 +325,6 @@ msgid ""
 "usually a link name. No namespacing (e.g., no \"/\" prefix) should be used."
 msgstr ""
 "ソルバーが動作しているフレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
-
-msgid "Return  The string name of the frame in which the solver is operating"
-msgstr "ソルバーが動作しているフレームの文字列名"
 
 msgid "The string name of the frame in which the solver is operating"
 msgstr "ソルバーが動作しているフレームの文字列名"
@@ -341,11 +335,6 @@ msgid ""
 "prefix) should be used."
 msgstr ""
 "ソルバーが動作しているチェーンのチップフレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
-
-msgid ""
-"Return  The string name of the tip frame of the chain on which the solver is"
-" operating"
-msgstr "ソルバーが動作しているチェーンの先端フレームの文字列名"
 
 msgid ""
 "The string name of the tip frame of the chain on which the solver is "
@@ -360,11 +349,6 @@ msgstr ""
 "ソルバーが動作しているキネマティックツリーの先端フレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。"
 
 msgid ""
-"Return  The vector of names of the tip frames of the kinematic tree on which"
-" the solver is operating"
-msgstr "ソルバーが動作しているキネマティックツリーの先端フレームの名前のベクトル"
-
-msgid ""
 "The vector of names of the tip frames of the kinematic tree on which the "
 "solver is operating"
 msgstr "ソルバーが動作しているキネマティックツリーの先端フレームの名前のベクトル"
@@ -376,13 +360,6 @@ msgid ""
 msgstr ""
 "運動学ソルバーが使用する冗長ジョイントのセットを設定します。 "
 "IKソルバーと冗長ジョイントの選択によっては、これが失敗する可能性があります！。また、各冗長ジョイントの離散化値をデフォルト値に設定します。"
-
-msgid ""
-"Return  False if any of the input joint indices are invalid (exceed number "
-"of joints)   Parameters  redundant_joint_indices: The set of redundant joint"
-" indices (corresponding to the list of joints you get from getJointNames())."
-msgstr ""
-"入力ジョイントインデックスのいずれかが無効（ジョイントの数を超えている）の場合、Falseを返します。パラメータredundancy_joint_indices：冗長ジョイントインデックスのセット（getJointNames（）から取得するジョイントのリストに対応）。"
 
 msgid ""
 "False if any of the input joint indices are invalid (exceed number of "
@@ -458,11 +435,6 @@ msgstr "冗長ジョイントごとに個別の離散化値を設定します。
 msgid "Calling this method replaces previous discretization settings."
 msgstr "このメソッドを呼び出すと、以前の離散化設定が置き換えられます。"
 
-msgid ""
-"Parameters  discretization: a map of joint indices and discretization value "
-"pairs."
-msgstr "パラメータの離散化：ジョイントインデックスと離散化値のペアのマップ。"
-
 msgid "discretization: a map of joint indices and discretization value pairs."
 msgstr "離散化：ジョイントインデックスと離散化値のペアのマップ。"
 
@@ -473,7 +445,7 @@ msgid ""
 "Returns the set of supported kinematics discretization search types. This "
 "implementation only supports the DiscretizationMethods::ONE search."
 msgstr ""
-"サポートされている運動学離散化検索タイプのセットを返します。この実装は、DiscretizationMethods :: "
+"サポートされている運動学離散化検索タイプのセットを返します。この実装は、DiscretizationMethods::"
 "ONE検索のみをサポートします。"
 
 msgid ""
