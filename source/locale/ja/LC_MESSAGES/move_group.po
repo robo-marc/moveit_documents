@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-24 21:58+0900\n"
+"POT-Creation-Date: 2020-01-29 19:12+0900\n"
 "PO-Revision-Date: 2020-01-28 14:51+0900\n"
 "Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,435 +19,431 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../../source/move_group.rst:2
+#: /home/yosuke/moveit_document/source/move_group.rst:2
 msgid "move_groupサーバの仕様"
 msgstr ""
 
-#: ../../source/move_group.rst:12
-msgid "プランニングの実行"
+#: /home/yosuke/moveit_document/source/move_group.rst:8
+msgid "Above image is from http://moveit.ros.org/"
 msgstr ""
 
-#: ../../source/move_group.rst
+#: /home/yosuke/moveit_document/source/move_group.rst:12
+msgid "ROS Action一覧"
+msgstr ""
+
+#: /home/yosuke/moveit_document/source/move_group.rst
 msgid "Field (Goal)"
 msgstr "フィールド（ゴール）"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:1
 msgid "Motion planning request to pass to planner"
 msgstr "プランナーに渡すモーションプランニングリクエスト"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:4
-#: ../../doxygen/moveit_msgs/action/Pickup.action:49
-#: ../../doxygen/moveit_msgs/action/Place.action:40
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:49
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:40
 msgid "Planning options"
 msgstr "プランニングオプション"
 
-#: ../../source/move_group.rst
+#: /home/yosuke/moveit_document/source/move_group.rst
 msgid "Field (Result)"
 msgstr "フィールド（結果）"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:9
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:9
 msgid "An error code reflecting what went wrong"
 msgstr "何がうまくいかなかったかを示すエラーコード"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:12
-#: ../../doxygen/moveit_msgs/action/Pickup.action:57
-#: ../../doxygen/moveit_msgs/action/Place.action:48
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:12
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:57
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:48
 msgid "The full starting state of the robot at the start of the trajectory"
 msgstr "軌道の開始時のロボットの開始状態"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:15
-#: ../../doxygen/moveit_msgs/action/Pickup.action:60
-#: ../../doxygen/moveit_msgs/action/Place.action:51
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:15
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:60
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:51
 msgid "The trajectory that moved group produced for execution"
 msgstr "生成された軌跡"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:18
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:18
 msgid "The trace of the trajectory recorded during execution"
-msgstr "軌跡実行中に記録された実際の軌跡"
+msgstr "軌跡実行中に記録されたロボットの実際の軌跡"
 
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:21
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:21
 msgid "The amount of time it took to complete the motion plan"
 msgstr "モーションプランを完了するのにかかった時間"
 
-#: ../../source/move_group.rst
+#: /home/yosuke/moveit_document/source/move_group.rst
 msgid "Field (Feedback)"
 msgstr "フィールド（フィードバック）"
 
-#: ../../doxygen/moveit_msgs/action/ExecuteTrajectory.action:11
-#: ../../doxygen/moveit_msgs/action/MoveGroup.action:26
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/ExecuteTrajectory.action:11
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/MoveGroup.action:26
 msgid "The internal state that the move group action currently is in"
 msgstr "現在の内部状態"
 
-#: ../../source/move_group.rst:20
-msgid "プランニング結果の実行"
-msgstr ""
-
-#: ../../doxygen/moveit_msgs/action/ExecuteTrajectory.action:1
-#: ../../doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/ExecuteTrajectory.action:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:4
 msgid "The trajectory to execute"
 msgstr "実行する軌跡"
 
-#: ../../doxygen/moveit_msgs/action/ExecuteTrajectory.action:6
-#: ../../doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:12
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/ExecuteTrajectory.action:6
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:12
 msgid "Error code - encodes the overall reason for failure"
 msgstr "エラーコード- 失敗の全般的な理由を示します"
 
-#: ../../source/move_group.rst:28
-msgid "高レベルのプランニング命令"
-msgstr ""
-
-#: ../../doxygen/moveit_msgs/action/Pickup.action:3
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:3
 msgid "The name of the object to pick up (as known in the planning scene)"
 msgstr "ピックアップするオブジェクト名（オブジェクト名はplanning sceneで既知である必要があります）"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:6
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:6
 msgid "which group should be used to plan for pickup"
 msgstr "ピックアップのプランニングに使用するグループ名"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:9
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:9
 msgid ""
-"which end-effector to be used for pickup (ideally descending from the group "
-"above)"
-msgstr "ピックアップに使用するエンドエフェクタ名（原則的には上記グループの子孫）"
+"which end-effector to be used for pickup (ideally descending from the "
+"group above)"
+msgstr "ピックアップに使用するエンドエフェクタ名（原則的には上記グループ内のリンク）"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:12
-msgid ""
-"a list of possible grasps to be used. At least one grasp must be filled in"
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:12
+msgid "a list of possible grasps to be used. At least one grasp must be filled in"
 msgstr "把握姿勢候補のリスト。少なくとも1つの把握姿勢が必要です"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:15
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:15
 msgid ""
-"the name that the support surface (e.g. table) has in the collision map can "
-"be left empty if no name is available"
+"the name that the support surface (e.g. table) has in the collision map "
+"can be left empty if no name is available"
 msgstr "干渉マップ上での支持平面（テーブルなど）の名前。名前が利用できない場合は空のままにすることができます"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:19
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:19
 msgid ""
 "whether collisions between the gripper and the support surface should be "
-"acceptable during move from pre-grasp to grasp and during lift. Collisions "
-"when moving to the pre-grasp location are still not allowed even if this is "
-"set to true."
-msgstr ""
-"把持前から把持への移動中およびリフト中に、グリッパーと支持平面の間の干渉を許容するかどうか。"
-"把持前の場所に移動する際の干渉は、これがtrueに設定されている場合でも許可されません。"
+"acceptable during move from pre-grasp to grasp and during lift. "
+"Collisions when moving to the pre-grasp location are still not allowed "
+"even if this is set to true."
+msgstr "把持前から把持への移動中およびリフト中に、グリッパーと支持平面の間の干渉を許容するかどうか。把持前の場所に移動する際の干渉は、これがtrueに設定されている場合でも許可されません。"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:24
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:24
 msgid ""
 "The names of the links the object to be attached is allowed to touch; If "
 "this is left empty, it defaults to the links in the used end-effector"
 msgstr "オブジェクトと接触判定されるリンクの名前。空のままにすると、デフォルトで使用されるエンドエフェクタのリンクになります"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:28
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:28
 msgid ""
 "Optionally notify the pick action that it should approach the object "
 "further, as much as possible (this minimizing the distance to the object "
-"before the grasp) along the approach direction; Note: this option changes "
-"the grasping poses supplied in possible_grasps[] such that they are closer "
-"to the object when possible."
-msgstr ""
-"必要に応じて、アプローチ方向に沿って、オブジェクトに近づく必要があることを把握アクションに通知します（これにより、把持する前にオブジェクトまでの距離を縮めます）。"
-"注：このオプションは、possible_grasps[]で提供される把握姿勢をオブジェクトに近づくように変更する場合があります。"
+"before the grasp) along the approach direction; Note: this option changes"
+" the grasping poses supplied in possible_grasps[] such that they are "
+"closer to the object when possible."
+msgstr "必要に応じて、アプローチ方向に沿って、オブジェクトに近づく必要があることを把握アクションに通知します（これにより、把持する前にオブジェクトまでの距離を縮めます）。注：このオプションは、possible_grasps[]で提供される把握姿勢をオブジェクトに近づくように変更する場合があります。"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:34
-#: ../../doxygen/moveit_msgs/action/Place.action:25
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:34
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:25
 msgid "Optional constraints to be imposed on every point in the motion plan"
-msgstr "モーションプランのすべての点に対して適用される制約（オプション）"
+msgstr "モーションプランのすべての点に対して適用される制約（任意）"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:37
-#: ../../doxygen/moveit_msgs/action/Place.action:28
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:37
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:28
 msgid ""
-"The name of the motion planner to use. If no name is specified, a default "
-"motion planner will be used"
+"The name of the motion planner to use. If no name is specified, a default"
+" motion planner will be used"
 msgstr "使用するモーションプランナーの名前。名前が指定されていない場合、デフォルトのモーションプランナーが使用されます"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:41
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:41
 msgid ""
-"an optional list of obstacles that we have semantic information about and "
-"that can be touched/pushed/moved in the course of grasping; CAREFUL: If the "
-"object name 'all' is used, collisions with all objects are disabled during "
-"the approach & lift."
-msgstr ""
-"付加情報を持っている障害物のリスト（オプション）。これら障害物は把握の過程で触り/押し/移動することができます。"
-"注意：オブジェクト名「all」が使用されている場合、アプローチおよびリフト中にすべてのオブジェクトとの接触判定が無効になります。"
+"an optional list of obstacles that we have semantic information about and"
+" that can be touched/pushed/moved in the course of grasping; CAREFUL: If "
+"the object name 'all' is used, collisions with all objects are disabled "
+"during the approach & lift."
+msgstr "付加情報を持っている障害物のリスト（任意）。これら障害物は把握の過程で触り/押し/移動することができます。注意：オブジェクト名「all」が使用されている場合、アプローチおよびリフト中にすべてのオブジェクトとの接触判定が無効になります。"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:46
-#: ../../doxygen/moveit_msgs/action/Place.action:37
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:46
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:37
 msgid "The maximum amount of time the motion planner is allowed to plan for"
 msgstr "モーションプランナーのタイムアウト時間"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:54
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:54
 msgid "The overall result of the pickup attempt"
 msgstr "試行の全般的な結果"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:65
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:65
 msgid "The performed grasp, if attempt was successful"
 msgstr "試みが成功した場合、実行された把握"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:68
-#: ../../doxygen/moveit_msgs/action/Place.action:59
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:68
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:59
 msgid "The amount of time in seconds it took to complete the plan"
 msgstr "プランニングを完了するのにかかった時間（秒）"
 
-#: ../../doxygen/moveit_msgs/action/Pickup.action:72
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Pickup.action:72
 msgid "The internal state that the pickup action currently is in"
 msgstr "ピックアップアクションの内部状態"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:3
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:3
 msgid "which group to be used to plan for grasping"
 msgstr "把握の計画に使用するグループ名"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:6
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:6
 msgid "the name of the attached object to place"
 msgstr "プレースするオブジェクトの名前"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:9
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:9
 msgid "a list of possible transformations for placing the object"
 msgstr "オブジェクトをプレースする場所候補のリスト"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:12
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:12
 msgid ""
-"if the user prefers setting the eef pose (same as in pick) rather than the "
-"location of the object, this flag should be set to true"
+"if the user prefers setting the eef pose (same as in pick) rather than "
+"the location of the object, this flag should be set to true"
 msgstr "プレースする際に、場所の座標でなく、エンドエフェクタの位置座標（pickと同じ）により指定したい場合、このフラグをtrueにします。"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:16
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:16
 msgid ""
-"the name that the support surface (e.g. table) has in the collision world "
-"can be left empty if no name is available"
+"the name that the support surface (e.g. table) has in the collision world"
+" can be left empty if no name is available"
 msgstr "干渉マップ上での支持平面（テーブルなど）の名前。名前が利用できない場合は空のままにすることができます"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:20
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:20
 msgid ""
 "whether collisions between the gripper and the support surface should be "
 "acceptable during move from pre-place to place and during retreat. "
-"Collisions when moving to the pre-place location are still not allowed even "
-"if this is set to true."
-msgstr ""
-"グリッパーと支持平面の間の干渉を事前配置から移動中および後退中に許容するかどうか。これがtrueに設定されている場合でも、事前配置場所に移動する際の干渉は許可されません。"
+"Collisions when moving to the pre-place location are still not allowed "
+"even if this is set to true."
+msgstr "グリッパーと支持平面の間の干渉を配置前から配置場所への移動中および後退中に許容するかどうか。これがtrueに設定されている場合でも、事前配置場所に移動する際の干渉は許可されません。"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:32
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:32
 msgid ""
-"an optional list of obstacles that we have semantic information about and "
-"that can be touched/pushed/moved in the course of placing; CAREFUL: If the "
-"object name 'all' is used, collisions with all objects are disabled during "
-"the approach & retreat."
-msgstr ""
-"付加情報があり、プレース中に触り/押し/移動できる障害物のリスト（オプション）。"
-"注意：オブジェクト名「all」を使用すると、アプローチとリトリート中にすべてのオブジェクトとの干渉判定が無効になります。"
+"an optional list of obstacles that we have semantic information about and"
+" that can be touched/pushed/moved in the course of placing; CAREFUL: If "
+"the object name 'all' is used, collisions with all objects are disabled "
+"during the approach & retreat."
+msgstr "付加情報があり、プレース中に触り/押し/移動できる障害物のリスト（任意）。注意：オブジェクト名「all」を使用すると、アプローチとリトリート中にすべてのオブジェクトとの干渉判定が無効になります。"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:45
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:45
 msgid "The result of the place attempt"
 msgstr "プレースの試みの結果"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:56
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:56
 msgid "The successful place location, if any"
 msgstr "プレースが成功した場所（存在する場合）"
 
-#: ../../doxygen/moveit_msgs/action/Place.action:63
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/action/Place.action:63
 msgid "The internal state that the place action currently is in"
 msgstr "プレースアクションの内部状態"
 
-#: ../../source/move_group.rst:41
-msgid "サービス一覧"
+#: /home/yosuke/moveit_document/source/move_group.rst:35
+msgid "ROSサービス一覧"
 msgstr ""
 
-#: ../../source/move_group.rst
+#: /home/yosuke/moveit_document/source/move_group.rst
 msgid "Field (Request)"
 msgstr "フィールド（リクエスト）"
 
-#: ../../source/move_group.rst
+#: /home/yosuke/moveit_document/source/move_group.rst
 msgid "Field (Response)"
 msgstr "フィールド（応答）"
 
-#: ../../doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:7
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/ExecuteKnownTrajectory.srv:7
 msgid ""
-"Set this to true if the service should block until the execution is complete"
+"Set this to true if the service should block until the execution is "
+"complete"
 msgstr "実行が完了するまでサービスがブロックする必要がある場合、これをtrueに設定します"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:1
 msgid "Define the frame for the specified waypoints"
 msgstr "waypointsの座標の解釈に用いられる基準座標を設定します"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:4
 msgid "The start at which to start the Cartesian path"
 msgstr "デカルトパスを開始する開始点"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:7
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:7
 msgid "Mandatory name of group to compute the path for"
 msgstr "パスを計算するグループ名（必須）"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:10
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:10
 msgid ""
 "Optional name of IK link for which waypoints are specified. If not "
-"specified, the tip of the group (which is assumed to be a chain) is assumed "
-"to be the link"
-msgstr ""
-"waypointsの設定対象となるリンク名（オプション）。指定しない場合、グループの先端（チェーン状であると想定される）のリンク名が使われます"
+"specified, the tip of the group (which is assumed to be a chain) is "
+"assumed to be the link"
+msgstr "waypointsの設定対象となるリンク名（任意）。指定しない場合、グループの先端（チェーン状であると想定される）のリンク名が使われます"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:15
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:15
 msgid ""
-"A sequence of waypoints to be followed by the specified link, while moving "
-"the specified group, such that the group moves only in a straight line "
-"between waypoints"
-msgstr "指定したリンクは、ウェイポイント間線形補完で移動する"
+"A sequence of waypoints to be followed by the specified link, while "
+"moving the specified group, such that the group moves only in a straight "
+"line between waypoints"
+msgstr "指定したリンクが、ウェイポイント間を線形補完で移動するようプランニングが行われます。"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:20
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:20
 msgid ""
-"The maximum distance (in Cartesian space) between consecutive points in the "
-"returned path. This must always be specified and > 0"
-msgstr "プランニング結果のパス内の点間の最大距離（デカルト空間）。常に指定する必要があり、> 0にする必要がある"
+"The maximum distance (in Cartesian space) between consecutive points in "
+"the returned path. This must always be specified and > 0"
+msgstr "プランニング結果のパスの点間の最大距離（デカルト空間）。常に指定する必要があり、> 0にする必要がある"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:24
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:24
 msgid ""
 "If above 0, this value is assumed to be the maximum allowed distance (L "
 "infinity) in configuration space, between consecutive points. If this "
-"distance is found to be above the maximum threshold, the path computation "
-"fails."
-msgstr ""
-"0以上の場合、この値は、コンフィギュレーション空間内の連続するポイント間の最大許容距離（L無限大）と見なされます。"
-"距離が最大値を超えることが判明した場合、パスの計算は失敗します。"
+"distance is found to be above the maximum threshold, the path computation"
+" fails."
+msgstr "0以上の場合、この値は、コンフィギュレーション空間内の連続する点間の最大許容距離（L無限大ノルム）と見なされます。距離が最大値を超えることが判明した場合、パスの計算は失敗します。"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:30
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:30
 msgid "Set to true if collisions should be avoided when possible"
 msgstr "障害物との干渉を回避する必要がある場合はtrueに設定します"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:33
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:33
 msgid "Specify additional constraints to be met by the Cartesian path"
 msgstr "デカルトパスが満たすべき追加の制約を指定します"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:38
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:38
 msgid "The state at which the computed path starts"
 msgstr "パスの開始状態"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:41
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:41
 msgid ""
-"The computed solution trajectory, for the desired group, in configuration "
-"space"
+"The computed solution trajectory, for the desired group, in configuration"
+" space"
 msgstr "計算された解の軌跡"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:44
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:44
 msgid ""
-"If the computation was incomplete, this value indicates the fraction of the "
-"path that was in fact computed (nr of waypoints traveled through)"
+"If the computation was incomplete, this value indicates the fraction of "
+"the path that was in fact computed (nr of waypoints traveled through)"
 msgstr "計算が不完全だった場合、この値は実際に計算されたパスの割合を示します（通過したウェイポイントの数）"
 
-#: ../../doxygen/moveit_msgs/srv/GetCartesianPath.srv:48
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetCartesianPath.srv:48
 msgid "The error code of the computation"
 msgstr "計算のエラーコード"
 
-#: ../../doxygen/moveit_msgs/srv/GetMotionPlan.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetMotionPlan.srv:1
 msgid ""
-"This service contains the definition for a request to the motion planner and"
-" the output it provides"
+"This service contains the definition for a request to the motion planner "
+"and the output it provides"
 msgstr "モーションプランナーへのリクエスト"
 
-#: ../../doxygen/moveit_msgs/srv/GetPlannerParams.srv:1
-#: ../../doxygen/moveit_msgs/srv/SetPlannerParams.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPlannerParams.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/SetPlannerParams.srv:1
 msgid "Name of planning config"
 msgstr "プランニング設定の名前"
 
-#: ../../doxygen/moveit_msgs/srv/GetPlannerParams.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPlannerParams.srv:4
 msgid "Optional name of planning group (return global defaults if empty)"
-msgstr "グループ名（オプション）（空の場合はグローバルデフォルトを返します）"
+msgstr "グループ名（任意）（空の場合はグローバルデフォルトを返します）"
 
-#: ../../doxygen/moveit_msgs/srv/GetPlannerParams.srv:9
-#: ../../doxygen/moveit_msgs/srv/SetPlannerParams.srv:7
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPlannerParams.srv:9
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/SetPlannerParams.srv:7
 msgid "parameters as key-value pairs"
 msgstr "パラメータ（キーと値のペア）"
 
-#: ../../doxygen/moveit_msgs/srv/SetPlannerParams.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/SetPlannerParams.srv:4
 msgid "Optional name of planning group (set global defaults if empty)"
-msgstr "グループ名（オプション）（空の場合はグローバルデフォルトを設定）"
+msgstr "グループ名（任意）（空の場合はグローバルデフォルトを設定）"
 
-#: ../../doxygen/moveit_msgs/srv/SetPlannerParams.srv:10
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/SetPlannerParams.srv:10
 msgid "replace params or augment existing ones?"
 msgstr "パラメータを置き換えるか、既存のものを増やすか"
 
-#: ../../doxygen/moveit_msgs/srv/GetPlanningScene.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPlanningScene.srv:1
 msgid ""
-"Get parts of the planning scene that are of interest All scene components "
-"are returned if none are specified"
-msgstr "興味のあるplanning sceneの一部を指定する。何も指定されていない場合、すべてのシーンコンポーネントが返されます。"
+"Get parts of the planning scene that are of interest All scene components"
+" are returned if none are specified"
+msgstr "興味のあるplanning sceneの一部を指定する。何も指定されていない場合、シーン全体が返されます。"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionFK.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionFK.srv:1
 msgid ""
-"A service definition for a standard forward kinematics service The frame_id "
-"in the header message is the frame in which the forward kinematics poses "
-"will be returned"
-msgstr "順運動学サービスのサービス定義。ヘッダーメッセージのframe_idは、順運動学の位置姿勢が返される基準座標名です。"
+"A service definition for a standard forward kinematics service The "
+"frame_id in the header message is the frame in which the forward "
+"kinematics poses will be returned"
+msgstr "順運動学サービスのサービス定義。ヘッダーメッセージのframe_idは、順運動学の位置姿勢が計算される基準座標名です。"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionFK.srv:6
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionFK.srv:6
 msgid "A vector of link name for which forward kinematics must be computed"
 msgstr "順運動学を計算するリンク名のリスト"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionFK.srv:9
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionFK.srv:9
 msgid ""
-"A robot state consisting of joint names and joint positions to be used for "
-"forward kinematics"
+"A robot state consisting of joint names and joint positions to be used "
+"for forward kinematics"
 msgstr "順運動学計算に使用される関節名と関節各で構成されるロボットの状態"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionFK.srv:12
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionFK.srv:12
 msgid ""
 "The resultant vector of PoseStamped messages that contains the (stamped) "
 "poses of the requested links"
-msgstr "各リンクの（タイムスタンプ付き）ポーズを含むPoseStampedメッセージのリスト"
+msgstr "各リンクの（タイムスタンプ付き）位置姿勢を含むPoseStampedメッセージのリスト"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionFK.srv:15
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionFK.srv:15
 msgid "The list of link names corresponding to the poses"
-msgstr "ポーズに対応するリンク名のリスト"
+msgstr "各位置姿勢に対応するリンク名のリスト"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionIK.srv:1
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionIK.srv:1
 msgid ""
-"A service call to carry out an inverse kinematics computation The inverse "
-"kinematics request"
+"A service call to carry out an inverse kinematics computation The inverse"
+" kinematics request"
 msgstr "逆運動学計算を実行するためのサービス。逆運動学リクエスト"
 
-#: ../../doxygen/moveit_msgs/srv/GetPositionIK.srv:7
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GetPositionIK.srv:7
 msgid ""
-"The returned solution (in the same order as the list of joints specified in "
-"the IKRequest message)"
+"The returned solution (in the same order as the list of joints specified "
+"in the IKRequest message)"
 msgstr "逆運動学の解（IKRequestメッセージで指定された関節リストと同じ順序）"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:4
 msgid "the planning group used"
 msgstr "使用するグループ名"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:7
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:7
 msgid "the object to be grasped"
 msgstr "把握するオブジェクト"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:10
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:10
 msgid ""
-"the names of the relevant support surfaces (e.g. tables) in the collision "
-"map can be left empty if no names are available"
+"the names of the relevant support surfaces (e.g. tables) in the collision"
+" map can be left empty if no names are available"
 msgstr "干渉マップ内の関連する支持平面（テーブルなど）の名前。名前が使用できない場合は空のままにできます。"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:14
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:14
 msgid "an optional list of grasps to be evaluated by the planner"
-msgstr "プランナーによって評価される把握リスト（オプション）"
+msgstr "プランナーによって評価される把握リスト（任意）"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:17
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:17
 msgid ""
-"an optional list of obstacles that we have semantic information about and "
-"that can be moved in the course of grasping"
-msgstr "付加情報を持ち、把握の過程で移動できる障害物のリスト（オプション）"
+"an optional list of obstacles that we have semantic information about and"
+" that can be moved in the course of grasping"
+msgstr "付加情報を持ち、把握の過程で移動できる障害物のリスト（任意）"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:23
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:23
 msgid "the list of planned grasps"
 msgstr "プランニングされた把握のリスト"
 
-#: ../../doxygen/moveit_msgs/srv/GraspPlanning.srv:26
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/GraspPlanning.srv:26
 msgid "whether an error occurred"
 msgstr "エラーが発生したかどうか"
 
-#: ../../doxygen/moveit_msgs/srv/QueryPlannerInterfaces.srv:4
+#: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/QueryPlannerInterfaces.srv:4
 msgid "The planning instances that could be used in the benchmark"
 msgstr "ベンチマークで使用されるプランニングインスタンスのリスト"
 
-#: ../../source/move_group.rst:144
+#: /home/yosuke/moveit_document/source/move_group.rst:138
 msgid "MoveGroupCapability基底クラス"
 msgstr "MoveGroupCapability基底クラス"
 
-#: ../../source/move_group.rst:146
+#: /home/yosuke/moveit_document/source/move_group.rst:140
 msgid "move_groupサーバは、各種サービスを実装する際に、MoveGroupCapabilityクラスを基底クラスとして利用します。"
+msgstr ""
+
+msgid ""
+"Subclassed by move_group::ApplyPlanningSceneService, "
+"move_group::ClearOctomapService, "
+"move_group::MoveGroupCartesianPathService, "
+"move_group::MoveGroupExecuteTrajectoryAction, "
+"move_group::MoveGroupGetPlanningSceneService, "
+"move_group::MoveGroupKinematicsService, move_group::MoveGroupMoveAction, "
+"move_group::MoveGroupPickPlaceAction, move_group::MoveGroupPlanService, "
+"move_group::MoveGroupQueryPlannersService, "
+"move_group::MoveGroupStateValidationService"
 msgstr ""
