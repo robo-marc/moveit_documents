@@ -426,7 +426,7 @@ msgstr "エラーが発生したかどうか"
 
 #: /home/yosuke/moveit_document/doxygen/moveit_msgs/srv/QueryPlannerInterfaces.srv:4
 msgid "The planning instances that could be used in the benchmark"
-msgstr "ベンチマークで使用されるプランニングインスタンスのリスト"
+msgstr "利用できるプランナーのリスト"
 
 #: /home/yosuke/moveit_document/source/move_group.rst:138
 msgid "MoveGroupCapability基底クラス"
