@@ -631,6 +631,7 @@ msgid ""
 "Get the predicate that decides whether states are considered valid or "
 "invalid for reasons beyond ones covered by collision checking and constraint"
 " evaluation."
+msgstr ""
 "干渉チェックや制約評価でカバーされる以外の尺度で、状態の有効性を評価する関数を取得します。"
 
 msgid ""
