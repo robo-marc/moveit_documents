@@ -27,16 +27,25 @@ MoveGroupInterfaceは、ROS通信を使って、プランニング命令をROS�
 
 move_groupサーバで提供されている各サービスとROS通信の詳細については、 :doc:`move_group` を参照してください。
 
+
+コードサンプル
+--------------
+
+本文書では、クラスの仕様のみを記述します。コードサンプルについては、以下の外部ドキュメント参照してください。
+
+http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/move_group_python_interface/move_group_python_interface_tutorial.html
+
+
 RobotCommander
 ---------------
 
 .. autoclass:: moveit_commander.RobotCommander
    :members:
 
-.. autoclass:: moveit_commander.RobotCommander.Joint
+.. .. autoclass:: moveit_commander.RobotCommander.Joint
    :members:
 
-.. autoclass:: moveit_commander.RobotCommander.Link
+.. .. autoclass:: moveit_commander.RobotCommander.Link
    :members:
 
 MoveGroupCommander
