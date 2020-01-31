@@ -13,7 +13,7 @@
 .. uml::
 
    planning_interface::PlanningContext <|-- chomp_interface::CHOMPPlanningContext
-   planning_interface::PlanningContext <|-- ompl_interface::OMPLPlanningContext
+   planning_interface::PlanningContext <|-- ompl_interface::ModelBasedPlanningContext
 
 各プランニングアルゴリズムは、PlannerManagerおよびPlanningContextを基底クラスとして実装されており、自由に切り替えて利用できます。
 
@@ -33,7 +33,6 @@ https://ros-planning.github.io/moveit_tutorials/doc/creating_moveit_plugins/plug
 
 .. uml::
 
-   アプリケーションプログラム -> ClassLoader: インスタンス生成
    アプリケーションプログラム -> ClassLoader: createUnmanagedInstance()
    ClassLoader -> PlannerManager: インスタンス生成
    アプリケーションプログラム <- ClassLoader: PlannerManagerインスタンス
