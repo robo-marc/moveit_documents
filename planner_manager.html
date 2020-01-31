@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>プランニングアルゴリズム基底クラス（PlannerManager）の仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様" href="kinematics_base.html" />
+    <link rel="prev" title="URDF/SRDFとロボットモデルの仕様" href="robot_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">クラス図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">シーケンス図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">コードサンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">基底クラス</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">PlannerManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planningcontext">PlanningContext</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ompl">OMPLプランナー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#omplplannermanager">OMPLPlannerManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelbasedplanningcontext">ModelBasedPlanningContext</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#chomp">CHOMPプランナー</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chompplannermanager">CHOMPPlannerManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chompplanningcontext">CHOMPPlanningContext</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>プランニングアルゴリズム基底クラス（PlannerManager）の仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="plannermanager">
+<h1>プランニングアルゴリズム基底クラス（PlannerManager）の仕様<a class="headerlink" href="#plannermanager" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>クラス図<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p class="plantuml">
+<img src="_images/plantuml-597040110c0d98abaf053231780f59c13211a656.png" alt="planning_interface::PlannerManager &lt;|-- chomp_interface::CHOMPPlannerManager
+planning_interface::PlannerManager &lt;|-- ompl_interface::OMPLPlannerManager"/>
+</p>
+<p class="plantuml">
+<img src="_images/plantuml-8711af9d401c763657ac3961cc38e009c691c201.png" alt="planning_interface::PlanningContext &lt;|-- chomp_interface::CHOMPPlanningContext
+planning_interface::PlanningContext &lt;|-- ompl_interface::ModelBasedPlanningContext"/>
+</p>
+<p>各プランニングアルゴリズムは、PlannerManagerおよびPlanningContextを基底クラスとして実装されており、自由に切り替えて利用できます。</p>
+<p>既存のプランニングアルゴリズムを使うだけでなく、独自のアルゴリズムを実装することもできます。
+MoveItでは、ROSのpluginlibの仕組みを使って独自アルゴリズムの既存システムへのプラグインを実現しています。
+詳しい方法については、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="https://ros-planning.github.io/moveit_tutorials/doc/creating_moveit_plugins/plugin_tutorial.html">https://ros-planning.github.io/moveit_tutorials/doc/creating_moveit_plugins/plugin_tutorial.html</a></p>
+</div>
+<div class="section" id="id2">
+<h2>シーケンス図<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>アプリケーションプログラムは、pluginlibのClassLoaderを利用してPlannerManagerプラグインをロードします。</p>
+<p>個々のプランニングは、PlannerManagerからPlanningContextを生成して実行されます。</p>
+<p class="plantuml">
+<img src="_images/plantuml-9ff8e30c0bee5e96c931c551213330455debbaeb.png" alt="アプリケーションプログラム -&gt; ClassLoader: createUnmanagedInstance()
+ClassLoader -&gt; PlannerManager: インスタンス生成
+アプリケーションプログラム &lt;- ClassLoader: PlannerManagerインスタンス
+アプリケーションプログラム -&gt; PlannerManager: initialize()
+アプリケーションプログラム -&gt; PlannerManager: getPlanningContext()
+PlannerManager -&gt; PlanningContext: インスタンス生成
+アプリケーションプログラム &lt;- PlannerManager: PlanningContextインスタンス
+アプリケーションプログラム -&gt; PlanningContext: solve()
+アプリケーションプログラム &lt;- PlanningContext: プランニング結果"/>
+</p>
+</div>
+<div class="section" id="id3">
+<h2>コードサンプル<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本文書では、クラスの仕様のみを記述します。コードサンプルについては、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/motion_planning_api/motion_planning_api_tutorial.html">http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/motion_planning_api/motion_planning_api_tutorial.html</a></p>
+</div>
+<div class="section" id="id4">
+<h2>基底クラス<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id5">
+<h3>PlannerManager<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N18planning_interface14PlannerManagerE">
+<span id="_CPPv3N18planning_interface14PlannerManagerE"></span><span id="_CPPv2N18planning_interface14PlannerManagerE"></span><span id="planning_interface::PlannerManager"></span><span class="target" id="classplanning__interface_1_1PlannerManager"></span><em class="property">class </em><code class="sig-prename descclassname">planning_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">PlannerManager</code><a class="headerlink" href="#_CPPv4N18planning_interface14PlannerManagerE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>MoveIt!プランナーの基底クラス。</p>
+<p>Subclassed by <a class="reference internal" href="#classchomp__interface_1_1CHOMPPlannerManager"><span class="std std-ref">chomp_interface::CHOMPPlannerManager</span></a>, <a class="reference internal" href="#classompl__interface_1_1OMPLPlannerManager"><span class="std std-ref">ompl_interface::OMPLPlannerManager</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N18planning_interface14PlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE">
+<span id="_CPPv3N18planning_interface14PlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="_CPPv2N18planning_interface14PlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="planning_interface::PlannerManager::initialize__robot_model::RobotModelConstPtrCR.ssCR"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1aa6ea0155324aa6140f412fd15593bc23"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> robot_model::RobotModelConstPtr &amp;<em>model</em>, <em class="property">const</em> std::string &amp;<em>ns</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18planning_interface14PlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーを初期化します。この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。model引数に指定されたロボットモデルに対してモーションプランが計算されます。ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager14getDescriptionEv">
+<span id="_CPPv3NK18planning_interface14PlannerManager14getDescriptionEv"></span><span id="_CPPv2NK18planning_interface14PlannerManager14getDescriptionEv"></span><span id="planning_interface::PlannerManager::getDescriptionC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1a94dd55d37ba70bef0e93524d40ff158f"></span>std::string <code class="sig-name descname">getDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager14getDescriptionEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Get. </p>
+<p>このプランニングインターフェースを識別する短い文字列を取得する。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3NK18planning_interface14PlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2NK18planning_interface14PlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="planning_interface::PlannerManager::getPlanningAlgorithms__std::vector:ss:RC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1a6847e2cbb0e60c16d8e918f633728d7f"></span>void <code class="sig-name descname">getPlanningAlgorithms</code><span class="sig-paren">(</span>std::vector&lt;std::string&gt; &amp;<em>algs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>登録されたプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE">
+<span id="_CPPv3NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE"></span><span id="_CPPv2NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE"></span><span id="planning_interface::PlannerManager::getPlanningContext__planning_scene::PlanningSceneConstPtrCR.MotionPlanRequestCR.moveit_msgs::MoveItErrorCodesRC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1ae2b9e1bba8400baee49d031b4adf228c"></span><em class="property">virtual</em> PlanningContextPtr <code class="sig-name descname">getPlanningContext</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE" title="planning_interface::PlannerManager::getPlanningContext::planning_scene">planning_scene</a>::PlanningSceneConstPtr &amp;<em>planning_scene</em>, <em class="property">const</em> MotionPlanRequest &amp;<em>req</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。問題が発生した場合、エラーコードが設定され、空のポインタが返されます。返されるモーションプランナーコンテキストは初期化された状態です。モーションプランは、コンテキストが構築されるたびにゼロから開始します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>planning_scene：プランニングに使用するplanning scene</p></li>
+<li><p>req： プランニングリクエスト</p></li>
+<li><p>error_code：プランニングコンテキストの構築が失敗した場合にエラーが設定される変数</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequest">
+<span id="_CPPv3NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequest"></span><span id="_CPPv2NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequest"></span><span id="planning_interface::PlannerManager::getPlanningContext__planning_scene::PlanningSceneConstPtrCR.MotionPlanRequestCRC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1a6b7c7d47f70851669145c6e03baca83f"></span>PlanningContextPtr <code class="sig-name descname">getPlanningContext</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequestRN11moveit_msgs16MoveItErrorCodesE" title="planning_interface::PlannerManager::getPlanningContext::planning_scene">planning_scene</a>::PlanningSceneConstPtr &amp;<em>planning_scene</em>, <em class="property">const</em> MotionPlanRequest &amp;<em>req</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERK17MotionPlanRequest" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>上記の関数を呼び出しますが、error_codeを無視します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager17canServiceRequestERK17MotionPlanRequest">
+<span id="_CPPv3NK18planning_interface14PlannerManager17canServiceRequestERK17MotionPlanRequest"></span><span id="_CPPv2NK18planning_interface14PlannerManager17canServiceRequestERK17MotionPlanRequest"></span><span id="planning_interface::PlannerManager::canServiceRequest__MotionPlanRequestCRC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1a0820d5d3922f3cd0d5d3dd86185afb16"></span><em class="property">virtual</em> bool <code class="sig-name descname">canServiceRequest</code><span class="sig-paren">(</span><em class="property">const</em> MotionPlanRequest &amp;<em>req</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager17canServiceRequestERK17MotionPlanRequest" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプラグインインスタンスが指定されたプランニングリクエストを扱うことができるか判定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface14PlannerManager24setPlannerConfigurationsERK23PlannerConfigurationMap">
+<span id="_CPPv3N18planning_interface14PlannerManager24setPlannerConfigurationsERK23PlannerConfigurationMap"></span><span id="_CPPv2N18planning_interface14PlannerManager24setPlannerConfigurationsERK23PlannerConfigurationMap"></span><span id="planning_interface::PlannerManager::setPlannerConfigurations__PlannerConfigurationMapCR"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1a5113ae0f3db5bc86805a13b6aeed605e"></span>void <code class="sig-name descname">setPlannerConfigurations</code><span class="sig-paren">(</span><em class="property">const</em> PlannerConfigurationMap &amp;<em>pcs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18planning_interface14PlannerManager24setPlannerConfigurationsERK23PlannerConfigurationMap" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このアルゴリズムに適用される設定を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager24getPlannerConfigurationsEv">
+<span id="_CPPv3NK18planning_interface14PlannerManager24getPlannerConfigurationsEv"></span><span id="_CPPv2NK18planning_interface14PlannerManager24getPlannerConfigurationsEv"></span><span id="planning_interface::PlannerManager::getPlannerConfigurationsC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1ae2731bd9b2ae0d9b767bc3ec02ed8a42"></span><em class="property">const</em> PlannerConfigurationMap &amp;<code class="sig-name descname">getPlannerConfigurations</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager24getPlannerConfigurationsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このアルゴリズムに適用されている設定を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface14PlannerManager9terminateEv">
+<span id="_CPPv3NK18planning_interface14PlannerManager9terminateEv"></span><span id="_CPPv2NK18planning_interface14PlannerManager9terminateEv"></span><span id="planning_interface::PlannerManager::terminateC"></span><span class="target" id="classplanning__interface_1_1PlannerManager_1add7f143e284717e58ea0fbd35bddc0f2"></span>void <code class="sig-name descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface14PlannerManager9terminateEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>solve関数が現在プランニングを計算している場合、中断を要求します。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="planningcontext">
+<h3>PlanningContext<a class="headerlink" href="#planningcontext" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N18planning_interface15PlanningContextE">
+<span id="_CPPv3N18planning_interface15PlanningContextE"></span><span id="_CPPv2N18planning_interface15PlanningContextE"></span><span id="planning_interface::PlanningContext"></span><span class="target" id="classplanning__interface_1_1PlanningContext"></span><em class="property">class </em><code class="sig-prename descclassname">planning_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">PlanningContext</code><a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContextE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニングコンテキスト。planning sceneとプランニングリクエストを入力として、解を計算するのがこのコンテキストの役割です。</p>
+<p>Subclassed by <a class="reference internal" href="#classchomp__interface_1_1CHOMPPlanningContext"><span class="std std-ref">chomp_interface::CHOMPPlanningContext</span></a>, <a class="reference internal" href="#classompl__interface_1_1ModelBasedPlanningContext"><span class="std std-ref">ompl_interface::ModelBasedPlanningContext</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext15PlanningContextERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N18planning_interface15PlanningContext15PlanningContextERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N18planning_interface15PlanningContext15PlanningContextERKNSt6stringERKNSt6stringE"></span><span id="planning_interface::PlanningContext::PlanningContext__ssCR.ssCR"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1af59cb55faa8277e37ed8968ffa7f080a"></span><code class="sig-name descname">PlanningContext</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::string &amp;<em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext15PlanningContextERKNSt6stringERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>グループ名groupに対するnameという名前のプランニングコンテキストを生成します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface15PlanningContext12getGroupNameEv">
+<span id="_CPPv3NK18planning_interface15PlanningContext12getGroupNameEv"></span><span id="_CPPv2NK18planning_interface15PlanningContext12getGroupNameEv"></span><span id="planning_interface::PlanningContext::getGroupNameC"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a26fcbf48d41882ad7a140c26d5ec0802"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getGroupName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface15PlanningContext12getGroupNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプランニングコンテキストの対象となるグループの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface15PlanningContext7getNameEv">
+<span id="_CPPv3NK18planning_interface15PlanningContext7getNameEv"></span><span id="_CPPv2NK18planning_interface15PlanningContext7getNameEv"></span><span id="planning_interface::PlanningContext::getNameC"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1affffef57f6383590843cbcd9ece29a08"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface15PlanningContext7getNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプランニングコンテキストの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface15PlanningContext16getPlanningSceneEv">
+<span id="_CPPv3NK18planning_interface15PlanningContext16getPlanningSceneEv"></span><span id="_CPPv2NK18planning_interface15PlanningContext16getPlanningSceneEv"></span><span id="planning_interface::PlanningContext::getPlanningSceneC"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a177f3e5824d3d23bb6bac53d9a8ae50f"></span><em class="property">const</em> planning_scene::PlanningSceneConstPtr &amp;<code class="sig-name descname">getPlanningScene</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface15PlanningContext16getPlanningSceneEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプランニングコンテキストに関連付けられたplanning sceneを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18planning_interface15PlanningContext20getMotionPlanRequestEv">
+<span id="_CPPv3NK18planning_interface15PlanningContext20getMotionPlanRequestEv"></span><span id="_CPPv2NK18planning_interface15PlanningContext20getMotionPlanRequestEv"></span><span id="planning_interface::PlanningContext::getMotionPlanRequestC"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a921310632564d17e94071cf2915c2526"></span><em class="property">const</em> MotionPlanRequest &amp;<code class="sig-name descname">getMotionPlanRequest</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18planning_interface15PlanningContext20getMotionPlanRequestEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプランニングコンテキストに関連付けられているモーションプランリクエストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext16setPlanningSceneERKN14planning_scene21PlanningSceneConstPtrE">
+<span id="_CPPv3N18planning_interface15PlanningContext16setPlanningSceneERKN14planning_scene21PlanningSceneConstPtrE"></span><span id="_CPPv2N18planning_interface15PlanningContext16setPlanningSceneERKN14planning_scene21PlanningSceneConstPtrE"></span><span id="planning_interface::PlanningContext::setPlanningScene__planning_scene::PlanningSceneConstPtrCR"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a112440fb0e22251da0e36240dedfbfc8"></span>void <code class="sig-name descname">setPlanningScene</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N18planning_interface15PlanningContext16setPlanningSceneERKN14planning_scene21PlanningSceneConstPtrE" title="planning_interface::PlanningContext::setPlanningScene::planning_scene">planning_scene</a>::PlanningSceneConstPtr &amp;<em>planning_scene</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext16setPlanningSceneERKN14planning_scene21PlanningSceneConstPtrE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このコンテキストのplanning sceneを設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext20setMotionPlanRequestERK17MotionPlanRequest">
+<span id="_CPPv3N18planning_interface15PlanningContext20setMotionPlanRequestERK17MotionPlanRequest"></span><span id="_CPPv2N18planning_interface15PlanningContext20setMotionPlanRequestERK17MotionPlanRequest"></span><span id="planning_interface::PlanningContext::setMotionPlanRequest__MotionPlanRequestCR"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1ae88e3282ba23b70950e342f414fcf046"></span>void <code class="sig-name descname">setMotionPlanRequest</code><span class="sig-paren">(</span><em class="property">const</em> MotionPlanRequest &amp;<em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext20setMotionPlanRequestERK17MotionPlanRequest" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このコンテキストのプランニングリクエストを設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext5solveER18MotionPlanResponse">
+<span id="_CPPv3N18planning_interface15PlanningContext5solveER18MotionPlanResponse"></span><span id="_CPPv2N18planning_interface15PlanningContext5solveER18MotionPlanResponse"></span><span id="planning_interface::PlanningContext::solve__MotionPlanResponseR"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1af3d95dd741609c58847bd312b8b033e0"></span><em class="property">virtual</em> bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>MotionPlanResponse &amp;<em>res</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext5solveER18MotionPlanResponse" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext5solveER26MotionPlanDetailedResponse">
+<span id="_CPPv3N18planning_interface15PlanningContext5solveER26MotionPlanDetailedResponse"></span><span id="_CPPv2N18planning_interface15PlanningContext5solveER26MotionPlanDetailedResponse"></span><span id="planning_interface::PlanningContext::solve__MotionPlanDetailedResponseR"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a7590fdf69a8cf0801799e802f9ea4d08"></span><em class="property">virtual</em> bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>MotionPlanDetailedResponse &amp;<em>res</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext5solveER26MotionPlanDetailedResponse" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext9terminateEv">
+<span id="_CPPv3N18planning_interface15PlanningContext9terminateEv"></span><span id="_CPPv2N18planning_interface15PlanningContext9terminateEv"></span><span id="planning_interface::PlanningContext::terminate"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a79272b058a0eeb78e64179cd044d779d"></span><em class="property">virtual</em> bool <code class="sig-name descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext9terminateEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>solve関数が実行中の場合、プランニングを中断します。終了できない場合はfalseを返します。 solve関数が実行されていない場合は何もしません（trueを返します）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18planning_interface15PlanningContext5clearEv">
+<span id="_CPPv3N18planning_interface15PlanningContext5clearEv"></span><span id="_CPPv2N18planning_interface15PlanningContext5clearEv"></span><span id="planning_interface::PlanningContext::clear"></span><span class="target" id="classplanning__interface_1_1PlanningContext_1a92cfedf0e29ce7596c9bff24cee04b0f"></span><em class="property">virtual</em> void <code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N18planning_interface15PlanningContext5clearEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーが使用するデータ構造を初期化します。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="ompl">
+<h2>OMPLプランナー<a class="headerlink" href="#ompl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="omplplannermanager">
+<h3>OMPLPlannerManager<a class="headerlink" href="#omplplannermanager" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N14ompl_interface18OMPLPlannerManagerE">
+<span id="_CPPv3N14ompl_interface18OMPLPlannerManagerE"></span><span id="_CPPv2N14ompl_interface18OMPLPlannerManagerE"></span><span id="ompl_interface::OMPLPlannerManager"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager"></span><em class="property">class </em><code class="sig-prename descclassname">ompl_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">OMPLPlannerManager</code><a class="headerlink" href="#_CPPv4N14ompl_interface18OMPLPlannerManagerE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Inherits from <a class="reference internal" href="#classplanning__interface_1_1PlannerManager"><span class="std std-ref">planning_interface::PlannerManager</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface18OMPLPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE">
+<span id="_CPPv3N14ompl_interface18OMPLPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="_CPPv2N14ompl_interface18OMPLPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="ompl_interface::OMPLPlannerManager::initialize__robot_model::RobotModelConstPtrCR.ssCR"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1a1a56bc988b2d6ee894b099eef15447df"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> robot_model::RobotModelConstPtr &amp;<em>model</em>, <em class="property">const</em> std::string &amp;<em>ns</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface18OMPLPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーを初期化します。この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。model引数に指定されたロボットモデルに対してモーションプランが計算されます。ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK14ompl_interface18OMPLPlannerManager17canServiceRequestERKN11moveit_msgs17MotionPlanRequestE">
+<span id="_CPPv3NK14ompl_interface18OMPLPlannerManager17canServiceRequestERKN11moveit_msgs17MotionPlanRequestE"></span><span id="_CPPv2NK14ompl_interface18OMPLPlannerManager17canServiceRequestERKN11moveit_msgs17MotionPlanRequestE"></span><span id="ompl_interface::OMPLPlannerManager::canServiceRequest__moveit_msgs::MotionPlanRequestCRC"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1a91a01692b6f1bc2ed1514ce38eb85038"></span>bool <code class="sig-name descname">canServiceRequest</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::MotionPlanRequest &amp;<em>req</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK14ompl_interface18OMPLPlannerManager17canServiceRequestERKN11moveit_msgs17MotionPlanRequestE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプラグインインスタンスが指定されたプランニングリクエストを扱うことができるか判定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK14ompl_interface18OMPLPlannerManager14getDescriptionEv">
+<span id="_CPPv3NK14ompl_interface18OMPLPlannerManager14getDescriptionEv"></span><span id="_CPPv2NK14ompl_interface18OMPLPlannerManager14getDescriptionEv"></span><span id="ompl_interface::OMPLPlannerManager::getDescriptionC"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1a763806486d56ceff079cc422f33c6462"></span>std::string <code class="sig-name descname">getDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK14ompl_interface18OMPLPlannerManager14getDescriptionEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Get. </p>
+<p>このプランニングインターフェースを識別する短い文字列を取得する。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK14ompl_interface18OMPLPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3NK14ompl_interface18OMPLPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2NK14ompl_interface18OMPLPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="ompl_interface::OMPLPlannerManager::getPlanningAlgorithms__std::vector:ss:RC"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1ad8484fec67c555e946ba930985860f1c"></span>void <code class="sig-name descname">getPlanningAlgorithms</code><span class="sig-paren">(</span>std::vector&lt;std::string&gt; &amp;<em>algs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK14ompl_interface18OMPLPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>登録されたプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface18OMPLPlannerManager24setPlannerConfigurationsERKN18planning_interface23PlannerConfigurationMapE">
+<span id="_CPPv3N14ompl_interface18OMPLPlannerManager24setPlannerConfigurationsERKN18planning_interface23PlannerConfigurationMapE"></span><span id="_CPPv2N14ompl_interface18OMPLPlannerManager24setPlannerConfigurationsERKN18planning_interface23PlannerConfigurationMapE"></span><span id="ompl_interface::OMPLPlannerManager::setPlannerConfigurations__planning_interface::PlannerConfigurationMapCR"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1a20c36a6ac221913804d89336a162782a"></span>void <code class="sig-name descname">setPlannerConfigurations</code><span class="sig-paren">(</span><em class="property">const</em> planning_interface::PlannerConfigurationMap &amp;<em>pcs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface18OMPLPlannerManager24setPlannerConfigurationsERKN18planning_interface23PlannerConfigurationMapE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このアルゴリズムに適用される設定を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK14ompl_interface18OMPLPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE">
+<span id="_CPPv3NK14ompl_interface18OMPLPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE"></span><span id="_CPPv2NK14ompl_interface18OMPLPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE"></span><span id="ompl_interface::OMPLPlannerManager::getPlanningContext__planning_scene::PlanningSceneConstPtrCR.planning_interface::MotionPlanRequestCR.moveit_msgs::MoveItErrorCodesRC"></span><span class="target" id="classompl__interface_1_1OMPLPlannerManager_1af9339e83d17abc2045a29e013c84a1c3"></span>planning_interface::PlanningContextPtr <code class="sig-name descname">getPlanningContext</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4NK14ompl_interface18OMPLPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE" title="ompl_interface::OMPLPlannerManager::getPlanningContext::planning_scene">planning_scene</a>::PlanningSceneConstPtr &amp;<em>planning_scene</em>, <em class="property">const</em> planning_interface::MotionPlanRequest &amp;<em>req</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK14ompl_interface18OMPLPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。問題が発生した場合、エラーコードが設定され、空のポインタが返されます。返されるモーションプランナーコンテキストは初期化された状態です。モーションプランは、コンテキストが構築されるたびにゼロから開始します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>planning_scene：プランニングに使用するplanning scene</p></li>
+<li><p>req： プランニングリクエスト</p></li>
+<li><p>error_code：プランニングコンテキストの構築が失敗した場合にエラーが設定される変数</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="modelbasedplanningcontext">
+<h3>ModelBasedPlanningContext<a class="headerlink" href="#modelbasedplanningcontext" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContextE">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContextE"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContextE"></span><span id="ompl_interface::ModelBasedPlanningContext"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext"></span><em class="property">class </em><code class="sig-prename descclassname">ompl_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">ModelBasedPlanningContext</code><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContextE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Inherits from <a class="reference internal" href="#classplanning__interface_1_1PlanningContext"><span class="std std-ref">planning_interface::PlanningContext</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface18MotionPlanResponseE">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface18MotionPlanResponseE"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface18MotionPlanResponseE"></span><span id="ompl_interface::ModelBasedPlanningContext::solve__planning_interface::MotionPlanResponseR"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext_1ae8157b2f232f07979313536e8fec3dc8"></span>bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>planning_interface::MotionPlanResponse &amp;<em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface18MotionPlanResponseE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE"></span><span id="ompl_interface::ModelBasedPlanningContext::solve__planning_interface::MotionPlanDetailedResponseR"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext_1ab9e1526ca0b10a8e793ddeb34162a143"></span>bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>planning_interface::MotionPlanDetailedResponse &amp;<em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContext5clearEv">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContext5clearEv"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContext5clearEv"></span><span id="ompl_interface::ModelBasedPlanningContext::clear"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext_1a224e7454fb7ef7a95e1cb44b88e82891"></span>void <code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContext5clearEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーが使用するデータ構造を初期化します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContext9terminateEv">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContext9terminateEv"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContext9terminateEv"></span><span id="ompl_interface::ModelBasedPlanningContext::terminate"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext_1abf1962790ec5f0a1019c245010f36bc9"></span>bool <code class="sig-name descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContext9terminateEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>solve関数が実行中の場合、プランニングを中断します。終了できない場合はfalseを返します。 solve関数が実行されていない場合は何もしません（trueを返します）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N14ompl_interface25ModelBasedPlanningContext23setMinimumWaypointCountEj">
+<span id="_CPPv3N14ompl_interface25ModelBasedPlanningContext23setMinimumWaypointCountEj"></span><span id="_CPPv2N14ompl_interface25ModelBasedPlanningContext23setMinimumWaypointCountEj"></span><span id="ompl_interface::ModelBasedPlanningContext::setMinimumWaypointCount__unsigned-i"></span><span class="target" id="classompl__interface_1_1ModelBasedPlanningContext_1ac33ee9373d0be202e80db68206798d2d"></span>void <code class="sig-name descname">setMinimumWaypointCount</code><span class="sig-paren">(</span>unsigned int <em>mwc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ompl_interface25ModelBasedPlanningContext23setMinimumWaypointCountEj" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Get the minimum number of waypoints along the solution path. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="chomp">
+<h2>CHOMPプランナー<a class="headerlink" href="#chomp" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="chompplannermanager">
+<h3>CHOMPPlannerManager<a class="headerlink" href="#chompplannermanager" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N15chomp_interface19CHOMPPlannerManagerE">
+<span id="_CPPv3N15chomp_interface19CHOMPPlannerManagerE"></span><span id="_CPPv2N15chomp_interface19CHOMPPlannerManagerE"></span><span id="chomp_interface::CHOMPPlannerManager"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager"></span><em class="property">class </em><code class="sig-prename descclassname">chomp_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">CHOMPPlannerManager</code><a class="headerlink" href="#_CPPv4N15chomp_interface19CHOMPPlannerManagerE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Inherits from <a class="reference internal" href="#classplanning__interface_1_1PlannerManager"><span class="std std-ref">planning_interface::PlannerManager</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N15chomp_interface19CHOMPPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE">
+<span id="_CPPv3N15chomp_interface19CHOMPPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="_CPPv2N15chomp_interface19CHOMPPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE"></span><span id="chomp_interface::CHOMPPlannerManager::initialize__robot_model::RobotModelConstPtrCR.ssCR"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager_1a020471975d211c77edb42dd97e56a28a"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> robot_model::RobotModelConstPtr &amp;<em>model</em>, <em class="property">const</em> std::string &amp;<em>ns</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15chomp_interface19CHOMPPlannerManager10initializeERKN11robot_model18RobotModelConstPtrERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーを初期化します。この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。model引数に指定されたロボットモデルに対してモーションプランが計算されます。ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK15chomp_interface19CHOMPPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE">
+<span id="_CPPv3NK15chomp_interface19CHOMPPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE"></span><span id="_CPPv2NK15chomp_interface19CHOMPPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE"></span><span id="chomp_interface::CHOMPPlannerManager::getPlanningContext__planning_scene::PlanningSceneConstPtrCR.planning_interface::MotionPlanRequestCR.moveit_msgs::MoveItErrorCodesRC"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager_1a895b418ebdefec15f7ea893a445fab21"></span>planning_interface::PlanningContextPtr <code class="sig-name descname">getPlanningContext</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4NK15chomp_interface19CHOMPPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE" title="chomp_interface::CHOMPPlannerManager::getPlanningContext::planning_scene">planning_scene</a>::PlanningSceneConstPtr &amp;<em>planning_scene</em>, <em class="property">const</em> planning_interface::MotionPlanRequest &amp;<em>req</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK15chomp_interface19CHOMPPlannerManager18getPlanningContextERKN14planning_scene21PlanningSceneConstPtrERKN18planning_interface17MotionPlanRequestERN11moveit_msgs16MoveItErrorCodesE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。問題が発生した場合、エラーコードが設定され、空のポインタが返されます。返されるモーションプランナーコンテキストは初期化された状態です。モーションプランは、コンテキストが構築されるたびにゼロから開始します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>planning_scene：プランニングに使用するplanning scene</p></li>
+<li><p>req： プランニングリクエスト</p></li>
+<li><p>error_code：プランニングコンテキストの構築が失敗した場合にエラーが設定される変数</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK15chomp_interface19CHOMPPlannerManager17canServiceRequestERKN18planning_interface17MotionPlanRequestE">
+<span id="_CPPv3NK15chomp_interface19CHOMPPlannerManager17canServiceRequestERKN18planning_interface17MotionPlanRequestE"></span><span id="_CPPv2NK15chomp_interface19CHOMPPlannerManager17canServiceRequestERKN18planning_interface17MotionPlanRequestE"></span><span id="chomp_interface::CHOMPPlannerManager::canServiceRequest__planning_interface::MotionPlanRequestCRC"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager_1ae28a6ddd19f081fd6c6bf11d8979f2ff"></span>bool <code class="sig-name descname">canServiceRequest</code><span class="sig-paren">(</span><em class="property">const</em> planning_interface::MotionPlanRequest &amp;<em>req</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK15chomp_interface19CHOMPPlannerManager17canServiceRequestERKN18planning_interface17MotionPlanRequestE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このプラグインインスタンスが指定されたプランニングリクエストを扱うことができるか判定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK15chomp_interface19CHOMPPlannerManager14getDescriptionEv">
+<span id="_CPPv3NK15chomp_interface19CHOMPPlannerManager14getDescriptionEv"></span><span id="_CPPv2NK15chomp_interface19CHOMPPlannerManager14getDescriptionEv"></span><span id="chomp_interface::CHOMPPlannerManager::getDescriptionC"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager_1a3827f0da7844ae3afc1b0198e6b7d35c"></span>std::string <code class="sig-name descname">getDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK15chomp_interface19CHOMPPlannerManager14getDescriptionEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Get. </p>
+<p>このプランニングインターフェースを識別する短い文字列を取得する。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK15chomp_interface19CHOMPPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3NK15chomp_interface19CHOMPPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2NK15chomp_interface19CHOMPPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE"></span><span id="chomp_interface::CHOMPPlannerManager::getPlanningAlgorithms__std::vector:ss:RC"></span><span class="target" id="classchomp__interface_1_1CHOMPPlannerManager_1a70c561a46dcd305e18e005fa79401688"></span>void <code class="sig-name descname">getPlanningAlgorithms</code><span class="sig-paren">(</span>std::vector&lt;std::string&gt; &amp;<em>algs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK15chomp_interface19CHOMPPlannerManager21getPlanningAlgorithmsERNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>登録されたプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="chompplanningcontext">
+<h3>CHOMPPlanningContext<a class="headerlink" href="#chompplanningcontext" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N15chomp_interface20CHOMPPlanningContextE">
+<span id="_CPPv3N15chomp_interface20CHOMPPlanningContextE"></span><span id="_CPPv2N15chomp_interface20CHOMPPlanningContextE"></span><span id="chomp_interface::CHOMPPlanningContext"></span><span class="target" id="classchomp__interface_1_1CHOMPPlanningContext"></span><em class="property">class </em><code class="sig-prename descclassname">chomp_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">CHOMPPlanningContext</code><a class="headerlink" href="#_CPPv4N15chomp_interface20CHOMPPlanningContextE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Inherits from <a class="reference internal" href="#classplanning__interface_1_1PlanningContext"><span class="std std-ref">planning_interface::PlanningContext</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface18MotionPlanResponseE">
+<span id="_CPPv3N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface18MotionPlanResponseE"></span><span id="_CPPv2N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface18MotionPlanResponseE"></span><span id="chomp_interface::CHOMPPlanningContext::solve__planning_interface::MotionPlanResponseR"></span><span class="target" id="classchomp__interface_1_1CHOMPPlanningContext_1af657437b44bf4b529074ca3aeab7c4a7"></span>bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>planning_interface::MotionPlanResponse &amp;<em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface18MotionPlanResponseE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE">
+<span id="_CPPv3N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE"></span><span id="_CPPv2N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE"></span><span id="chomp_interface::CHOMPPlanningContext::solve__planning_interface::MotionPlanDetailedResponseR"></span><span class="target" id="classchomp__interface_1_1CHOMPPlanningContext_1a55a651775f3556b1cc656ebed9b468c6"></span>bool <code class="sig-name descname">solve</code><span class="sig-paren">(</span>planning_interface::MotionPlanDetailedResponse &amp;<em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15chomp_interface20CHOMPPlanningContext5solveERN18planning_interface26MotionPlanDetailedResponseE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N15chomp_interface20CHOMPPlanningContext5clearEv">
+<span id="_CPPv3N15chomp_interface20CHOMPPlanningContext5clearEv"></span><span id="_CPPv2N15chomp_interface20CHOMPPlanningContext5clearEv"></span><span id="chomp_interface::CHOMPPlanningContext::clear"></span><span class="target" id="classchomp__interface_1_1CHOMPPlanningContext_1acba0a23d64acf1b49863cf5e161ae7bf"></span>void <code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15chomp_interface20CHOMPPlanningContext5clearEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランナーが使用するデータ構造を初期化します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N15chomp_interface20CHOMPPlanningContext9terminateEv">
+<span id="_CPPv3N15chomp_interface20CHOMPPlanningContext9terminateEv"></span><span id="_CPPv2N15chomp_interface20CHOMPPlanningContext9terminateEv"></span><span id="chomp_interface::CHOMPPlanningContext::terminate"></span><span class="target" id="classchomp__interface_1_1CHOMPPlanningContext_1a4e1a85b20ef0b7813f9dc73908a57952"></span>bool <code class="sig-name descname">terminate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15chomp_interface20CHOMPPlanningContext9terminateEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>solve関数が実行中の場合、プランニングを中断します。終了できない場合はfalseを返します。 solve関数が実行されていない場合は何もしません（trueを返します）。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kinematics_base.html" class="btn btn-neutral float-right" title="運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="robot_model.html" class="btn btn-neutral float-left" title="URDF/SRDFとロボットモデルの仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>URDF/SRDFとロボットモデルの仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="プランニングアルゴリズム基底クラス（PlannerManager）の仕様" href="planner_manager.html" />
+    <link rel="prev" title="C++用ユーザライブラリ（MoveGroupInterface）の仕様" href="move_group_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">URDF/SRDFとロボットモデルの仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#urdf">URDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#srdf">SRDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">モデルローダー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ロボットモデル</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>URDF/SRDFとロボットモデルの仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="urdf-srdf">
+<h1>URDF/SRDFとロボットモデルの仕様<a class="headerlink" href="#urdf-srdf" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="urdf">
+<h2>URDF<a class="headerlink" href="#urdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ロボットの関節、リンク、干渉形状、関節角度制限などを記述するROSのロボットモデル記述形式です。</p>
+<p>詳しい仕様は、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="https://wiki.ros.org/urdf/XML">https://wiki.ros.org/urdf/XML</a></p>
+</div>
+<div class="section" id="srdf">
+<h2>SRDF<a class="headerlink" href="#srdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveIt!がURDFに加えて利用するロボットモデルの記述形式です。
+グループ、キネマティックチェーン、エンドエフェクタ名、干渉ペアの指定を行います。</p>
+<p>詳しい仕様は、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="https://wiki.ros.org/srdf">https://wiki.ros.org/srdf</a></p>
+<p>SRDFファイルは、MoveIt Setup Assistantを使って生成できます。詳しくは以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/setup_assistant/setup_assistant_tutorial.html">http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/setup_assistant/setup_assistant_tutorial.html</a></p>
+</div>
+<div class="section" id="id1">
+<h2>モデルローダー<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>URDFとSRDFファイルをロードするユーティリティクラスです。運動学プラグインのロードにも使われます。</p>
+<dl class="class">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoaderE">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoaderE"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoaderE"></span><span id="robot_model_loader::RobotModelLoader"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader"></span><em class="property">class </em><code class="sig-prename descclassname">robot_model_loader<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">RobotModelLoader</code><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoaderE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader16RobotModelLoaderERK7Options">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader16RobotModelLoaderERK7Options"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader16RobotModelLoaderERK7Options"></span><span id="robot_model_loader::RobotModelLoader::RobotModelLoader__OptionsCR"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1ae651ff12df357f03a147bac572733091"></span><code class="sig-name descname">RobotModelLoader</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N18robot_model_loader16RobotModelLoader7OptionsE" title="robot_model_loader::RobotModelLoader::Options">Options</a> &amp;<em>opt</em> = <a class="reference internal" href="#_CPPv4N18robot_model_loader16RobotModelLoader7OptionsE" title="robot_model_loader::RobotModelLoader::Options">Options</a>()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader16RobotModelLoaderERK7Options" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デフォルトのコンストラクタ。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader8getModelEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader8getModelEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader8getModelEv"></span><span id="robot_model_loader::RobotModelLoader::getModelC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1ae86461088884a172f51e36b0cc51791a"></span><em class="property">const</em> robot_model::RobotModelPtr &amp;<code class="sig-name descname">getModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader8getModelEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning_models::RobotModelを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader19getRobotDescriptionEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader19getRobotDescriptionEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader19getRobotDescriptionEv"></span><span id="robot_model_loader::RobotModelLoader::getRobotDescriptionC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1aaaba6932b9595bc7e88476c39a56bc6b"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getRobotDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader19getRobotDescriptionEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットモデルのパラメーター名を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader7getURDFEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader7getURDFEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader7getURDFEv"></span><span id="robot_model_loader::RobotModelLoader::getURDFC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1a611918427aa8b203093c914cc8e38539"></span><em class="property">const</em> urdf::ModelInterfaceSharedPtr &amp;<code class="sig-name descname">getURDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader7getURDFEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パース済みのURDFモデルを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader7getSRDFEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader7getSRDFEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader7getSRDFEv"></span><span id="robot_model_loader::RobotModelLoader::getSRDFC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1ae3b2921e1b87da6d3f8ad4ee9ff9169b"></span><em class="property">const</em> srdf::ModelSharedPtr &amp;<code class="sig-name descname">getSRDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader7getSRDFEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パース済みSRDFモデルを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader12getRDFLoaderEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader12getRDFLoaderEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader12getRDFLoaderEv"></span><span id="robot_model_loader::RobotModelLoader::getRDFLoaderC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1a8ae0a927eefd7b5c99d2b37a450c9a19"></span><em class="property">const</em> rdf_loader::RDFLoaderPtr &amp;<code class="sig-name descname">getRDFLoader</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader12getRDFLoaderEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モデルの読み込みに使用されたrdf_loader::RDFLoaderのインスタンスを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK18robot_model_loader16RobotModelLoader25getKinematicsPluginLoaderEv">
+<span id="_CPPv3NK18robot_model_loader16RobotModelLoader25getKinematicsPluginLoaderEv"></span><span id="_CPPv2NK18robot_model_loader16RobotModelLoader25getKinematicsPluginLoaderEv"></span><span id="robot_model_loader::RobotModelLoader::getKinematicsPluginLoaderC"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1a7b43962e3451bcfae7b059c5617af14d"></span><em class="property">const</em> kinematics_plugin_loader::KinematicsPluginLoaderPtr &amp;<code class="sig-name descname">getKinematicsPluginLoader</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK18robot_model_loader16RobotModelLoader25getKinematicsPluginLoaderEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーのプラグインローダーを取得します。</p>
+<p><dl class="simple">
+<dt>注意</dt><dd><p>このプラグインローダーは変数スコープ内に維持する必要があります。そうしないと、運動学ソルバーがアンロードされる可能性があります。</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader21loadKinematicsSolversERKN24kinematics_plugin_loader25KinematicsPluginLoaderPtrE">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader21loadKinematicsSolversERKN24kinematics_plugin_loader25KinematicsPluginLoaderPtrE"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader21loadKinematicsSolversERKN24kinematics_plugin_loader25KinematicsPluginLoaderPtrE"></span><span id="robot_model_loader::RobotModelLoader::loadKinematicsSolvers__kinematics_plugin_loader::KinematicsPluginLoaderPtrCR"></span><span class="target" id="classrobot__model__loader_1_1RobotModelLoader_1af3b5c5b24d5f7c258fac7c6014540381"></span>void <code class="sig-name descname">loadKinematicsSolvers</code><span class="sig-paren">(</span><em class="property">const</em> kinematics_plugin_loader::KinematicsPluginLoaderPtr &amp;<em>kloader</em> = kinematics_plugin_loader::KinematicsPluginLoaderPtr()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader21loadKinematicsSolversERKN24kinematics_plugin_loader25KinematicsPluginLoaderPtrE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーを運動学モデルにロードします。これは、コンストラクターに渡されるオプションによって明示的に無効にされない限り、デフォルトで行われます。</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader7OptionsE">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader7OptionsE"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader7OptionsE"></span><span id="robot_model_loader::RobotModelLoader::Options"></span><span class="target" id="structrobot__model__loader_1_1RobotModelLoader_1_1Options"></span><em class="property">struct </em><code class="sig-name descname">Options</code><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader7OptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotModelLoaderコンストラクターに渡されるオプション。</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">公開メンバー</p>
+<dl class="member">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader7Options18robot_description_E">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader7Options18robot_description_E"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader7Options18robot_description_E"></span><span id="robot_model_loader::RobotModelLoader::Options::robot_description___ss"></span><span class="target" id="structrobot__model__loader_1_1RobotModelLoader_1_1Options_1abeed6dd139d8fc81d6f5b3ea4b1d572d"></span>std::string <code class="sig-name descname">robot_description_</code><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader7Options18robot_description_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>URDFがロードされるROSパラメーターに対応する文字列名。パラメータ名に「_planning」サフィックスを使用して、追加の構成を指定できます（追加のジョイント制限など）。パラメータサーバからのロードは、文字列からのロードが失敗した場合にのみ試行されます。</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader7Options12urdf_string_E">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader7Options12urdf_string_E"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader7Options12urdf_string_E"></span><span id="robot_model_loader::RobotModelLoader::Options::urdf_string___ss"></span><span class="target" id="structrobot__model__loader_1_1RobotModelLoader_1_1Options_1ac1f58f87b30674e75a4c38440a10e36d"></span>std::string <code class="sig-name descname">urdf_string_</code><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader7Options12urdf_string_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>URDFおよびSRDFドキュメントの文字列コンテンツ。文字列からのロードは、XMLからのロードが失敗した場合にのみ試行されます。</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N18robot_model_loader16RobotModelLoader7Options24load_kinematics_solvers_E">
+<span id="_CPPv3N18robot_model_loader16RobotModelLoader7Options24load_kinematics_solvers_E"></span><span id="_CPPv2N18robot_model_loader16RobotModelLoader7Options24load_kinematics_solvers_E"></span><span id="robot_model_loader::RobotModelLoader::Options::load_kinematics_solvers___b"></span><span class="target" id="structrobot__model__loader_1_1RobotModelLoader_1_1Options_1ad35c667fbafa13fbf9bc8bb26ae84817"></span>bool <code class="sig-name descname">load_kinematics_solvers_</code><a class="headerlink" href="#_CPPv4N18robot_model_loader16RobotModelLoader7Options24load_kinematics_solvers_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定されたROSパラメーターを使用して、キネマティクスソルバーもロードする必要があるかどうかを示すフラグ。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id2">
+<h2>ロボットモデル<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6moveit4core10RobotModelE">
+<span id="_CPPv3N6moveit4core10RobotModelE"></span><span id="_CPPv2N6moveit4core10RobotModelE"></span><span id="moveit::core::RobotModel"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel"></span><em class="property">class </em><code class="sig-prename descclassname">moveit::core<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">RobotModel</code><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModelE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボット運動学モデルの定義。このクラスはスレッドセーフではありませんが、複数のインスタンスを作成できます。</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">関節モデルへのアクセス</p>
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel12getRootJointEv">
+<span id="_CPPv3NK6moveit4core10RobotModel12getRootJointEv"></span><span id="_CPPv2NK6moveit4core10RobotModel12getRootJointEv"></span><span id="moveit::core::RobotModel::getRootJointC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4f0b8ab9b0c478e6144f494583f35001"></span><em class="property">const</em> JointModel *<code class="sig-name descname">getRootJoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel12getRootJointEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ルート関節を取得します。モデルが空でない限り、1つのルート関節が存在します。これはSRDFから抽出されるか、タイプ指定されていない場合は固定関節が想定されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel16getRootJointNameEv">
+<span id="_CPPv3NK6moveit4core10RobotModel16getRootJointNameEv"></span><span id="_CPPv2NK6moveit4core10RobotModel16getRootJointNameEv"></span><span id="moveit::core::RobotModel::getRootJointNameC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a489e26407e0ce14d2bd675902050ea6c"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getRootJointName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel16getRootJointNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ルート関節の名前を返します。ルート関節がない場合、例外をスローします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13hasJointModelERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel13hasJointModelERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel13hasJointModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::hasJointModel__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1aae6e197969696a9cd0a70cab0c120594"></span>bool <code class="sig-name descname">hasJointModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13hasJointModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節が存在するかどうかを確認します。存在する場合はtrueを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13getJointModelERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel13getJointModelERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel13getJointModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::getJointModel__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4230509a72f427c4d54f1db9b2081b2a"></span><em class="property">const</em> JointModel *<code class="sig-name descname">getJointModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>joint</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13getJointModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前を指定して関節を取得します。関節が存在しない場合は、エラーが出力され、NULLが返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13getJointModelEi">
+<span id="_CPPv3NK6moveit4core10RobotModel13getJointModelEi"></span><span id="_CPPv2NK6moveit4core10RobotModel13getJointModelEi"></span><span id="moveit::core::RobotModel::getJointModel__iC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a088d6f03b1f263609573551bbc87d5a0"></span><em class="property">const</em> JointModel *<code class="sig-name descname">getJointModel</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13getJointModelEi" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>インデックス指定で関節を取得します。関節が存在しない場合は、エラーが出力され、NULLが返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel13getJointModelERKNSt6stringE">
+<span id="_CPPv3N6moveit4core10RobotModel13getJointModelERKNSt6stringE"></span><span id="_CPPv2N6moveit4core10RobotModel13getJointModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::getJointModel__ssCR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1adcb6a06041f7e08d238afc9e5785bb87"></span>JointModel *<code class="sig-name descname">getJointModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>joint</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel13getJointModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前を指定して関節を取得します。関節が存在しない場合は、エラーが出力され、NULLが返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel14getJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel14getJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel14getJointModelsEv"></span><span id="moveit::core::RobotModel::getJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a8ef1f458090caac577b5bfc852ba7941"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel14getJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateに格納されている順序で、関節のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel14getJointModelsEv">
+<span id="_CPPv3N6moveit4core10RobotModel14getJointModelsEv"></span><span id="_CPPv2N6moveit4core10RobotModel14getJointModelsEv"></span><span id="moveit::core::RobotModel::getJointModels"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a90cdeb6659fc8a11534a3014e2892c45"></span><em class="property">const</em> std::vector&lt;JointModel *&gt; &amp;<code class="sig-name descname">getJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel14getJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateに格納されている順序で、関節のリストを取得します。JointModelGroup::getJointModels()とは対照的に、すべてのタイプの関節（mimicおよび固定を含む）が含まれます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel18getJointModelNamesEv">
+<span id="_CPPv3NK6moveit4core10RobotModel18getJointModelNamesEv"></span><span id="_CPPv2NK6moveit4core10RobotModel18getJointModelNamesEv"></span><span id="moveit::core::RobotModel::getJointModelNamesC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a3b2c098d91dd7a916b81248ec84141d1"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointModelNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel18getJointModelNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateに格納されている順序で、関節名のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel20getActiveJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel20getActiveJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel20getActiveJointModelsEv"></span><span id="moveit::core::RobotModel::getActiveJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a19cf4cd05c4601c1174eb954bff72d0f"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getActiveJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel20getActiveJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このモデルのアクティブな（固定やmimicではない）関節のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel20getActiveJointModelsEv">
+<span id="_CPPv3N6moveit4core10RobotModel20getActiveJointModelsEv"></span><span id="_CPPv2N6moveit4core10RobotModel20getActiveJointModelsEv"></span><span id="moveit::core::RobotModel::getActiveJointModels"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a116908f84052d7fbe2731aec835478c9"></span><em class="property">const</em> std::vector&lt;JointModel *&gt; &amp;<code class="sig-name descname">getActiveJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel20getActiveJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このモデルのアクティブな（固定やmimicではない）関節のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel23getSingleDOFJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel23getSingleDOFJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel23getSingleDOFJointModelsEv"></span><span id="moveit::core::RobotModel::getSingleDOFJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a7189a0eb931f2acc54a53b593a723d6b"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getSingleDOFJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel23getSingleDOFJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべての単一自由度関節（mimic関節を含む）のリストを取得します</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel22getMultiDOFJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel22getMultiDOFJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel22getMultiDOFJointModelsEv"></span><span id="moveit::core::RobotModel::getMultiDOFJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ad846a68501ab667ca4ba520e53dfe4b9"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getMultiDOFJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel22getMultiDOFJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのmulti-dof関節のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel24getContinuousJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel24getContinuousJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel24getContinuousJointModelsEv"></span><span id="moveit::core::RobotModel::getContinuousJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ac329e877c6315024325a16692b72e003"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getContinuousJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel24getContinuousJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>無限回転する関節のリストを、RobotStateに格納されている順序で取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel19getMimicJointModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel19getMimicJointModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel19getMimicJointModelsEv"></span><span id="moveit::core::RobotModel::getMimicJointModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a95865c5b8253db0de6f994714f4d1e44"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModel *&gt; &amp;<code class="sig-name descname">getMimicJointModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel19getMimicJointModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>mimic関節のリストを、RobotStateに格納されている順序で取得します。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">リンクモデルへのアクセス</p>
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel11getRootLinkEv">
+<span id="_CPPv3NK6moveit4core10RobotModel11getRootLinkEv"></span><span id="_CPPv2NK6moveit4core10RobotModel11getRootLinkEv"></span><span id="moveit::core::RobotModel::getRootLinkC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1afd93ef0a43ca8cf28f75089d6a02ec4a"></span><em class="property">const</em> LinkModel *<code class="sig-name descname">getRootLink</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel11getRootLinkEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットの物理的なルートリンクを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel15getRootLinkNameEv">
+<span id="_CPPv3NK6moveit4core10RobotModel15getRootLinkNameEv"></span><span id="_CPPv2NK6moveit4core10RobotModel15getRootLinkNameEv"></span><span id="moveit::core::RobotModel::getRootLinkNameC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4b764e710f6a41ccb57e7b3f93660f30"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getRootLinkName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel15getRootLinkNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットのルートリンクの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel12hasLinkModelERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel12hasLinkModelERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel12hasLinkModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::hasLinkModel__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ac2631db66b0b4659756c0d3a46d31418"></span>bool <code class="sig-name descname">hasLinkModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel12hasLinkModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>リンクが存在するかどうかを確認します。存在する場合はtrueを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel12getLinkModelERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel12getLinkModelERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel12getLinkModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::getLinkModel__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a695e20cca1fcaeb38a01ab380f0c30bb"></span><em class="property">const</em> LinkModel *<code class="sig-name descname">getLinkModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>link</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel12getLinkModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前指定でリンクを取得します。リンクが見つからない場合は、エラーが出力され、NULLを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel12getLinkModelEi">
+<span id="_CPPv3NK6moveit4core10RobotModel12getLinkModelEi"></span><span id="_CPPv2NK6moveit4core10RobotModel12getLinkModelEi"></span><span id="moveit::core::RobotModel::getLinkModel__iC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a5b714bfea843c8999288ee8d9eccda03"></span><em class="property">const</em> LinkModel *<code class="sig-name descname">getLinkModel</code><span class="sig-paren">(</span>int <em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel12getLinkModelEi" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>インデックス指定でリンクを取得します。リンクが見つからない場合は、エラーが出力され、NULLを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel12getLinkModelERKNSt6stringE">
+<span id="_CPPv3N6moveit4core10RobotModel12getLinkModelERKNSt6stringE"></span><span id="_CPPv2N6moveit4core10RobotModel12getLinkModelERKNSt6stringE"></span><span id="moveit::core::RobotModel::getLinkModel__ssCR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a90e030981ce90c6c89723ace826fb391"></span>LinkModel *<code class="sig-name descname">getLinkModel</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>link</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel12getLinkModelERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前指定でリンクを取得します。リンクが見つからない場合は、エラーが出力され、NULLを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13getLinkModelsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel13getLinkModelsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel13getLinkModelsEv"></span><span id="moveit::core::RobotModel::getLinkModelsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a51b31269f4a7d78a6ef831ad236c6f73"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> LinkModel *&gt; &amp;<code class="sig-name descname">getLinkModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13getLinkModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>リンクの配列を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel13getLinkModelsEv">
+<span id="_CPPv3N6moveit4core10RobotModel13getLinkModelsEv"></span><span id="_CPPv2N6moveit4core10RobotModel13getLinkModelsEv"></span><span id="moveit::core::RobotModel::getLinkModels"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a214f53a4a897272e574bd43323c93ac9"></span><em class="property">const</em> std::vector&lt;LinkModel *&gt; &amp;<code class="sig-name descname">getLinkModels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel13getLinkModelsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>リンクの配列を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel17getLinkModelNamesEv">
+<span id="_CPPv3NK6moveit4core10RobotModel17getLinkModelNamesEv"></span><span id="_CPPv2NK6moveit4core10RobotModel17getLinkModelNamesEv"></span><span id="moveit::core::RobotModel::getLinkModelNamesC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ac2e6429322178db85f08178ed48d1dfb"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkModelNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel17getLinkModelNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>（すべてのリンクの）リンク名を取得する</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel34getLinkModelsWithCollisionGeometryEv">
+<span id="_CPPv3NK6moveit4core10RobotModel34getLinkModelsWithCollisionGeometryEv"></span><span id="_CPPv2NK6moveit4core10RobotModel34getLinkModelsWithCollisionGeometryEv"></span><span id="moveit::core::RobotModel::getLinkModelsWithCollisionGeometryC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a35ccad8ceda6d3c7e30d09ad2e4e5d7c"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> LinkModel *&gt; &amp;<code class="sig-name descname">getLinkModelsWithCollisionGeometry</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel34getLinkModelsWithCollisionGeometryEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>干渉形状が関連付けられているリンクを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel38getLinkModelNamesWithCollisionGeometryEv">
+<span id="_CPPv3NK6moveit4core10RobotModel38getLinkModelNamesWithCollisionGeometryEv"></span><span id="_CPPv2NK6moveit4core10RobotModel38getLinkModelNamesWithCollisionGeometryEv"></span><span id="moveit::core::RobotModel::getLinkModelNamesWithCollisionGeometryC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ab20499eee3b91dbc5a5095c86c70fd4b"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkModelNamesWithCollisionGeometry</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel38getLinkModelNamesWithCollisionGeometryEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>干渉形状が関連付けられているリンクの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel34getRigidlyConnectedParentLinkModelEPK9LinkModel">
+<span id="_CPPv3N6moveit4core10RobotModel34getRigidlyConnectedParentLinkModelEPK9LinkModel"></span><span id="_CPPv2N6moveit4core10RobotModel34getRigidlyConnectedParentLinkModelEPK9LinkModel"></span><span id="moveit::core::RobotModel::getRigidlyConnectedParentLinkModel__LinkModelCP"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1abc8fa87627c002b5790c34130a5a5d00"></span><em class="property">const</em> LinkModel *<code class="sig-name descname">getRigidlyConnectedParentLinkModel</code><span class="sig-paren">(</span><em class="property">const</em> LinkModel *<em>link</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel34getRigidlyConnectedParentLinkModelEPK9LinkModel" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>固定関節を介してのみ接続されているキネマティックツリーのもっとも根元にあるリンクを取得します。</p>
+<p>updateStateWithLinkAt()を使用してリンクを特定のポーズに向ける必要がある場合に便利に使えます。 updateStateWithLinkAt()は、指定されたリンクとその子孫のみの向きを変えるため、リンクが抽象フレーム名の場合、目的を達成できない可能性があります。次の例を考えてみてください: root -&gt; arm0 -&gt; ... -&gt; armN -&gt; wrist grasp_frame palm -&gt; エンドエフェクタ... ここで、updateStateWithLinkAt(grasp_frame)を呼び出しても、エンドエフェクタの向きは変わりません。代わりに、updateStateWithLinkAt(getRigidlyConnectedParentLinkModel(grasp_frame),...)とすると実際に手首（およびそのすべての子孫）の向きが変わります。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">グループへのアクセス</p>
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel18hasJointModelGroupERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel18hasJointModelGroupERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel18hasJointModelGroupERKNSt6stringE"></span><span id="moveit::core::RobotModel::hasJointModelGroup__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a84f358f25cd404d0b542f1e1b22ec75d"></span>bool <code class="sig-name descname">hasJointModelGroup</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>group</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel18hasJointModelGroupERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>JointModelGroupグループが存在するかどうかを確認します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE"></span><span id="moveit::core::RobotModel::getJointModelGroup__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1adb5b553336174187f587e42ca187f110"></span><em class="property">const</em> JointModelGroup *<code class="sig-name descname">getJointModelGroup</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前指定でグループを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE">
+<span id="_CPPv3N6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE"></span><span id="_CPPv2N6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE"></span><span id="moveit::core::RobotModel::getJointModelGroup__ssCR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1aa3b68bf0980355638f923091988992f5"></span>JointModelGroup *<code class="sig-name descname">getJointModelGroup</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel18getJointModelGroupERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前指定でグループを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel19getJointModelGroupsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel19getJointModelGroupsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel19getJointModelGroupsEv"></span><span id="moveit::core::RobotModel::getJointModelGroupsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4b8f8080de3fccdeebccd42b22e6d95a"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModelGroup *&gt; &amp;<code class="sig-name descname">getJointModelGroups</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel19getJointModelGroupsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>定義されたグループのリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel19getJointModelGroupsEv">
+<span id="_CPPv3N6moveit4core10RobotModel19getJointModelGroupsEv"></span><span id="_CPPv2N6moveit4core10RobotModel19getJointModelGroupsEv"></span><span id="moveit::core::RobotModel::getJointModelGroups"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a8d34a60aad1fb7b536182c7930d327da"></span><em class="property">const</em> std::vector&lt;JointModelGroup *&gt; &amp;<code class="sig-name descname">getJointModelGroups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel19getJointModelGroupsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>定義されたグループのリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel23getJointModelGroupNamesEv">
+<span id="_CPPv3NK6moveit4core10RobotModel23getJointModelGroupNamesEv"></span><span id="_CPPv2NK6moveit4core10RobotModel23getJointModelGroupNamesEv"></span><span id="moveit::core::RobotModel::getJointModelGroupNamesC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a9da77a181463e5646dc1daab73148da2"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointModelGroupNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel23getJointModelGroupNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このモデルに定義されているすべてのグループの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel14hasEndEffectorERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel14hasEndEffectorERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel14hasEndEffectorERKNSt6stringE"></span><span id="moveit::core::RobotModel::hasEndEffector__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a1e28bdaacbcdcba7e94e414844467bc2"></span>bool <code class="sig-name descname">hasEndEffector</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>eef</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel14hasEndEffectorERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタが存在するかどうかを確認します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel14getEndEffectorERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel14getEndEffectorERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel14getEndEffectorERKNSt6stringE"></span><span id="moveit::core::RobotModel::getEndEffector__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a92a2dab92f6a0d43bebb297ed80cf14b"></span><em class="property">const</em> JointModelGroup *<code class="sig-name descname">getEndEffector</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel14getEndEffectorERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>特定のエンドエフェクタ名に対応するグループを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel14getEndEffectorERKNSt6stringE">
+<span id="_CPPv3N6moveit4core10RobotModel14getEndEffectorERKNSt6stringE"></span><span id="_CPPv2N6moveit4core10RobotModel14getEndEffectorERKNSt6stringE"></span><span id="moveit::core::RobotModel::getEndEffector__ssCR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a98652ff31857462db512c0fb06966dad"></span>JointModelGroup *<code class="sig-name descname">getEndEffector</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel14getEndEffectorERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>特定のエンドエフェクタ名に対応するグループを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel15getEndEffectorsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel15getEndEffectorsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel15getEndEffectorsEv"></span><span id="moveit::core::RobotModel::getEndEffectorsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ae459dc09c29ed4a69a5b0cadd50184d0"></span><em class="property">const</em> std::vector&lt;<em class="property">const</em> JointModelGroup *&gt; &amp;<code class="sig-name descname">getEndEffectors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel15getEndEffectorsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタ名とそれらが対応するグループ間のマップを取得します。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel10RobotModelERKN4urdf23ModelInterfaceSharedPtrERKN4srdf19ModelConstSharedPtrE">
+<span id="_CPPv3N6moveit4core10RobotModel10RobotModelERKN4urdf23ModelInterfaceSharedPtrERKN4srdf19ModelConstSharedPtrE"></span><span id="_CPPv2N6moveit4core10RobotModel10RobotModelERKN4urdf23ModelInterfaceSharedPtrERKN4srdf19ModelConstSharedPtrE"></span><span id="moveit::core::RobotModel::RobotModel__urdf::ModelInterfaceSharedPtrCR.srdf::ModelConstSharedPtrCR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ab2d8a71b22b1659634434f9badaa706b"></span><code class="sig-name descname">RobotModel</code><span class="sig-paren">(</span><em class="property">const</em> urdf::ModelInterfaceSharedPtr &amp;<em>urdf_model</em>, <em class="property">const</em> srdf::ModelConstSharedPtr &amp;<em>srdf_model</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel10RobotModelERKN4urdf23ModelInterfaceSharedPtrERKN4srdf19ModelConstSharedPtrE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パース済みのロボットモデルとグループのリストから運動学モデルを構築します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModelD0Ev">
+<span id="_CPPv3N6moveit4core10RobotModelD0Ev"></span><span id="_CPPv2N6moveit4core10RobotModelD0Ev"></span><span id="moveit::core::RobotModel::~RobotModel"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a6040a6e597f1c75fd7c8b47d8f472923"></span><code class="sig-name descname">~RobotModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModelD0Ev" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デストラクタ。すべてのメモリをクリアします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel7getNameEv">
+<span id="_CPPv3NK6moveit4core10RobotModel7getNameEv"></span><span id="_CPPv2NK6moveit4core10RobotModel7getNameEv"></span><span id="moveit::core::RobotModel::getNameC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a57595eadac4ff5b5b776a192b8cdac97"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel7getNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モデル名を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13getModelFrameEv">
+<span id="_CPPv3NK6moveit4core10RobotModel13getModelFrameEv"></span><span id="_CPPv2NK6moveit4core10RobotModel13getModelFrameEv"></span><span id="moveit::core::RobotModel::getModelFrameC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a155d9bc0b6e3b6f8e10ed3021bceca62"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getModelFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13getModelFrameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このモデルの基準座標を取得します（RobotStateを使用する場合）。この基準座標はルート関節に依存します。そのため、基準座標はSRDFから抽出されるか、ルート関節の名前であると想定されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel7isEmptyEv">
+<span id="_CPPv3NK6moveit4core10RobotModel7isEmptyEv"></span><span id="_CPPv2NK6moveit4core10RobotModel7isEmptyEv"></span><span id="moveit::core::RobotModel::isEmptyC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a18e8f3091135a7cbbd06e3887501269f"></span>bool <code class="sig-name descname">isEmpty</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel7isEmptyEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モデルが空の場合、trueを返します（ルートリンクも関節もありません）</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel7getURDFEv">
+<span id="_CPPv3NK6moveit4core10RobotModel7getURDFEv"></span><span id="_CPPv2NK6moveit4core10RobotModel7getURDFEv"></span><span id="moveit::core::RobotModel::getURDFC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1af48166bf4ba5c50a53f015f6b2b51314"></span><em class="property">const</em> urdf::ModelInterfaceSharedPtr &amp;<code class="sig-name descname">getURDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel7getURDFEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パース済みのURDFモデルを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel7getSRDFEv">
+<span id="_CPPv3NK6moveit4core10RobotModel7getSRDFEv"></span><span id="_CPPv2NK6moveit4core10RobotModel7getSRDFEv"></span><span id="moveit::core::RobotModel::getSRDFC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a9e34755169b00408297624244f6f5843"></span><em class="property">const</em> srdf::ModelConstSharedPtr &amp;<code class="sig-name descname">getSRDF</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel7getSRDFEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パース済みSRDFモデルを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel14printModelInfoERNSt7ostreamE">
+<span id="_CPPv3NK6moveit4core10RobotModel14printModelInfoERNSt7ostreamE"></span><span id="_CPPv2NK6moveit4core10RobotModel14printModelInfoERNSt7ostreamE"></span><span id="moveit::core::RobotModel::printModelInfo__osRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4be4673de0632d119bac6b871a13edc0"></span>void <code class="sig-name descname">printModelInfo</code><span class="sig-paren">(</span>std::ostream &amp;<em>out</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel14printModelInfoERNSt7ostreamE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モデルに関する情報を出力します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorEPd">
+<span id="_CPPv3NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorEPd"></span><span id="_CPPv2NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorEPd"></span><span id="moveit::core::RobotModel::getVariableRandomPositions__random_numbers::RandomNumberGeneratorR.doublePC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1af560b302ad3791eed4538d2d2b027746"></span>void <code class="sig-name descname">getVariableRandomPositions</code><span class="sig-paren">(</span>random_numbers::RandomNumberGenerator &amp;<em>rng</em>, double *<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorEPd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのランダム値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsEPd">
+<span id="_CPPv3NK6moveit4core10RobotModel27getVariableDefaultPositionsEPd"></span><span id="_CPPv2NK6moveit4core10RobotModel27getVariableDefaultPositionsEPd"></span><span id="moveit::core::RobotModel::getVariableDefaultPositions__doublePC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ad1af677dd7267646e181e684e5fa8cd6"></span>void <code class="sig-name descname">getVariableDefaultPositions</code><span class="sig-paren">(</span>double *<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsEPd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのデフォルト値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt6vectorIdEE">
+<span id="_CPPv3NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt6vectorIdEE"></span><span id="_CPPv2NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt6vectorIdEE"></span><span id="moveit::core::RobotModel::getVariableRandomPositions__random_numbers::RandomNumberGeneratorR.std::vector:double:RC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1aa44c716e26274754bff3753caa296b46"></span>void <code class="sig-name descname">getVariableRandomPositions</code><span class="sig-paren">(</span>random_numbers::RandomNumberGenerator &amp;<em>rng</em>, std::vector&lt;double&gt; &amp;<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt6vectorIdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのランダム値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt6vectorIdEE">
+<span id="_CPPv3NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt6vectorIdEE"></span><span id="_CPPv2NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt6vectorIdEE"></span><span id="moveit::core::RobotModel::getVariableDefaultPositions__std::vector:double:RC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1aafe1edffa85fadd2c22ba6e8e6416279"></span>void <code class="sig-name descname">getVariableDefaultPositions</code><span class="sig-paren">(</span>std::vector&lt;double&gt; &amp;<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt6vectorIdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのデフォルト値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt3mapINSt6stringEdEE">
+<span id="_CPPv3NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt3mapINSt6stringEdEE"></span><span id="_CPPv2NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt3mapINSt6stringEdEE"></span><span id="moveit::core::RobotModel::getVariableRandomPositions__random_numbers::RandomNumberGeneratorR.std::map:ss.double:RC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a72ccc19922e6c3d86f39ca3bd35ddb09"></span>void <code class="sig-name descname">getVariableRandomPositions</code><span class="sig-paren">(</span>random_numbers::RandomNumberGenerator &amp;<em>rng</em>, std::map&lt;std::string, double&gt; &amp;<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel26getVariableRandomPositionsERN14random_numbers21RandomNumberGeneratorERNSt3mapINSt6stringEdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのランダム値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt3mapINSt6stringEdEE">
+<span id="_CPPv3NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt3mapINSt6stringEdEE"></span><span id="_CPPv2NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt3mapINSt6stringEdEE"></span><span id="moveit::core::RobotModel::getVariableDefaultPositions__std::map:ss.double:RC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a4fa7f7e2c571635d52fd11bef6b36005"></span>void <code class="sig-name descname">getVariableDefaultPositions</code><span class="sig-paren">(</span>std::map&lt;std::string, double&gt; &amp;<em>values</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel27getVariableDefaultPositionsERNSt3mapINSt6stringEdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotStateのデフォルト値を計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel16getVariableCountEv">
+<span id="_CPPv3NK6moveit4core10RobotModel16getVariableCountEv"></span><span id="_CPPv2NK6moveit4core10RobotModel16getVariableCountEv"></span><span id="moveit::core::RobotModel::getVariableCountC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a12f79113bc75bed2be6887a488ccba9c"></span>std::size_t <code class="sig-name descname">getVariableCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel16getVariableCountEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このモデルを記述する変数の数を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel16getVariableNamesEv">
+<span id="_CPPv3NK6moveit4core10RobotModel16getVariableNamesEv"></span><span id="_CPPv2NK6moveit4core10RobotModel16getVariableNamesEv"></span><span id="moveit::core::RobotModel::getVariableNamesC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1ac03ab1904a5af0dbbcfce97623e2feab"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getVariableNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel16getVariableNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>この状態を記述する関節の変数名を取得します。固定関節には自由度がないため、ここには含まれませんが、mimic関節は含まれます。返される要素の数は常にgetVariableCount()と等しくなります</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel17getVariableBoundsERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel17getVariableBoundsERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel17getVariableBoundsERKNSt6stringE"></span><span id="moveit::core::RobotModel::getVariableBounds__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a9805364d02c694d6d40cc0827766e775"></span><em class="property">const</em> VariableBounds &amp;<code class="sig-name descname">getVariableBounds</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>variable</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel17getVariableBoundsERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された変数の境界値を取得します。変数が見つからない場合、例外をスローします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel26getActiveJointModelsBoundsEv">
+<span id="_CPPv3NK6moveit4core10RobotModel26getActiveJointModelsBoundsEv"></span><span id="_CPPv2NK6moveit4core10RobotModel26getActiveJointModelsBoundsEv"></span><span id="moveit::core::RobotModel::getActiveJointModelsBoundsC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a634dd1d0b52f9484d29d2d945f658a54"></span><em class="property">const</em> JointBoundsVector &amp;<code class="sig-name descname">getActiveJointModelsBounds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel26getActiveJointModelsBoundsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのアクティブな関節の境界値を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel16getVariableIndexERKNSt6stringE">
+<span id="_CPPv3NK6moveit4core10RobotModel16getVariableIndexERKNSt6stringE"></span><span id="_CPPv2NK6moveit4core10RobotModel16getVariableIndexERKNSt6stringE"></span><span id="moveit::core::RobotModel::getVariableIndex__ssCRC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1a47c74ed349d40bea2c5c8e3625f693a6"></span>int <code class="sig-name descname">getVariableIndex</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>variable</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel16getVariableIndexERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボット状態の変数名のインデックス値を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit4core10RobotModel13getCommonRootEPK10JointModelPK10JointModel">
+<span id="_CPPv3NK6moveit4core10RobotModel13getCommonRootEPK10JointModelPK10JointModel"></span><span id="_CPPv2NK6moveit4core10RobotModel13getCommonRootEPK10JointModelPK10JointModel"></span><span id="moveit::core::RobotModel::getCommonRoot__JointModelCP.JointModelCPC"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1aa758a48347f6b556a9ec29a8b216d6d0"></span><em class="property">const</em> JointModel *<code class="sig-name descname">getCommonRoot</code><span class="sig-paren">(</span><em class="property">const</em> JointModel *<em>a</em>, <em class="property">const</em> JointModel *<em>b</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit4core10RobotModel13getCommonRootEPK10JointModelPK10JointModel" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>引数として渡された2つの関節の共通の親であり、キネマティックツリーで最も深い関節を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit4core10RobotModel23setKinematicsAllocatorsERKNSt3mapINSt6stringE17SolverAllocatorFnEE">
+<span id="_CPPv3N6moveit4core10RobotModel23setKinematicsAllocatorsERKNSt3mapINSt6stringE17SolverAllocatorFnEE"></span><span id="_CPPv2N6moveit4core10RobotModel23setKinematicsAllocatorsERKNSt3mapINSt6stringE17SolverAllocatorFnEE"></span><span id="moveit::core::RobotModel::setKinematicsAllocators__std::map:ss.SolverAllocatorFn:CR"></span><span class="target" id="classmoveit_1_1core_1_1RobotModel_1af78afbd7f6d3a858d0f4645ca1210f5c"></span>void <code class="sig-name descname">setKinematicsAllocators</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;std::string, SolverAllocatorFn&gt; &amp;<em>allocators</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit4core10RobotModel23setKinematicsAllocatorsERKNSt3mapINSt6stringE17SolverAllocatorFnEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーとグループ名を関連付けたマップを登録する。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="planner_manager.html" class="btn btn-neutral float-right" title="プランニングアルゴリズム基底クラス（PlannerManager）の仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="move_group_interface.html" class="btn btn-neutral float-left" title="C++用ユーザライブラリ（MoveGroupInterface）の仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

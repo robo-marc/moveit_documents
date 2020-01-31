@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MoveIt!の全体構成 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Python用ユーザライブラリ（moveit_commander）の仕様" href="moveit_commander.html" />
+    <link rel="prev" title="コンテンツ" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MoveIt!の全体構成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">ユーザ向けライブラリ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ros">ROS通信</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planning-interface">Planning Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#colllision-detection-interface">Colllision Detection Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planning-scene">Planning Scene</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>MoveIt!の全体構成</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="moveit">
+<h1>MoveIt!の全体構成<a class="headerlink" href="#moveit" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>MoveIt!の全体のソフトウェア構造を以下の図に示します。</p>
+<img alt="_images/moveit_pipeline.png" src="_images/moveit_pipeline.png" />
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Above image is from <a class="reference external" href="http://moveit.ros.org/">http://moveit.ros.org/</a></p>
+</div>
+<div class="section" id="id1">
+<h2>ユーザ向けライブラリ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveIt!は、ROS上に構築されていますが、ROSの知識を必要としないで利用できるユーザ向けライブラリが用意されています。</p>
+<p>MoveIt Commanderは、Python用のユーザ向けライブラリで、ロボットの動作計画の基本APIをROSの知識なく利用できます。</p>
+<p>MoveGroupInterfaceは、C++用のユーザ向けライブラリで、ロボットの動作計画の基本APIをROSの知識なく利用できます。</p>
+</div>
+<div class="section" id="ros">
+<h2>ROS通信<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveItの各内部モジュールはROS通信を行っており、MoveItを利用する際には、ROS通信を直接使うこともできます。</p>
+<p>MoveItのユーザ向けAPIのほとんどはROS Actionの仕組みを使って呼び出します。</p>
+</div>
+<div class="section" id="planning-interface">
+<h2>Planning Interface<a class="headerlink" href="#planning-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveItには、CHOMP、OMPL、SBPLなどの各種プランニングアルゴリズムが実装されています。
+それらプランニングアルゴリズムは、Planning Interfaceクラスを基底クラスとして実装されていますので、自由に切り替えて使うことができます。</p>
+<p>開発者は、Planning Interfaceを継承した独自のクラスを実装することで、独自のアルゴリズムを使ってプランニングを実行することもできます。</p>
+</div>
+<div class="section" id="colllision-detection-interface">
+<h2>Colllision Detection Interface<a class="headerlink" href="#colllision-detection-interface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveItには、FCL、PCDなどの各種干渉計算アルゴリズムが実装されています。
+それら干渉計算アルゴリズムは、Collision Detection Interfaceクラスを基底クラスとして実装されていますので、自由に切り替えて使うことができます。</p>
+<p>開発者は、Collision Detection Interfaceを継承した独自のクラスを実装することで、独自のアルゴリズムを使ってプランニングを実行することもできます。</p>
+</div>
+<div class="section" id="planning-scene">
+<h2>Planning Scene<a class="headerlink" href="#planning-scene" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveItでは、ロボット自身の形状はURDF形式のデータを用いますが、ロボット周辺の環境の形状を考慮したプランニングを行うこともできます。</p>
+<p>Planning Sceneモジュールでは、ROS通信を用いて、ポイントクラウド情報を取り込んだり、各種プリミティブ形状を生成したりするインターフェースが用意されています。</p>
+<p>これら環境情報は、MoveIt全体の制御を行うMove Groupモジュールを経由してCollision Detectionモジュールで利用されます。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="moveit_commander.html" class="btn btn-neutral float-right" title="Python用ユーザライブラリ（moveit_commander）の仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="コンテンツ" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

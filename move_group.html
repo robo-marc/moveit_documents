@@ -1,0 +1,896 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>move_groupサーバの仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="ROSメッセージ一覧" href="ros_messages.html" />
+    <link rel="prev" title="プランニングシーン（PlanningScene）の仕様" href="planning_scene.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">move_groupサーバの仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ros-action">ROS Action一覧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#movegroup">MoveGroup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#executetrajectory">ExecuteTrajectory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pickup">Pickup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#place">Place</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ros">ROSサービス一覧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#applyplanningscene">ApplyPlanningScene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getplanningscene">GetPlanningScene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#executeknowntrajectory">ExecuteKnownTrajectory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getcartesianpath">GetCartesianPath</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getmotionplan">GetMotionPlan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setplannerparams">SetPlannerParams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getplannerparams">GetPlannerParams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getpositionfk">GetPositionFK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getpositionik">GetPositionIK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getstatevalidity">GetStateValidity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#queryplannerinterfaces">QueryPlannerInterfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graspplanning">GraspPlanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#savemap">SaveMap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loadmap">LoadMap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#saverobotstatetowarehouse">SaveRobotStateToWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getrobotstatefromwarehouse">GetRobotStateFromWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deleterobotstatefromwarehouse">DeleteRobotStateFromWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkifrobotstateexistsinwarehouse">CheckIfRobotStateExistsInWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listrobotstatesinwarehouse">ListRobotStatesInWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renamerobotstateinwarehouse">RenameRobotStateInWarehouse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#movegroupcapability">MoveGroupCapability基底クラス</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>move_groupサーバの仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="move-group">
+<h1>move_groupサーバの仕様<a class="headerlink" href="#move-group" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>move_groupサーバの全体構成を以下に示します。</p>
+<p>プランニングと実行などの長期のタスクを実行する際には、ROSアクション（図中赤線）が用いられます。</p>
+<p>その他のサービスは、ROSサービス（図中青線）を用いて提供されます。</p>
+<p>環境情報のアップデートは、一方向通信のROSトピック（図中緑線）が用いられます。</p>
+<img alt="_images/move_group.png" src="_images/move_group.png" />
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Above image is from <a class="reference external" href="http://moveit.ros.org/">http://moveit.ros.org/</a></p>
+</div>
+<div class="section" id="ros-action">
+<h2>ROS Action一覧<a class="headerlink" href="#ros-action" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ROSアクションを各言語で呼び出すにはROSのactionlibを使います。
+詳細な使い方は、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="http://wiki.ros.org/ja/actionlib">http://wiki.ros.org/ja/actionlib</a></p>
+<p>ROSアクション呼び出しは、内部的にはROSメッセージの送信（ゴール情報の送信）と受信（フィードバックメッセージと結果メッセージ）の双方向通信として実現されます。</p>
+<p class="plantuml">
+<img src="_images/plantuml-418bae08e3e54297a396d1cf9513ad69dd5785aa.png" alt="アプリケーションプログラム -&gt; ROSアクション: ゴール情報メッセージ
+アプリケーションプログラム &lt;- ROSアクション: フィードバックメッセージ
+...ゴール状態が達成されるまでフィードバックを繰り返す...
+アプリケーションプログラム &lt;- ROSアクション: 結果メッセージ"/>
+</p>
+<p>ROSアクションはactionlibを通して、実行途中でキャンセルすることもできます。以下はその場合のシーケンスです。</p>
+<p class="plantuml">
+<img src="_images/plantuml-39f93ee9eba1825fe1adea6f2bc400a1abd2371e.png" alt="アプリケーションプログラム -&gt; ROSアクション: ゴール情報メッセージ
+アプリケーションプログラム &lt;- ROSアクション: フィードバックメッセージ
+...フィードバックを繰り返す...
+アプリケーションプログラム -&gt; ROSアクション: キャンセルメッセージ
+アプリケーションプログラム &lt;- ROSアクション: 結果メッセージ"/>
+</p>
+<div class="section" id="movegroup">
+<h3>MoveGroup<a class="headerlink" href="#movegroup" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>軌跡の計算と実行を行うアクションです</p>
+<dl class="action">
+<dt id="action-moveit_msgs/MoveGroup">
+<code class="sig-name descname">moveit_msgs/MoveGroup</code><a class="headerlink" href="#action-moveit_msgs/MoveGroup" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（ゴール）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MotionPlanRequest" title="moveit_msgs/MotionPlanRequest"><em>moveit_msgs/MotionPlanRequest</em></a>) -- プランナーに渡すモーションプランニングリクエスト</p></li>
+<li><p><strong>planning_options</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningOptions" title="moveit_msgs/PlanningOptions"><em>moveit_msgs/PlanningOptions</em></a>) -- プランニングオプション</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（結果）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- 何がうまくいかなかったかを示すエラーコード</p></li>
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 軌道の開始時のロボットの開始状態</p></li>
+<li><p><strong>planned_trajectory</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 生成された軌跡</p></li>
+<li><p><strong>executed_trajectory</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 軌跡実行中に記録されたロボットの実際の軌跡</p></li>
+<li><p><strong>planning_time</strong> (<em>float64</em>) -- モーションプランを完了するのにかかった時間</p></li>
+</ul>
+</dd>
+<dt class="field-odd">フィールド（フィードバック）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<em>string</em>) -- 現在の内部状態</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="executetrajectory">
+<h3>ExecuteTrajectory<a class="headerlink" href="#executetrajectory" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>軌跡の実行を行うアクションです</p>
+<dl class="action">
+<dt id="action-moveit_msgs/ExecuteTrajectory">
+<code class="sig-name descname">moveit_msgs/ExecuteTrajectory</code><a class="headerlink" href="#action-moveit_msgs/ExecuteTrajectory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（ゴール）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 実行する軌跡</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（結果）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- エラーコード- 失敗の全般的な理由を示します</p></li>
+</ul>
+</dd>
+<dt class="field-odd">フィールド（フィードバック）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<em>string</em>) -- 現在の内部状態</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="pickup">
+<h3>Pickup<a class="headerlink" href="#pickup" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ピッキング動作を行う高レベルアクションです</p>
+<dl class="action">
+<dt id="action-moveit_msgs/Pickup">
+<code class="sig-name descname">moveit_msgs/Pickup</code><a class="headerlink" href="#action-moveit_msgs/Pickup" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（ゴール）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_name</strong> (<em>string</em>) -- ピックアップするオブジェクト名（オブジェクト名はplanning sceneで既知である必要があります）</p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- ピックアップのプランニングに使用するグループ名</p></li>
+<li><p><strong>end_effector</strong> (<em>string</em>) -- ピックアップに使用するエンドエフェクタ名（原則的には上記グループ内のリンク）</p></li>
+<li><p><strong>possible_grasps[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Grasp" title="moveit_msgs/Grasp"><em>moveit_msgs/Grasp</em></a>) -- 把握姿勢候補のリスト。少なくとも1つの把握姿勢が必要です</p></li>
+<li><p><strong>support_surface_name</strong> (<em>string</em>) -- 干渉マップ上での支持平面（テーブルなど）の名前。名前が利用できない場合は空のままにすることができます</p></li>
+<li><p><strong>allow_gripper_support_collision</strong> (<em>bool</em>) -- 把持前から把持への移動中およびリフト中に、グリッパーと支持平面の間の干渉を許容するかどうか。把持前の場所に移動する際の干渉は、これがtrueに設定されている場合でも許可されません。</p></li>
+<li><p><strong>attached_object_touch_links[]</strong> (<em>string</em>) -- オブジェクトと接触判定されるリンクの名前。空のままにすると、デフォルトで使用されるエンドエフェクタのリンクになります</p></li>
+<li><p><strong>minimize_object_distance</strong> (<em>bool</em>) -- 必要に応じて、アプローチ方向に沿って、オブジェクトに近づく必要があることを把握アクションに通知します（これにより、把持する前にオブジェクトまでの距離を縮めます）。注：このオプションは、possible_grasps[]で提供される把握姿勢をオブジェクトに近づくように変更する場合があります。</p></li>
+<li><p><strong>path_constraints</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- モーションプランのすべての点に対して適用される制約（任意）</p></li>
+<li><p><strong>planner_id</strong> (<em>string</em>) -- 使用するモーションプランナーの名前。名前が指定されていない場合、デフォルトのモーションプランナーが使用されます</p></li>
+<li><p><strong>allowed_touch_objects[]</strong> (<em>string</em>) -- 付加情報を持っている障害物のリスト（任意）。これら障害物は把握の過程で触り/押し/移動することができます。注意：オブジェクト名「all」が使用されている場合、アプローチおよびリフト中にすべてのオブジェクトとの接触判定が無効になります。</p></li>
+<li><p><strong>allowed_planning_time</strong> (<em>float64</em>) -- モーションプランナーのタイムアウト時間</p></li>
+<li><p><strong>planning_options</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningOptions" title="moveit_msgs/PlanningOptions"><em>moveit_msgs/PlanningOptions</em></a>) -- プランニングオプション</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（結果）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- 試行の全般的な結果</p></li>
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 軌道の開始時のロボットの開始状態</p></li>
+<li><p><strong>trajectory_stages[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 生成された軌跡</p></li>
+<li><p><strong>trajectory_descriptions[]</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>grasp</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Grasp" title="moveit_msgs/Grasp"><em>moveit_msgs/Grasp</em></a>) -- 試みが成功した場合、実行された把握</p></li>
+<li><p><strong>planning_time</strong> (<em>float64</em>) -- プランニングを完了するのにかかった時間（秒）</p></li>
+</ul>
+</dd>
+<dt class="field-odd">フィールド（フィードバック）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<em>string</em>) -- ピックアップアクションの内部状態</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="place">
+<h3>Place<a class="headerlink" href="#place" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>プレース動作を行う高レベルアクションです</p>
+<dl class="action">
+<dt id="action-moveit_msgs/Place">
+<code class="sig-name descname">moveit_msgs/Place</code><a class="headerlink" href="#action-moveit_msgs/Place" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（ゴール）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_name</strong> (<em>string</em>) -- 把握の計画に使用するグループ名</p></li>
+<li><p><strong>attached_object_name</strong> (<em>string</em>) -- プレースするオブジェクトの名前</p></li>
+<li><p><strong>place_locations[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlaceLocation" title="moveit_msgs/PlaceLocation"><em>moveit_msgs/PlaceLocation</em></a>) -- オブジェクトをプレースする場所候補のリスト</p></li>
+<li><p><strong>place_eef</strong> (<em>bool</em>) -- プレースする際に、場所の座標でなく、エンドエフェクタの位置座標（pickと同じ）により指定したい場合、このフラグをtrueにします。</p></li>
+<li><p><strong>support_surface_name</strong> (<em>string</em>) -- 干渉マップ上での支持平面（テーブルなど）の名前。名前が利用できない場合は空のままにすることができます</p></li>
+<li><p><strong>allow_gripper_support_collision</strong> (<em>bool</em>) -- グリッパーと支持平面の間の干渉を配置前から配置場所への移動中および後退中に許容するかどうか。これがtrueに設定されている場合でも、事前配置場所に移動する際の干渉は許可されません。</p></li>
+<li><p><strong>path_constraints</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- モーションプランのすべての点に対して適用される制約（任意）</p></li>
+<li><p><strong>planner_id</strong> (<em>string</em>) -- 使用するモーションプランナーの名前。名前が指定されていない場合、デフォルトのモーションプランナーが使用されます</p></li>
+<li><p><strong>allowed_touch_objects[]</strong> (<em>string</em>) -- 付加情報があり、プレース中に触り/押し/移動できる障害物のリスト（任意）。注意：オブジェクト名「all」を使用すると、アプローチとリトリート中にすべてのオブジェクトとの干渉判定が無効になります。</p></li>
+<li><p><strong>allowed_planning_time</strong> (<em>float64</em>) -- モーションプランナーのタイムアウト時間</p></li>
+<li><p><strong>planning_options</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningOptions" title="moveit_msgs/PlanningOptions"><em>moveit_msgs/PlanningOptions</em></a>) -- プランニングオプション</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（結果）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- プレースの試みの結果</p></li>
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 軌道の開始時のロボットの開始状態</p></li>
+<li><p><strong>trajectory_stages[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 生成された軌跡</p></li>
+<li><p><strong>trajectory_descriptions[]</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>place_location</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlaceLocation" title="moveit_msgs/PlaceLocation"><em>moveit_msgs/PlaceLocation</em></a>) -- プレースが成功した場所（存在する場合）</p></li>
+<li><p><strong>planning_time</strong> (<em>float64</em>) -- プランニングを完了するのにかかった時間（秒）</p></li>
+</ul>
+</dd>
+<dt class="field-odd">フィールド（フィードバック）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<em>string</em>) -- プレースアクションの内部状態</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="ros">
+<h2>ROSサービス一覧<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ROSサービスを各言語で呼び出す方法については、以下の外部ドキュメントを参照してください。</p>
+<p>C++でシンプルなサービスとクライアントを書く
+<a class="reference external" href="http://wiki.ros.org/ja/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29">http://wiki.ros.org/ja/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29</a></p>
+<p>シンプルなサービスとクライアントを書く (Python)
+<a class="reference external" href="http://wiki.ros.org/ja/ROS/Tutorials/WritingServiceClient%28python%29">http://wiki.ros.org/ja/ROS/Tutorials/WritingServiceClient%28python%29</a></p>
+<p>ROSサービス呼び出しは、内部的にはROSメッセージの送信（リクエスト）と受信（応答）の双方向通信として実現されます。</p>
+<p class="plantuml">
+<img src="_images/plantuml-34cce98013e4a6750d43d502c72b2df8c84d3f43.png" alt="アプリケーションプログラム -&gt; ROSサービス: リクエストメッセージ
+アプリケーションプログラム &lt;- ROSサービス: 応答メッセージ"/>
+</p>
+<p>ROSサービスを呼び出すには以下に列挙するメッセージの型情報と共に、ROSトピック名が必要です。
+利用したいROSサービスのトピック名を調べるには、rosserviceコマンドを使います。
+例えば、「moveit_msgs/ApplyPlanningScene」サービスを提供するトピック名を調べるには、以下のコマンドを実行してください:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosservice</span> <span class="n">find</span> <span class="n">moveit_msgs</span><span class="o">/</span><span class="n">ApplyPlanningScene</span>
+</pre></div>
+</div>
+<p>move_groupサーバの各ROSサービスは後述するプラグインの仕組みを使って実装されています。
+もし上記のコマンドでROSトピック名が発見されなかった場合は、利用したいサービスを提供するプラグインが有効になっているかどうかを確認してください。</p>
+<div class="section" id="applyplanningscene">
+<h3>ApplyPlanningScene<a class="headerlink" href="#applyplanningscene" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>planning sceneを適用するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/ApplyPlanningScene">
+<code class="sig-name descname">moveit_msgs/ApplyPlanningScene</code><a class="headerlink" href="#service-moveit_msgs/ApplyPlanningScene" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scene</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningScene" title="moveit_msgs/PlanningScene"><em>moveit_msgs/PlanningScene</em></a>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>success</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getplanningscene">
+<h3>GetPlanningScene<a class="headerlink" href="#getplanningscene" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>planning sceneを取得するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetPlanningScene">
+<code class="sig-name descname">moveit_msgs/GetPlanningScene</code><a class="headerlink" href="#service-moveit_msgs/GetPlanningScene" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningSceneComponents" title="moveit_msgs/PlanningSceneComponents"><em>moveit_msgs/PlanningSceneComponents</em></a>) -- 興味のあるplanning sceneの一部を指定する。何も指定されていない場合、シーン全体が返されます。</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>scene</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlanningScene" title="moveit_msgs/PlanningScene"><em>moveit_msgs/PlanningScene</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="executeknowntrajectory">
+<h3>ExecuteKnownTrajectory<a class="headerlink" href="#executeknowntrajectory" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>軌跡を実行するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/ExecuteKnownTrajectory">
+<code class="sig-name descname">moveit_msgs/ExecuteKnownTrajectory</code><a class="headerlink" href="#service-moveit_msgs/ExecuteKnownTrajectory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 実行する軌跡</p></li>
+<li><p><strong>wait_for_execution</strong> (<em>bool</em>) -- 実行が完了するまでサービスがブロックする必要がある場合、これをtrueに設定します</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- エラーコード- 失敗の全般的な理由を示します</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getcartesianpath">
+<h3>GetCartesianPath<a class="headerlink" href="#getcartesianpath" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>CP制御のためのプランニングを行うサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetCartesianPath">
+<code class="sig-name descname">moveit_msgs/GetCartesianPath</code><a class="headerlink" href="#service-moveit_msgs/GetCartesianPath" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- waypointsの座標の解釈に用いられる基準座標を設定します</p></li>
+<li><p><strong>start_state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- デカルトパスを開始する開始点</p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- パスを計算するグループ名（必須）</p></li>
+<li><p><strong>link_name</strong> (<em>string</em>) -- waypointsの設定対象となるリンク名（任意）。指定しない場合、グループの先端（チェーン状であると想定される）のリンク名が使われます</p></li>
+<li><p><strong>waypoints[]</strong> (<em>geometry_msgs/Pose</em>) -- 指定したリンクが、ウェイポイント間を線形補完で移動するようプランニングが行われます。</p></li>
+<li><p><strong>max_step</strong> (<em>float64</em>) -- プランニング結果のパスの点間の最大距離（デカルト空間）。常に指定する必要があり、&gt; 0にする必要がある</p></li>
+<li><p><strong>jump_threshold</strong> (<em>float64</em>) -- 0以上の場合、この値は、コンフィギュレーション空間内の連続する点間の最大許容距離（L無限大ノルム）と見なされます。距離が最大値を超えることが判明した場合、パスの計算は失敗します。</p></li>
+<li><p><strong>avoid_collisions</strong> (<em>bool</em>) -- 障害物との干渉を回避する必要がある場合はtrueに設定します</p></li>
+<li><p><strong>path_constraints</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- デカルトパスが満たすべき追加の制約を指定します</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>start_state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- パスの開始状態</p></li>
+<li><p><strong>solution</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 計算された解の軌跡</p></li>
+<li><p><strong>fraction</strong> (<em>float64</em>) -- 計算が不完全だった場合、この値は実際に計算されたパスの割合を示します（通過したウェイポイントの数）</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- 計算のエラーコード</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getmotionplan">
+<h3>GetMotionPlan<a class="headerlink" href="#getmotionplan" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>動作計画を行うサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetMotionPlan">
+<code class="sig-name descname">moveit_msgs/GetMotionPlan</code><a class="headerlink" href="#service-moveit_msgs/GetMotionPlan" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>motion_plan_request</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MotionPlanRequest" title="moveit_msgs/MotionPlanRequest"><em>moveit_msgs/MotionPlanRequest</em></a>) -- モーションプランナーへのリクエスト</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>motion_plan_response</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MotionPlanResponse" title="moveit_msgs/MotionPlanResponse"><em>moveit_msgs/MotionPlanResponse</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="setplannerparams">
+<h3>SetPlannerParams<a class="headerlink" href="#setplannerparams" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>プランナーのパラメータ設定を行うサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/SetPlannerParams">
+<code class="sig-name descname">moveit_msgs/SetPlannerParams</code><a class="headerlink" href="#service-moveit_msgs/SetPlannerParams" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planner_config</strong> (<em>string</em>) -- プランニング設定の名前</p></li>
+<li><p><strong>group</strong> (<em>string</em>) -- グループ名（任意）（空の場合はグローバルデフォルトを設定）</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlannerParams" title="moveit_msgs/PlannerParams"><em>moveit_msgs/PlannerParams</em></a>) -- パラメータ（キーと値のペア）</p></li>
+<li><p><strong>replace</strong> (<em>bool</em>) -- パラメータを置き換えるか、既存のものを増やすか</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getplannerparams">
+<h3>GetPlannerParams<a class="headerlink" href="#getplannerparams" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>プランナーのパラメータ取得を行うサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetPlannerParams">
+<code class="sig-name descname">moveit_msgs/GetPlannerParams</code><a class="headerlink" href="#service-moveit_msgs/GetPlannerParams" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planner_config</strong> (<em>string</em>) -- プランニング設定の名前</p></li>
+<li><p><strong>group</strong> (<em>string</em>) -- グループ名（任意）（空の場合はグローバルデフォルトを返します）</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>params</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlannerParams" title="moveit_msgs/PlannerParams"><em>moveit_msgs/PlannerParams</em></a>) -- パラメータ（キーと値のペア）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getpositionfk">
+<h3>GetPositionFK<a class="headerlink" href="#getpositionfk" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>順運動学を計算するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetPositionFK">
+<code class="sig-name descname">moveit_msgs/GetPositionFK</code><a class="headerlink" href="#service-moveit_msgs/GetPositionFK" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- 順運動学サービスのサービス定義。ヘッダーメッセージのframe_idは、順運動学の位置姿勢が計算される基準座標名です。</p></li>
+<li><p><strong>fk_link_names[]</strong> (<em>string</em>) -- 順運動学を計算するリンク名のリスト</p></li>
+<li><p><strong>robot_state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 順運動学計算に使用される関節名と関節各で構成されるロボットの状態</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>pose_stamped[]</strong> (<em>geometry_msgs/PoseStamped</em>) -- 各リンクの（タイムスタンプ付き）位置姿勢を含むPoseStampedメッセージのリスト</p></li>
+<li><p><strong>fk_link_names[]</strong> (<em>string</em>) -- 各位置姿勢に対応するリンク名のリスト</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getpositionik">
+<h3>GetPositionIK<a class="headerlink" href="#getpositionik" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>逆運動学を計算するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetPositionIK">
+<code class="sig-name descname">moveit_msgs/GetPositionIK</code><a class="headerlink" href="#service-moveit_msgs/GetPositionIK" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ik_request</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PositionIKRequest" title="moveit_msgs/PositionIKRequest"><em>moveit_msgs/PositionIKRequest</em></a>) -- 逆運動学計算を実行するためのサービス。逆運動学リクエスト</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>solution</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 逆運動学の解（IKRequestメッセージで指定された関節リストと同じ順序）</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getstatevalidity">
+<h3>GetStateValidity<a class="headerlink" href="#getstatevalidity" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの状態が与えた制約を満たしているかどうかを判定するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetStateValidity">
+<code class="sig-name descname">moveit_msgs/GetStateValidity</code><a class="headerlink" href="#service-moveit_msgs/GetStateValidity" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robot_state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- </p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>constraints</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>valid</strong> (<em>bool</em>) -- </p></li>
+<li><p><strong>contacts[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/ContactInformation" title="moveit_msgs/ContactInformation"><em>moveit_msgs/ContactInformation</em></a>) -- </p></li>
+<li><p><strong>cost_sources[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/CostSource" title="moveit_msgs/CostSource"><em>moveit_msgs/CostSource</em></a>) -- </p></li>
+<li><p><strong>constraint_result[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/ConstraintEvalResult" title="moveit_msgs/ConstraintEvalResult"><em>moveit_msgs/ConstraintEvalResult</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="queryplannerinterfaces">
+<h3>QueryPlannerInterfaces<a class="headerlink" href="#queryplannerinterfaces" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>利用できるプランナー一覧を取得するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/QueryPlannerInterfaces">
+<code class="sig-name descname">moveit_msgs/QueryPlannerInterfaces</code><a class="headerlink" href="#service-moveit_msgs/QueryPlannerInterfaces" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（応答）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planner_interfaces[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/PlannerInterfaceDescription" title="moveit_msgs/PlannerInterfaceDescription"><em>moveit_msgs/PlannerInterfaceDescription</em></a>) -- 利用できるプランナーのリスト</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="graspplanning">
+<h3>GraspPlanning<a class="headerlink" href="#graspplanning" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>把持計画を実行するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GraspPlanning">
+<code class="sig-name descname">moveit_msgs/GraspPlanning</code><a class="headerlink" href="#service-moveit_msgs/GraspPlanning" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_name</strong> (<em>string</em>) -- 使用するグループ名</p></li>
+<li><p><strong>target</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/CollisionObject" title="moveit_msgs/CollisionObject"><em>moveit_msgs/CollisionObject</em></a>) -- 把握するオブジェクト</p></li>
+<li><p><strong>support_surfaces[]</strong> (<em>string</em>) -- 干渉マップ内の関連する支持平面（テーブルなど）の名前。名前が使用できない場合は空のままにできます。</p></li>
+<li><p><strong>candidate_grasps[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Grasp" title="moveit_msgs/Grasp"><em>moveit_msgs/Grasp</em></a>) -- プランナーによって評価される把握リスト（任意）</p></li>
+<li><p><strong>movable_obstacles[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/CollisionObject" title="moveit_msgs/CollisionObject"><em>moveit_msgs/CollisionObject</em></a>) -- 付加情報を持ち、把握の過程で移動できる障害物のリスト（任意）</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>grasps[]</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/Grasp" title="moveit_msgs/Grasp"><em>moveit_msgs/Grasp</em></a>) -- プランニングされた把握のリスト</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- エラーが発生したかどうか</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="savemap">
+<h3>SaveMap<a class="headerlink" href="#savemap" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>干渉マップを保存するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/SaveMap">
+<code class="sig-name descname">moveit_msgs/SaveMap</code><a class="headerlink" href="#service-moveit_msgs/SaveMap" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>success</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="loadmap">
+<h3>LoadMap<a class="headerlink" href="#loadmap" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>干渉マップをロードするサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/LoadMap">
+<code class="sig-name descname">moveit_msgs/LoadMap</code><a class="headerlink" href="#service-moveit_msgs/LoadMap" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>success</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="saverobotstatetowarehouse">
+<h3>SaveRobotStateToWarehouse<a class="headerlink" href="#saverobotstatetowarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの状態をデータベース（MongoDB）に保存するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/SaveRobotStateToWarehouse">
+<code class="sig-name descname">moveit_msgs/SaveRobotStateToWarehouse</code><a class="headerlink" href="#service-moveit_msgs/SaveRobotStateToWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>success</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="getrobotstatefromwarehouse">
+<h3>GetRobotStateFromWarehouse<a class="headerlink" href="#getrobotstatefromwarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの状態をデータベース（MongoDB）からロードするサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/GetRobotStateFromWarehouse">
+<code class="sig-name descname">moveit_msgs/GetRobotStateFromWarehouse</code><a class="headerlink" href="#service-moveit_msgs/GetRobotStateFromWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="ros_messages.html#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="deleterobotstatefromwarehouse">
+<h3>DeleteRobotStateFromWarehouse<a class="headerlink" href="#deleterobotstatefromwarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの状態をデータベース（MongoDB）から削除するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/DeleteRobotStateFromWarehouse">
+<code class="sig-name descname">moveit_msgs/DeleteRobotStateFromWarehouse</code><a class="headerlink" href="#service-moveit_msgs/DeleteRobotStateFromWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="checkifrobotstateexistsinwarehouse">
+<h3>CheckIfRobotStateExistsInWarehouse<a class="headerlink" href="#checkifrobotstateexistsinwarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ロボットの状態がデータベース（MongoDB）に保存されているか確認するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/CheckIfRobotStateExistsInWarehouse">
+<code class="sig-name descname">moveit_msgs/CheckIfRobotStateExistsInWarehouse</code><a class="headerlink" href="#service-moveit_msgs/CheckIfRobotStateExistsInWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>exists</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="listrobotstatesinwarehouse">
+<h3>ListRobotStatesInWarehouse<a class="headerlink" href="#listrobotstatesinwarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>データベース（MongoDB）に保存されたロボットの状態を一覧するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/ListRobotStatesInWarehouse">
+<code class="sig-name descname">moveit_msgs/ListRobotStatesInWarehouse</code><a class="headerlink" href="#service-moveit_msgs/ListRobotStatesInWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regex</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド（応答）</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>states[]</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="renamerobotstateinwarehouse">
+<h3>RenameRobotStateInWarehouse<a class="headerlink" href="#renamerobotstateinwarehouse" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>データベース（MongoDB）に保存されたロボットの状態の名前を変更するサービス</p>
+<dl class="service">
+<dt id="service-moveit_msgs/RenameRobotStateInWarehouse">
+<code class="sig-name descname">moveit_msgs/RenameRobotStateInWarehouse</code><a class="headerlink" href="#service-moveit_msgs/RenameRobotStateInWarehouse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド（リクエスト）</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>new_name</strong> (<em>string</em>) -- </p></li>
+<li><p><strong>robot</strong> (<em>string</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="movegroupcapability">
+<h3>MoveGroupCapability基底クラス<a class="headerlink" href="#movegroupcapability" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>move_groupサーバは、各種サービスを実装する際に、MoveGroupCapabilityクラスを基底クラスとして利用します。</p>
+<dl class="class">
+<dt id="_CPPv4N10move_group19MoveGroupCapabilityE">
+<span id="_CPPv3N10move_group19MoveGroupCapabilityE"></span><span id="_CPPv2N10move_group19MoveGroupCapabilityE"></span><span id="move_group::MoveGroupCapability"></span><span class="target" id="classmove__group_1_1MoveGroupCapability"></span><em class="property">class </em><code class="sig-prename descclassname">move_group<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">MoveGroupCapability</code><a class="headerlink" href="#_CPPv4N10move_group19MoveGroupCapabilityE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Subclassed by move_group::ApplyPlanningSceneService, move_group::ClearOctomapService, move_group::MoveGroupCartesianPathService, move_group::MoveGroupExecuteTrajectoryAction, move_group::MoveGroupGetPlanningSceneService, move_group::MoveGroupKinematicsService, move_group::MoveGroupMoveAction, move_group::MoveGroupPickPlaceAction, move_group::MoveGroupPlanService, move_group::MoveGroupQueryPlannersService, move_group::MoveGroupStateValidationService</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ros_messages.html" class="btn btn-neutral float-right" title="ROSメッセージ一覧" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="planning_scene.html" class="btn btn-neutral float-left" title="プランニングシーン（PlanningScene）の仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

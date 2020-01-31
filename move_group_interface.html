@@ -1,0 +1,1219 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>C++用ユーザライブラリ（MoveGroupInterface）の仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="URDF/SRDFとロボットモデルの仕様" href="robot_model.html" />
+    <link rel="prev" title="Python用ユーザライブラリ（moveit_commander）の仕様" href="moveit_commander.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">コンポーネント図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">コードサンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#movegroupinterface">MoveGroupInterface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planningsceneinterface">PlanningSceneInterface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>C++用ユーザライブラリ（MoveGroupInterface）の仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="c-movegroupinterface">
+<h1>C++用ユーザライブラリ（MoveGroupInterface）の仕様<a class="headerlink" href="#c-movegroupinterface" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>コンポーネント図<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveGroupInterfaceは、ROS通信を使って、プランニング命令をROSのmove_groupサーバに送信します。</p>
+<p class="plantuml">
+<img src="_images/plantuml-d7badfbea33930d4e16e0b18bfa19a05c905da36.png" alt="[MoveGroupInterface] -right-&gt; [move_group] : ROS通信"/>
+</p>
+<p>move_groupサーバで提供されている各サービスとROS通信の詳細については、 <a class="reference internal" href="move_group.html"><span class="doc">move_groupサーバの仕様</span></a> を参照してください。</p>
+</div>
+<div class="section" id="id2">
+<h2>コードサンプル<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本文書では、クラスの仕様のみを記述します。コードサンプルについては、以下の外部ドキュメント参照してください。</p>
+<p><a class="reference external" href="http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/move_group_interface/move_group_interface_tutorial.html">http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/move_group_interface/move_group_interface_tutorial.html</a></p>
+</div>
+<div class="section" id="movegroupinterface">
+<h2>MoveGroupInterface<a class="headerlink" href="#movegroupinterface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterfaceE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterfaceE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterfaceE"></span><span id="moveit::planning_interface::MoveGroupInterface"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface"></span><em class="property">class </em><code class="sig-prename descclassname">moveit::planning_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">MoveGroupInterface</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterfaceE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>move_groupサーバによって提供されている各種ROSサービスを使用するためのクライアントクラス</p>
+<p>このクラスでは、利便性を向上させるために多くの暗黙の設定が行われています。</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">関節角ベースの目標設定</p>
+<p>目標には2つのタイプがあります。JointValueTargetは、各関節角（回転関節の場合は角度、prismatic関節の場合は位置）の値を目標として指定します。PoseTargetは、1つまたは複数のエンドエフェクタの位置姿勢を目標として指定します（プランナーは、位置姿勢に到達させるために必要な関節角度を自動で計算します）。両者のタイプのうちどちらか一方のみを計画に使用できます。setJointValueTarget関数を呼び出すと、関節角度ベースの目標が設定されます。setPoseTarget、setOrientationTarget、setRPYTarget、setPositionTarget関数のいずれかを呼び出すと、位置姿勢ベースの目標が設定されます。</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6vectorIdEE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6vectorIdEE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6vectorIdEE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__std::vector:double:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a71e3819bd31711dcb81c18305ca9a521"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;double&gt; &amp;<em>group_variable_values</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6vectorIdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>group_variable_valuesには、getJointValueTarget().getJointModelGroup(getName())-&gt;getVariableNames()で得られる関節名の配列と同じ順序で、各関節角度値を設定する必要があります。</p>
+<p>毎回全ての関節の角度値を設定する必要があります。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt3mapINSt6stringEdEE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt3mapINSt6stringEdEE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt3mapINSt6stringEdEE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__std::map:ss.double:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a3c3eca8861fb5874961ea1feb4e77836"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;std::string, double&gt; &amp;<em>variable_values</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt3mapINSt6stringEdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>variable_valuesは、関節名と関節角度を対応付けた辞書形式です。グループ内の関節名が実際の目標を設定するために使用されます。グループに含まれない関節名は無視されます。モデルに関節名が見つからない場合、例外がスローされます。variable_valuesで指定されていない関節の目標は変更されません（ロボットのすべての関節角目標を現在の関節角にリセットするには、setJointValueTarget(getCurrentJointValues())を使用してください）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11robot_state10RobotStateE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11robot_state10RobotStateE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11robot_state10RobotStateE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__robot_state::RobotStateCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a81d64ae2586265816efa67c583cefd15"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> robot_state::RobotState &amp;<em>robot_state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11robot_state10RobotStateE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>グループ内のすべての関節角の目標値をrobot_stateで指定された値に設定します。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringERKNSt6vectorIdEE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringERKNSt6vectorIdEE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringERKNSt6vectorIdEE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__ssCR.std::vector:double:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aecfafc21c445b22697347bbaf4477ea5"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>joint_name</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringERKNSt6vectorIdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>joint_nameで指定される関節に対応した1つの値が必要です。値は、この関節の目標角度として設定されます。他の関節の目標角度は変更されません。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__ssCR.double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab66f647d3361ba5208c497d05a23bec2"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>joint_name</em>, double <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKNSt6stringEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>joint_nameで指定される関節は1自由度である必要があります。値は、この関節の目標角度として設定されます。他の関節の目標角度は変更されません。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11sensor_msgs10JointStateE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11sensor_msgs10JointStateE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11sensor_msgs10JointStateE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__sensor_msgs::JointStateCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1adc5bab02c10ad2ae1ee83215b66d52b7"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> sensor_msgs::JointState &amp;<em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN11sensor_msgs10JointStateE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角ベースの目標を設定し、動作計画に使用します。</p>
+<p>stateは、関節の目標角度を設定するために使用されます。stateで指定されていない他の関節の目標角度は変更されません。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>値が範囲外の場合、falseが返されますが、値はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__geometry_msgs::PoseCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab654cb8e9f1e3c3f772a4b60bb80ce25"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられなかった場合、falseが返されますが、逆運動学計算の一部の結果はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__geometry_msgs::PoseStampedCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af21679db6e03559a27d63d086614e360"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::PoseStamped &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられなかった場合、falseが返されますが、逆運動学計算の一部の結果はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setJointValueTarget__Eigen::Isometry3dCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1acc1aea9902f6bf2dbebaa77073bbd8b5"></span>bool <code class="sig-name descname">setJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> Eigen::Isometry3d &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19setJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられなかった場合、falseが返されますが、逆運動学計算の一部の結果はまだ目標として設定されていることに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setApproximateJointValueTarget__geometry_msgs::PoseCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a1e7e2b8f5dd5e2f97ee936015b9338bb"></span>bool <code class="sig-name descname">setApproximateJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs4PoseERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられない場合、近似が使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setApproximateJointValueTarget__geometry_msgs::PoseStampedCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a4322570daae71478f283872abf3dde93"></span>bool <code class="sig-name descname">setApproximateJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::PoseStamped &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられない場合、近似が使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setApproximateJointValueTarget__Eigen::Isometry3dCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ade4282b39b240c0ea221b4ee33080134"></span>bool <code class="sig-name descname">setApproximateJointValueTarget</code><span class="sig-paren">(</span><em class="property">const</em> Eigen::Isometry3d &amp;<em>eef_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface30setApproximateJointValueTargetERKN5Eigen10Isometry3dERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学を計算して、関節角度の目標を設定します。</p>
+<p>setPoseTarget関数とは異なり、逆運動学を用いて単一の解を算出し関節角度の目標値として設定します（setPoseTarget関数の場合は、逆運動学の複数の解が考慮されます）。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+<p>逆運動学で解が見つけられない場合、近似が使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15setRandomTargetEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15setRandomTargetEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15setRandomTargetEv"></span><span id="moveit::planning_interface::MoveGroupInterface::setRandomTarget"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a9244c9fa2f08747a3bd00c9a040e1cd6"></span>void <code class="sig-name descname">setRandomTarget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15setRandomTargetEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>各関節角の目標をランダムに設定します。</p>
+<p>この関数の呼び出しが行われると、以前に設定された位置、姿勢、位置姿勢目標の代わりに関節角ベースの目標が使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14setNamedTargetERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14setNamedTargetERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14setNamedTargetERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setNamedTarget__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a5262ff42a454b499d3608b384957a5e4"></span>bool <code class="sig-name descname">setNamedTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14setNamedTargetERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角の目標値をrememberJointValues関数によって以前に記憶された値に設定するか、SRDFファイルに記述された値に設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getJointValueTargetEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface19getJointValueTargetEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface19getJointValueTargetEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getJointValueTargetC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a3b3e2106b7506f4e6c8b66ec0b914bc4"></span><em class="property">const</em> robot_state::RobotState &amp;<code class="sig-name descname">getJointValueTarget</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getJointValueTargetEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在設定されている関節の目標角を取得します。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">位置姿勢ベースの目標設定</p>
+<p>位置姿勢（または位置、姿勢）目標を設定すると、以前設定された関節角度ベースの目標が無効になります。</p>
+<p>複数のエンドエフェクタを持つグループの場合、グループ内の各エンドエフェクタに位置姿勢目標を設定できます。位置姿勢目標を設定されていないエンドエフェクタは、任意の位置に移動されることがあります。</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17setPositionTargetEdddRKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17setPositionTargetEdddRKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17setPositionTargetEdddRKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPositionTarget__double.double.double.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a417e37154a0f276de9ab70bae2fcad32"></span>bool <code class="sig-name descname">setPositionTarget</code><span class="sig-paren">(</span>double <em>x</em>, double <em>y</em>, double <em>z</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17setPositionTargetEdddRKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの目標位置を（x、y、z）形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12setRPYTargetEdddRKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12setRPYTargetEdddRKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12setRPYTargetEdddRKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setRPYTarget__double.double.double.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7f43684b3ccf3788d758c2aafa887353"></span>bool <code class="sig-name descname">setRPYTarget</code><span class="sig-paren">(</span>double <em>roll</em>, double <em>pitch</em>, double <em>yaw</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12setRPYTargetEdddRKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの姿勢目標を（ロール、ピッチ、ヨー）形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20setOrientationTargetEddddRKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20setOrientationTargetEddddRKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20setOrientationTargetEddddRKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setOrientationTarget__double.double.double.double.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a718268743cb7a60268803c8840d63a75"></span>bool <code class="sig-name descname">setOrientationTarget</code><span class="sig-paren">(</span>double <em>x</em>, double <em>y</em>, double <em>z</em>, double <em>w</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20setOrientationTargetEddddRKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの姿勢目標をクォータニオン（x、y、z、w）形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN5Eigen10Isometry3dERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN5Eigen10Isometry3dERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTarget__Eigen::Isometry3dCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a28a6cebdb01f4f8cadc829b36855182a"></span>bool <code class="sig-name descname">setPoseTarget</code><span class="sig-paren">(</span><em class="property">const</em> Eigen::Isometry3d &amp;<em>end_effector_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN5Eigen10Isometry3dERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの位置姿勢目標を設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs4PoseERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs4PoseERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTarget__geometry_msgs::PoseCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7751b5fd0a6a2011e1b7f2f5e9338261"></span>bool <code class="sig-name descname">setPoseTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>target</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs4PoseERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの位置姿勢目標を設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTarget__geometry_msgs::PoseStampedCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1abf206356ab21737fa6e045d08509696c"></span>bool <code class="sig-name descname">setPoseTarget</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::PoseStamped &amp;<em>target</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13setPoseTargetERKN13geometry_msgs11PoseStampedERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの位置姿勢目標を設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKN8EigenSTL17vector_Isometry3dERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKN8EigenSTL17vector_Isometry3dERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKN8EigenSTL17vector_Isometry3dERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTargets__EigenSTL::vector_Isometry3dCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a273acfcb7cdd825f62287187e0a05314"></span>bool <code class="sig-name descname">setPoseTargets</code><span class="sig-paren">(</span><em class="property">const</em> EigenSTL::vector_Isometry3d &amp;<em>end_effector_pose</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKN8EigenSTL17vector_Isometry3dERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkの位置姿勢目標をリスト形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>計画するとき、プランナーはリストから任意に選択されたある1つの位置姿勢へ移動する軌跡を見つけようとします。このグループに複数のエンドエフェクタが含まれる場合、グループ内のすべてのエンドエフェクタに対して、同じ数の位置姿勢目標が設定されなければなりません。計画が成功した場合、すべてのエンドエフェクタに対して、各目標リスト内の同じインデックスの位置姿勢に動かそうとします。すなわち、あるエンドエフェクタが目標リストの3番目の位置姿勢を採用した場合、グループ内の他のエンドエフェクタも、それぞれの目標リストの3番目の位置姿勢を選択します。重要ではないエンドエフェクタ（どの位置に移動しても良いエンドエフェクタ）は、そのend_effector_linkに対してclearPoseTarget関数を呼び出すことにより、位置姿勢目標設定を無効化できます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTargets__std::vector:geometry_msgs::Pose:CR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ac135bf61e119f8ecd3b2e6010b54ebf8"></span>bool <code class="sig-name descname">setPoseTargets</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>target</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkの位置姿勢目標をリスト形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>計画するとき、プランナーはリストから任意に選択されたある1つの位置姿勢へ移動する軌跡を見つけようとします。このグループに複数のエンドエフェクタが含まれる場合、グループ内のすべてのエンドエフェクタに対して、同じ数の位置姿勢目標が設定されなければなりません。計画が成功した場合、すべてのエンドエフェクタに対して、各目標リスト内の同じインデックスの位置姿勢に動かそうとします。すなわち、あるエンドエフェクタが目標リストの3番目の位置姿勢を採用した場合、グループ内の他のエンドエフェクタも、それぞれの目標リストの3番目の位置姿勢を選択します。重要ではないエンドエフェクタ（どの位置に移動しても良いエンドエフェクタ）は、そのend_effector_linkに対してclearPoseTarget関数を呼び出すことにより、位置姿勢目標設定を無効化できます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs11PoseStampedEEERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs11PoseStampedEEERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs11PoseStampedEEERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseTargets__std::vector:geometry_msgs::PoseStamped:CR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a05f560f83c601ed70d74d2269bedafe8"></span>bool <code class="sig-name descname">setPoseTargets</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::PoseStamped&gt; &amp;<em>target</em>, <em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14setPoseTargetsERKNSt6vectorIN13geometry_msgs11PoseStampedEEERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkの位置姿勢目標をリスト形式で設定します。</p>
+<p>end_effector_linkが指定されていない場合、getEndEffectorLink関数の戻り値（デフォルトのエンドエフェクタ）が使用されます。</p>
+<p>計画するとき、プランナーはリストから任意に選択されたある1つの位置姿勢へ移動する軌跡を見つけようとします。このグループに複数のエンドエフェクタが含まれる場合、グループ内のすべてのエンドエフェクタに対して、同じ数の位置姿勢目標が設定されなければなりません。計画が成功した場合、すべてのエンドエフェクタに対して、各目標リスト内の同じインデックスの位置姿勢に動かそうとします。すなわち、あるエンドエフェクタが目標リストの3番目の位置姿勢を採用した場合、グループ内の他のエンドエフェクタも、それぞれの目標リストの3番目の位置姿勢を選択します。重要ではないエンドエフェクタ（どの位置に移動しても良いエンドエフェクタ）は、そのend_effector_linkに対してclearPoseTarget関数を呼び出すことにより、位置姿勢目標設定を無効化できます。</p>
+<p>既存の関節角度ベースの目標は、設定された新しい位置、方向、位置姿勢目標で置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface21setPoseReferenceFrameERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface21setPoseReferenceFrameERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface21setPoseReferenceFrameERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPoseReferenceFrame__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aac4b6f7cb3c3257001ccbd64c6d14f46"></span>void <code class="sig-name descname">setPoseReferenceFrame</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>pose_reference_frame</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface21setPoseReferenceFrameERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>位置姿勢を設定する際に、基準座標名を省略した場合にデフォルトとして用いる基準座標を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18setEndEffectorLinkERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18setEndEffectorLinkERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18setEndEffectorLinkERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setEndEffectorLink__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a344d714020cfbbfed36ccf7b3c5055da"></span>bool <code class="sig-name descname">setEndEffectorLink</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18setEndEffectorLinkERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの親リンクを指定します。このend_effector_linkは、各目標設定関数でend_effector_linkが明示的に指定されていない場合に、デフォルトとして使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14setEndEffectorERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14setEndEffectorERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14setEndEffectorERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setEndEffector__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1acd09831014016b69fef201a066560184"></span>bool <code class="sig-name descname">setEndEffector</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>eef_name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14setEndEffectorERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>使用するエンドエフェクタの名前を設定します。EndEffectorLinkをこのエンドエフェクタの親リンクとして設定することと同じ効果があります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15clearPoseTargetERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15clearPoseTargetERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15clearPoseTargetERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::clearPoseTarget__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a837dd04d54218876236da957faf82374"></span>void <code class="sig-name descname">clearPoseTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15clearPoseTargetERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkに対して設定された位置姿勢目標を消去します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface16clearPoseTargetsEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface16clearPoseTargetsEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface16clearPoseTargetsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::clearPoseTargets"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aca31d1456dd7b6ef92b309a1b1922af0"></span>void <code class="sig-name descname">clearPoseTargets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface16clearPoseTargetsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのエンドエフェクタに設定された位置姿勢目標を消去します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getPoseTargetERKNSt6stringE">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface13getPoseTargetERKNSt6stringE"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface13getPoseTargetERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getPoseTarget__ssCRC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7ce866118312d6f2a9698ba015f0136b"></span><em class="property">const</em> geometry_msgs::PoseStamped &amp;<code class="sig-name descname">getPoseTarget</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getPoseTargetERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkに対して現在設定されている位置姿勢目標を取得します。 end_effector_linkが空の場合、getEndEffectorLink関数の戻り値（デフォルト値）が使用されます。end_effector_linkに複数の目標が設定されている場合、最初の目標が返されます。このend_effector_linkに位置姿勢目標が設定されていない場合、空の位置姿勢が返されます（orientation.xyzw == 0を確認してください）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface14getPoseTargetsERKNSt6stringE">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface14getPoseTargetsERKNSt6stringE"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface14getPoseTargetsERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getPoseTargets__ssCRC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1acca0012a0c21d3a68ae6b8080c3635a2"></span><em class="property">const</em> std::vector&lt;geometry_msgs::PoseStamped&gt; &amp;<code class="sig-name descname">getPoseTargets</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface14getPoseTargetsERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタの現在設定されている位置姿勢目標を取得します。位置姿勢目標は、対応するsetPoseTarget関数呼び出しが行われた場合、複数のポーズで構成される場合もあります。それ以外の場合、1つの位置姿勢目標のみを含むベクトルが返されます。 end_effector_linkが空（デフォルト値）の場合、getEndEffectorLink関数の戻り値がデフォルトとして利用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getEndEffectorLinkEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface18getEndEffectorLinkEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface18getEndEffectorLinkEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getEndEffectorLinkC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aa329d5256a3fdf52911f2bdcfe3e31bc"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getEndEffectorLink</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getEndEffectorLinkEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在のエンドエフェクタリンクを取得します。これは、setEndEffectorLink関数によって（または間接的にsetEndEffector関数によって）設定された値を返します。setEndEffectorLink関数が呼び出されなかった場合、グループに含まれるエンドエフェクタの親リンク名を報告します。複数のエンドエフェクタがある場合、そのうちの1つが返されます。そのようなリンクが不明な場合、空の文字列が返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface14getEndEffectorEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface14getEndEffectorEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface14getEndEffectorEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getEndEffectorC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a308ce78d3f36f05f3fbb6f582ee9ede6"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getEndEffector</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface14getEndEffectorEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在のエンドエフェクタ名を取得します。これは、setEndEffector関数によって（またはsetEndEffectorLink関数によって間接的に）設定された値を返します。setEndEffector関数が呼び出されなかった場合、この関数はこのグループに含まれるエンドエフェクタを報告します。複数のエンドエフェクタがある場合、そのうちの1つが返されます。エンドエフェクタが不明な場合、空の文字列が返されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface21getPoseReferenceFrameEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface21getPoseReferenceFrameEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface21getPoseReferenceFrameEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getPoseReferenceFrameC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a3488deaa8569fa3e86f3d99f2ef72e7e"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getPoseReferenceFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface21getPoseReferenceFrameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>setPoseReferenceFrame関数によって設定された基準座標を取得します。デフォルトでは、ロボットモデルの基準座標が用いられます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">スタート位置から目標位置へのパスを計画し、その計画を実行します。</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface9asyncMoveEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface9asyncMoveEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface9asyncMoveEv"></span><span id="moveit::planning_interface::MoveGroupInterface::asyncMove"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ac6a5bd3175b0a702050148d96955b5e8"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">asyncMove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface9asyncMoveEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>設定した目標に到達させる軌跡を計画および実行します。この呼び出しはブロックされません（軌跡の実行が完了するまで待機しません）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getMoveGroupClientEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface18getMoveGroupClientEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface18getMoveGroupClientEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getMoveGroupClientC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a6ceac66242f835415855595d41354139"></span>actionlib::SimpleActionClient&lt;moveit_msgs::MoveGroupAction&gt; &amp;<code class="sig-name descname">getMoveGroupClient</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getMoveGroupClientEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>MoveGroupInterfaceによって使用されるROSのmove_groupアクションクライアントを取得します。アクションクライアントを使用して、軌道の実行状態をモニタし、非同期実行中に軌道の実行を中止することができます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4moveEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4moveEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4moveEv"></span><span id="moveit::planning_interface::MoveGroupInterface::move"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a3513c41b0c73400fc6713b25bc6b1637"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4moveEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>設定した目標に到達させる軌跡を計画および実行します。この呼び出しは常にブロックします（軌跡の実行が完了するまで待機します）。実行時には非同期スピナーを開始する必要があります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4planER4Plan">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4planER4Plan"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4planER4Plan"></span><span id="moveit::planning_interface::MoveGroupInterface::plan__PlanR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ad72e3d9367374e388546c8e81f26035a"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">plan</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4PlanE" title="moveit::planning_interface::MoveGroupInterface::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4planER4Plan" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節グループを現在の状態から設定した目標に移動する軌跡計画を行います。軌跡の実行はされません。計画の結果はplanに保存されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12asyncExecuteERK4Plan">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12asyncExecuteERK4Plan"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12asyncExecuteERK4Plan"></span><span id="moveit::planning_interface::MoveGroupInterface::asyncExecute__PlanCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a07227c4302a2a4d423ba413bde4deab7"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">asyncExecute</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4PlanE" title="moveit::planning_interface::MoveGroupInterface::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12asyncExecuteERK4Plan" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>計画を実行し、完了を待たずに終了します。成功時にtrueを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface7executeERK4Plan">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface7executeERK4Plan"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface7executeERK4Plan"></span><span id="moveit::planning_interface::MoveGroupInterface::execute__PlanCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1add236df4ab9ba7b7011ec53f8aa9c026"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4PlanE" title="moveit::planning_interface::MoveGroupInterface::Plan">Plan</a> &amp;<em>plan</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7executeERK4Plan" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>計画を実行し、完了を待って終了します。成功時にtrueを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryEbPN11moveit_msgs16MoveItErrorCodesE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryEbPN11moveit_msgs16MoveItErrorCodesE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryEbPN11moveit_msgs16MoveItErrorCodesE"></span><span id="moveit::planning_interface::MoveGroupInterface::computeCartesianPath__std::vector:geometry_msgs::Pose:CR.double.double.moveit_msgs::RobotTrajectoryR.b.moveit_msgs::MoveItErrorCodesP"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1afd29c4dc55b10564102cf393cd38c71d"></span>double <code class="sig-name descname">computeCartesianPath</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>waypoints</em>, double <em>eef_step</em>, double <em>jump_threshold</em>, moveit_msgs::RobotTrajectory &amp;<em>trajectory</em>, bool <em>avoid_collisions</em> = true, moveit_msgs::MoveItErrorCodes *<em>error_code</em> = NULL<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryEbPN11moveit_msgs16MoveItErrorCodesE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定されたwaypointsを辿るCartesian pathを計算します。結果の軌跡は、エンドエフェクタ座標上で、最大でeef_stepのステップサイズ（メートル単位）になるよう計算されます。waypointsの基準座標には、setPoseReferenceFrame関数で設定された座標が使われます。ロボットのコンフィグレーション空間上での距離変化としてjump_thresholdで設定された値のみが許可されます（これは逆運動学の解が「ジャンプ」することを防ぐためです）。avoid_collisionsがtrueに設定された場合、障害物回避が行われます。障害物が回避できない場合、関数は失敗します。 この関数は、waypointsによって記述されたパスをどれだけ忠実に辿ることができたかを示す0.0〜1.0の値を返します。エラーの場合は-1.0を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryERKN11moveit_msgs11ConstraintsEbPN11moveit_msgs16MoveItErrorCodesE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryERKN11moveit_msgs11ConstraintsEbPN11moveit_msgs16MoveItErrorCodesE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryERKN11moveit_msgs11ConstraintsEbPN11moveit_msgs16MoveItErrorCodesE"></span><span id="moveit::planning_interface::MoveGroupInterface::computeCartesianPath__std::vector:geometry_msgs::Pose:CR.double.double.moveit_msgs::RobotTrajectoryR.moveit_msgs::ConstraintsCR.b.moveit_msgs::MoveItErrorCodesP"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ac33e8c239dead1e1ffb3cfb7e629a626"></span>double <code class="sig-name descname">computeCartesianPath</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>waypoints</em>, double <em>eef_step</em>, double <em>jump_threshold</em>, moveit_msgs::RobotTrajectory &amp;<em>trajectory</em>, <em class="property">const</em> moveit_msgs::Constraints &amp;<em>path_constraints</em>, bool <em>avoid_collisions</em> = true, moveit_msgs::MoveItErrorCodes *<em>error_code</em> = NULL<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20computeCartesianPathERKNSt6vectorIN13geometry_msgs4PoseEEEddRN11moveit_msgs15RobotTrajectoryERKN11moveit_msgs11ConstraintsEbPN11moveit_msgs16MoveItErrorCodesE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定されたwaypointsを辿るCartesian pathを計算します。結果の軌跡は、エンドエフェクタ座標上で、最大でeef_stepのステップサイズ（メートル単位）になるよう計算されます。waypointsの基準座標には、setPoseReferenceFrame関数で設定された座標が使われます。ロボットのコンフィグレーション空間上での距離変化としてjump_thresholdで設定された値のみが許可されます（これは逆運動学の解が「ジャンプ」することを防ぐためです）。path_constraintsで指定された運動学的制約を軌道上の全ての点でチェックします。制約が満たされない場合、部分的な解が返されます。 0.0〜1.0の値を返します。これは、ウェイポイントによって記述されたパスの割合を示します。エラーの場合は-1.0を返します。avoid_collisionsがtrueに設定された場合、制約がチェックされるとともに障害物回避が行われます。障害物が回避できない場合、関数は失敗します。 この関数は、waypointsによって記述されたパスをどれだけ忠実に辿ることができたかを示す0.0〜1.0の値を返します。エラーの場合は-1.0を返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4stopEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4stopEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4stopEv"></span><span id="moveit::planning_interface::MoveGroupInterface::stop"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a16ad2dbf427bddba1c9c4ba20e0a2f05"></span>void <code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4stopEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>軌道の実行が行われている場合は、それを停止します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12allowLookingEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12allowLookingEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12allowLookingEb"></span><span id="moveit::planning_interface::MoveGroupInterface::allowLooking__b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ae33718102a4542366b43a6a763031d52"></span>void <code class="sig-name descname">allowLooking</code><span class="sig-paren">(</span>bool <em>flag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12allowLookingEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットが動作する前に視点を変えて周囲を見回すかどうかを指定します（デフォルトはtrue）</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15allowReplanningEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15allowReplanningEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15allowReplanningEb"></span><span id="moveit::planning_interface::MoveGroupInterface::allowReplanning__b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a683a78bcefe1207e71a1354f0189bcc8"></span>void <code class="sig-name descname">allowReplanning</code><span class="sig-paren">(</span>bool <em>flag</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15allowReplanningEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>環境の変化を検出した場合に、ロボットが再計画するかどうかを指定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface26constructMotionPlanRequestERN11moveit_msgs17MotionPlanRequestE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface26constructMotionPlanRequestERN11moveit_msgs17MotionPlanRequestE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface26constructMotionPlanRequestERN11moveit_msgs17MotionPlanRequestE"></span><span id="moveit::planning_interface::MoveGroupInterface::constructMotionPlanRequest__moveit_msgs::MotionPlanRequestR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a51b1e296f0508b0c879755d3acb96c21"></span>void <code class="sig-name descname">constructMotionPlanRequest</code><span class="sig-paren">(</span>moveit_msgs::MotionPlanRequest &amp;<em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface26constructMotionPlanRequestERN11moveit_msgs17MotionPlanRequestE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>plan関数、またはmove関数からmove_groupサーバにリクエストを送信するためのMotionPlanRequestを作成します。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">計画とアクションを複数利用する高レベルの関数</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringEb"></span><span id="moveit::planning_interface::MoveGroupInterface::pick__ssCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a1e34378bf0b55cb6d07fab5d4d3ae12d"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">pick</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをピックします。</p>
+<p>この関数では、事前に用意された複数のデフォルト把持ポーズを使ってプランニングを試行します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKN11moveit_msgs5GraspEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKN11moveit_msgs5GraspEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKN11moveit_msgs5GraspEb"></span><span id="moveit::planning_interface::MoveGroupInterface::pick__ssCR.moveit_msgs::GraspCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a814bbccdb54f56eeedf1bc64c1c72791"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">pick</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> moveit_msgs::Grasp &amp;<em>grasp</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKN11moveit_msgs5GraspEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>把握ポーズを与えることでオブジェクトをピックします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKNSt6vectorIN11moveit_msgs5GraspEEEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKNSt6vectorIN11moveit_msgs5GraspEEEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKNSt6vectorIN11moveit_msgs5GraspEEEb"></span><span id="moveit::planning_interface::MoveGroupInterface::pick__ssCR.std::vector:moveit_msgs::Grasp:CR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a5282b9d12418b751f84cbff0a021a8ae"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">pick</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::vector&lt;moveit_msgs::Grasp&gt; &amp;<em>grasps</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4pickERKNSt6stringERKNSt6vectorIN11moveit_msgs5GraspEEEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>把握ポーズの候補を与えることでオブジェクトをピックします。</p>
+<p>引数のベクトルが空の場合、この関数はpick(const std::string ＆object)と同様に動作します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKNSt6stringEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKNSt6stringEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKNSt6stringEb"></span><span id="moveit::planning_interface::MoveGroupInterface::planGraspsAndPick__ssCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab55194dc7ccb62c50a1a0d6d653f43bd"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">planGraspsAndPick</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em> = &quot;&quot;, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKNSt6stringEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをピックします。</p>
+<p>moveit_msgs::GraspPlanningサービスの「plan_grasps」関数を呼び出して、最適な把握ポーズを計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKN11moveit_msgs15CollisionObjectEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKN11moveit_msgs15CollisionObjectEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKN11moveit_msgs15CollisionObjectEb"></span><span id="moveit::planning_interface::MoveGroupInterface::planGraspsAndPick__moveit_msgs::CollisionObjectCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8dd2aaa5eba418be6bb75bf92fd4a5ea"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">planGraspsAndPick</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::CollisionObject &amp;<em>object</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17planGraspsAndPickERKN11moveit_msgs15CollisionObjectEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをピックします。</p>
+<p>moveit_msgs::GraspPlanningサービスの「plan_grasps」関数を呼び出して、最適な把握ポーズを計算します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringEb"></span><span id="moveit::planning_interface::MoveGroupInterface::place__ssCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a08cb62ef4aed345c37c61500567246f5"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ワールドの安全な場所にオブジェクトをプレースします（安全な場所が自動で検出されます）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN11moveit_msgs13PlaceLocationEEEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN11moveit_msgs13PlaceLocationEEEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN11moveit_msgs13PlaceLocationEEEb"></span><span id="moveit::planning_interface::MoveGroupInterface::place__ssCR.std::vector:moveit_msgs::PlaceLocation:CR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a9aa35d793087769f89eca1316d893601"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::vector&lt;moveit_msgs::PlaceLocation&gt; &amp;<em>locations</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN11moveit_msgs13PlaceLocationEEEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された場所の候補のいずれかにオブジェクトをプレースします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb"></span><span id="moveit::planning_interface::MoveGroupInterface::place__ssCR.std::vector:geometry_msgs::PoseStamped:CR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1adba657c6f0ac9fc72bbb220698371234"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::vector&lt;geometry_msgs::PoseStamped&gt; &amp;<em>poses</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された場所の候補のいずれかにオブジェクトをプレースします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKN13geometry_msgs11PoseStampedEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKN13geometry_msgs11PoseStampedEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKN13geometry_msgs11PoseStampedEb"></span><span id="moveit::planning_interface::MoveGroupInterface::place__ssCR.geometry_msgs::PoseStampedCR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8daaa39330a3f65aa794dbd89c29dfb2"></span>moveit::planning_interface::MoveItErrorCode <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> geometry_msgs::PoseStamped &amp;<em>pose</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface5placeERKNSt6stringERKN13geometry_msgs11PoseStampedEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された場所にオブジェクトをプレースします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::attachObject__ssCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a459f644ad3c7b8a07a3d0c2bd454b844"></span>bool <code class="sig-name descname">attachObject</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::string &amp;<em>link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning scene内のオブジェクトの名前を指定して、オブジェクトをロボットのリンクに接続します。リンク名が指定されていない場合、デフォルトのエンドエフェクタが使用されます。エンドエフェクタが無い場合、グループ内の最初のリンクが使用されます。オブジェクト名が指定されない場合、move_groupサーバ上でエラーが発生しますが、このインターフェイスによる要求は成功します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::MoveGroupInterface::attachObject__ssCR.ssCR.std::vector:ss:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aa37519f35cbed12eaa398d6391872898"></span>bool <code class="sig-name descname">attachObject</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::string &amp;<em>link</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>touch_links</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12attachObjectERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planning scene内のオブジェクトの名前を指定して、オブジェクトをロボットのリンクに接続します。touch_links引数によってオブジェクトが接触できるリンクのセットを指定します。リンク名が指定されていない場合、デフォルトのエンドエフェクタが使用されます。エンドエフェクタが無い場合、グループ内の最初のリンクが使用されます。オブジェクト名が指定されない場合、move_groupサーバ上でエラーが発生しますが、このインターフェイスによる要求は成功することに注意してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12detachObjectERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12detachObjectERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12detachObjectERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::detachObject__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aa99896b1fcca049803ec4015d6dd8f03"></span>bool <code class="sig-name descname">detachObject</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12detachObjectERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトの接続を解除します。 name引数で接続されているオブジェクトの名前、またはオブジェクトが接続されているリンクの名前を指定します。nameが指定されておらず、接続されているオブジェクトが1つしかない場合は、そのオブジェクトが切り離されます。接続解除するオブジェクトが識別できない場合は、エラーが生成されます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">ロボットの状態をモニタする</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17startStateMonitorEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17startStateMonitorEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17startStateMonitorEd"></span><span id="moveit::planning_interface::MoveGroupInterface::startStateMonitor__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ae9996710a32f8636c1bb82750929dca8"></span>bool <code class="sig-name descname">startStateMonitor</code><span class="sig-paren">(</span>double <em>wait</em> = 1.0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17startStateMonitorEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットの現在の状態についてのデータを受信するCurrentStateMonitorインスタンスを作成します。データを受信する作業をあらかじめ開始できるため、今後のgetCurrentStateなどの関数の呼び出しに時間がかからず、失敗する可能性が低くなります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface21getCurrentJointValuesEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface21getCurrentJointValuesEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface21getCurrentJointValuesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getCurrentJointValues"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a83676c1aca54429ff0de9919ffb79b7a"></span>std::vector&lt;double&gt; <code class="sig-name descname">getCurrentJointValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface21getCurrentJointValuesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>各関節の現在の角度を取得します（getJoints関数を参照）</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15getCurrentStateEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15getCurrentStateEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15getCurrentStateEd"></span><span id="moveit::planning_interface::MoveGroupInterface::getCurrentState__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aecbc1f0926edc654375c9125dbb2a16d"></span>robot_state::RobotStatePtr <code class="sig-name descname">getCurrentState</code><span class="sig-paren">(</span>double <em>wait</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15getCurrentStateEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>waitで指定された時間の間、ロボットの現在の状態に関するデータを収集します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface14getCurrentPoseERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface14getCurrentPoseERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface14getCurrentPoseERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getCurrentPose__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a6430022f7709b989857af33b1a128563"></span>geometry_msgs::PoseStamped <code class="sig-name descname">getCurrentPose</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface14getCurrentPoseERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されたエンドエフェクタの位置姿勢を取得します。 end_effector_linkが指定されなかった場合、getEndEffectorLinkによって指定されるデフォルトのエンドエフェクタが想定されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13getCurrentRPYERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13getCurrentRPYERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13getCurrentRPYERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getCurrentRPY__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a830c4ad88ec226c239fbb54882588d5b"></span>std::vector&lt;double&gt; <code class="sig-name descname">getCurrentRPY</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13getCurrentRPYERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されたエンドエフェクタのロールピッチヨー（XYZ）を取得します。 end_effector_linkが指定されなかった場合、getEndEffectorLinkによって指定されるデフォルトのエンドエフェクタが想定されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20getRandomJointValuesEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20getRandomJointValuesEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20getRandomJointValuesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getRandomJointValues"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a946f05ae9494c21436e7794bad60c274"></span>std::vector&lt;double&gt; <code class="sig-name descname">getRandomJointValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20getRandomJointValuesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>各関節のランダムな角度を取得します（getJoints関数を参照）</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13getRandomPoseERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13getRandomPoseERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13getRandomPoseERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getRandomPose__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a12c22f64ed1ed79fbca3f425c8f1855c"></span>geometry_msgs::PoseStamped <code class="sig-name descname">getRandomPose</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>end_effector_link</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13getRandomPoseERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>end_effector_linkで指定されるエンドエフェクタが到達可能な位置姿勢の中からランダムな位置姿勢を取得します。 end_effector_linkが指定されなかった場合、getEndEffectorLink関数によって指定されるエンドエフェクタが想定されます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">名前付き関節角構成を管理する</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::rememberJointValues__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a9756c7e7248526382189ca7cc89fdddd"></span>void <code class="sig-name descname">rememberJointValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在の関節角度値を名前を付けて記録する。これらはsetNamedTarget関数で使用できます。これらの値は、クライアントでローカルに記録されます。他のクライアントはそれらにアクセスできません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringERKNSt6vectorIdEE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringERKNSt6vectorIdEE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringERKNSt6vectorIdEE"></span><span id="moveit::planning_interface::MoveGroupInterface::rememberJointValues__ssCR.std::vector:double:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1add21f181b93fab2a50b52014dc3551e7"></span>void <code class="sig-name descname">rememberJointValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>values</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface19rememberJointValuesERKNSt6stringERKNSt6vectorIdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された関節角度値を名前を付けて記録する。これらはsetNamedTarget関数で使用できます。これらの値は、クライアントでローカルに記録されます。他のクライアントはそれらにアクセスできません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface24getRememberedJointValuesEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface24getRememberedJointValuesEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface24getRememberedJointValuesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getRememberedJointValuesC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7da7361401c0810970a6b69105c5ee01"></span><em class="property">const</em> std::map&lt;std::string, std::vector&lt;double&gt;&gt; &amp;<code class="sig-name descname">getRememberedJointValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface24getRememberedJointValuesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在記録されている名前と関節角度値のマップを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17forgetJointValuesERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17forgetJointValuesERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17forgetJointValuesERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::forgetJointValues__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ad0e6c9229684e8f172dc40c3df038d17"></span>void <code class="sig-name descname">forgetJointValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17forgetJointValuesERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前を指定して記録された関節角度を消去する。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">プランニングの制約を管理する</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface22setConstraintsDatabaseERKNSt6stringEj">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface22setConstraintsDatabaseERKNSt6stringEj"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface22setConstraintsDatabaseERKNSt6stringEj"></span><span id="moveit::planning_interface::MoveGroupInterface::setConstraintsDatabase__ssCR.unsigned-i"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1acf351f6c3bb8730c76bdc4f624fc3ea2"></span>void <code class="sig-name descname">setConstraintsDatabase</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>host</em>, unsigned int <em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface22setConstraintsDatabaseERKNSt6stringEj" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>制約情報を保存するデータベースサーバーの場所を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getKnownConstraintsEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface19getKnownConstraintsEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface19getKnownConstraintsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getKnownConstraintsC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a10b304e11e9744061689853b5ee5413a"></span>std::vector&lt;std::string&gt; <code class="sig-name descname">getKnownConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getKnownConstraintsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>MongoDBデータベースから既知の制約の名前を読み取ります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getPathConstraintsEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface18getPathConstraintsEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface18getPathConstraintsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getPathConstraintsC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a2c41c4a1449cc1ed9eb085cbf84c3852"></span>moveit_msgs::Constraints <code class="sig-name descname">getPathConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface18getPathConstraintsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このMoveGroupInterfaceに現在設定されている制約を取得します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>このインターフェイスに設定された現在のパス制約のコピー</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPathConstraints__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ac74ec94967a06f6b1da8ea6e060b7444"></span>bool <code class="sig-name descname">setPathConstraints</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>constraint</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>使用するパス制約を設定します。制約は、MongoDBサーバから名前で検索されます。以前setPathConstraints関数の呼び出しで設定されたパス制約は置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKN11moveit_msgs11ConstraintsE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKN11moveit_msgs11ConstraintsE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKN11moveit_msgs11ConstraintsE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPathConstraints__moveit_msgs::ConstraintsCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a92c66e91248f923eb71b2eacf088512b"></span>void <code class="sig-name descname">setPathConstraints</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::Constraints &amp;<em>constraint</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18setPathConstraintsERKN11moveit_msgs11ConstraintsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>使用するパス制約を設定します。この関数については、データベースサーバーは必要ありません。以前setPathConstraints関数の呼び出しで設定されたパス制約は置き換えられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20clearPathConstraintsEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20clearPathConstraintsEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20clearPathConstraintsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::clearPathConstraints"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a4530a0e30683a0d1ae47de1424a5a992"></span>void <code class="sig-name descname">clearPathConstraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20clearPathConstraintsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>パス制約を使用しないことを指定します。以前setPathConstraints関数の呼び出しで設定されたパス制約はすべて削除されます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK7OptionsRKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK7OptionsRKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK7OptionsRKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE"></span><span id="moveit::planning_interface::MoveGroupInterface::MoveGroupInterface__OptionsCR.std::shared_ptr:tf2_ros::Buffer:CR.ros::WallDurationCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7cb9660791640b3620b2b2a5a317c293"></span><code class="sig-name descname">MoveGroupInterface</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7OptionsE" title="moveit::planning_interface::MoveGroupInterface::Options">Options</a> &amp;<em>opt</em>, <em class="property">const</em> std::shared_ptr&lt;tf2_ros::Buffer&gt; &amp;<em>tf_buffer</em> = std::shared_ptr&lt;tf2_ros::Buffer&gt;(), <em class="property">const</em> ros::WallDuration &amp;<em>wait_for_servers</em> = ros::WallDuration()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK7OptionsRKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オプションoptを用いて、MoveGroupInterfaceインスタンスを作成します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>opt.: MoveGroupInterface::Options構造体。特定のコールバックキューでros::NodeHandleを渡す場合、ros::CallbackQueueタイプ（ROSで使用されるコールバックキューのデフォルトタイプ）である必要があります。</p></li>
+<li><p>tf_buffer.: 使用するTF2_ROSバッファーインスタンスを指定します。指定されない場合、内部TF2_ROS TransformListenerとともに内部的に構築されます。</p></li>
+<li><p>wait_for_servers.: アクションサーバーへの接続のタイムアウト。ゼロ時間は無制限の待機を意味します。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERKNSt6stringERKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERKNSt6stringERKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERKNSt6stringERKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE"></span><span id="moveit::planning_interface::MoveGroupInterface::MoveGroupInterface__ssCR.std::shared_ptr:tf2_ros::Buffer:CR.ros::WallDurationCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a4fc94b3cc60667af7b701bd352af8884"></span><code class="sig-name descname">MoveGroupInterface</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>group</em>, <em class="property">const</em> std::shared_ptr&lt;tf2_ros::Buffer&gt; &amp;<em>tf_buffer</em> = std::shared_ptr&lt;tf2_ros::Buffer&gt;(), <em class="property">const</em> ros::WallDuration &amp;<em>wait_for_servers</em> = ros::WallDuration()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERKNSt6stringERKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>特定のグループのMoveGroupアクションのクライアントを構築します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>tf_buffer.: 使用するTF2_ROSバッファーインスタンスを指定します。指定されない場合、内部TF2_ROS TransformListenerとともに内部的に構築されます。</p></li>
+<li><p>wait_for_servers.: アクションサーバーへの接続のタイムアウト。ゼロ時間は無制限の待機を意味します。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK18MoveGroupInterface">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK18MoveGroupInterface"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK18MoveGroupInterface"></span><span id="moveit::planning_interface::MoveGroupInterface::MoveGroupInterface__MoveGroupInterfaceCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a34459a1d34eb981c4e91d0db0a4132cf"></span><code class="sig-name descname">MoveGroupInterface</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK7OptionsRKNSt10shared_ptrIN7tf2_ros6BufferEEERKN3ros12WallDurationE" title="moveit::planning_interface::MoveGroupInterface::MoveGroupInterface">MoveGroupInterface</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface18MoveGroupInterfaceERK18MoveGroupInterface" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このクラスは一意のリソース（アクションクライアント、スレッドなど）を所有しており、コピーする意味はあまりありません。参照渡し、移動、または必要に応じて複数のインスタンスを作成することを推奨します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface7getNameEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface7getNameEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface7getNameEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getNameC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a42fb1ebcff890806dd5c1f82e2a18055"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface7getNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このインスタンスが動作するグループの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15getNamedTargetsEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15getNamedTargetsEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15getNamedTargetsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getNamedTargets"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8fdc429c39a619d9935d9d15efbed87d"></span><em class="property">const</em> std::vector&lt;std::string&gt; <code class="sig-name descname">getNamedTargets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15getNamedTargetsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>目標として使用可能な名前付きロボット状態の名前を取得します。SRDFファイルから各状態とデフォルト状態の両方を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getRobotModelEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface13getRobotModelEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface13getRobotModelEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getRobotModelC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aad1f1ce64bbc8c7c275da6eb0b1b1510"></span>robot_model::RobotModelConstPtr <code class="sig-name descname">getRobotModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getRobotModelEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>RobotModelオブジェクトを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getNodeHandleEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface13getNodeHandleEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface13getNodeHandleEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getNodeHandleC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af6837d4030a8b96ce251ebbf614d0158"></span><em class="property">const</em> ros::NodeHandle &amp;<code class="sig-name descname">getNodeHandle</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface13getNodeHandleEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このインスタンスのROSノードハンドルを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface16getPlanningFrameEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface16getPlanningFrameEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface16getPlanningFrameEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getPlanningFrameC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab20ccac5f7cce02a907dfb6c1ee9f544"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getPlanningFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface16getPlanningFrameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニングを行う際に用いられるフレームの名前を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface23getJointModelGroupNamesEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface23getJointModelGroupNamesEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface23getJointModelGroupNamesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getJointModelGroupNamesC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab512300db224b645d1453be030d5370a"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointModelGroupNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface23getJointModelGroupNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>利用可能なプランニンググループ名を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13getJointNamesEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13getJointNamesEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13getJointNamesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getJointNames"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a899ffaae0d4fd36295bea6d72c122562"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13getJointNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>グループで使用可能なジョイントの名前をvector形式で取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12getLinkNamesEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12getLinkNamesEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12getLinkNamesEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getLinkNames"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a692a257f9c0a7863e8c38adfa80cca58"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12getLinkNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ループで使用可能なリンクの名前をvector形式で取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface20getNamedTargetValuesERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface20getNamedTargetValuesERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface20getNamedTargetValuesERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getNamedTargetValues__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a45eb7b78bf81f9fc429b8e91c66706b3"></span>std::map&lt;std::string, double&gt; <code class="sig-name descname">getNamedTargetValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface20getNamedTargetValuesERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>名前で指定されたロボット状態の関節角度を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface15getActiveJointsEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface15getActiveJointsEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface15getActiveJointsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getActiveJointsC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a40155313200ef8db02a00433a0af4811"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getActiveJoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface15getActiveJointsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このインスタンスが動作するアクティブな（作動可能な）関節リストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface9getJointsEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface9getJointsEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface9getJointsEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getJointsC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ad70dc7e2c5554d63d66fb9ccf1bfa36c"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface9getJointsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このインスタンスが動作するすべての関節リストを取得します（固定関節を含む）。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface16getVariableCountEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface16getVariableCountEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface16getVariableCountEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getVariableCountC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a92db8965d5c2a93dfd591ed0fe7cc7d1"></span>unsigned int <code class="sig-name descname">getVariableCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface16getVariableCountEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このグループの状態を記述するために使用される変数の数を取得します。これは、自由度の数以上の数になります。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface23getInterfaceDescriptionERN11moveit_msgs27PlannerInterfaceDescriptionE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface23getInterfaceDescriptionERN11moveit_msgs27PlannerInterfaceDescriptionE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface23getInterfaceDescriptionERN11moveit_msgs27PlannerInterfaceDescriptionE"></span><span id="moveit::planning_interface::MoveGroupInterface::getInterfaceDescription__moveit_msgs::PlannerInterfaceDescriptionR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a070f0d4500decb3a557814ce5a952dd8"></span>bool <code class="sig-name descname">getInterfaceDescription</code><span class="sig-paren">(</span>moveit_msgs::PlannerInterfaceDescription &amp;<em>desc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface23getInterfaceDescriptionERN11moveit_msgs27PlannerInterfaceDescriptionE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>サーバによって読み込まれたプランニングプラグインの説明を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface16getPlannerParamsERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface16getPlannerParamsERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface16getPlannerParamsERKNSt6stringERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getPlannerParams__ssCR.ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a82c7b1757d22c71d52fa657307a241b2"></span>std::map&lt;std::string, std::string&gt; <code class="sig-name descname">getPlannerParams</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>planner_id</em>, <em class="property">const</em> std::string &amp;<em>group</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface16getPlannerParamsERKNSt6stringERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planner_idで指定されたプランナーのパラメータを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface16setPlannerParamsERKNSt6stringERKNSt6stringERKNSt3mapINSt6stringENSt6stringEEEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface16setPlannerParamsERKNSt6stringERKNSt6stringERKNSt3mapINSt6stringENSt6stringEEEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface16setPlannerParamsERKNSt6stringERKNSt6stringERKNSt3mapINSt6stringENSt6stringEEEb"></span><span id="moveit::planning_interface::MoveGroupInterface::setPlannerParams__ssCR.ssCR.std::map:ss.ss:CR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af6adaecfa21a4b0ca1c4eac30b7269b1"></span>void <code class="sig-name descname">setPlannerParams</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>planner_id</em>, <em class="property">const</em> std::string &amp;<em>group</em>, <em class="property">const</em> std::map&lt;std::string, std::string&gt; &amp;<em>params</em>, bool <em>bReplace</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface16setPlannerParamsERKNSt6stringERKNSt6stringERKNSt3mapINSt6stringENSt6stringEEEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>planner_idで指定されたプランナーのパラメータを設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getDefaultPlannerIdERKNSt6stringE">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface19getDefaultPlannerIdERKNSt6stringE"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface19getDefaultPlannerIdERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::getDefaultPlannerId__ssCRC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8cd64b74e79b7f7059259b26c4ec1395"></span>std::string <code class="sig-name descname">getDefaultPlannerId</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>group</em> = &quot;&quot;<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface19getDefaultPlannerIdERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デフォルトプランナー（グループを指定しない場合はグローバルデフォルトプランナー）を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12setPlannerIdERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12setPlannerIdERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12setPlannerIdERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setPlannerId__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1acab185ec950fe45dad9781eca3c71cc2"></span>void <code class="sig-name descname">setPlannerId</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>planner_id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12setPlannerIdERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>今後の計画に使用するプランナーを指定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface12getPlannerIdEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface12getPlannerIdEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface12getPlannerIdEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getPlannerIdC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af89d6aeacd5bfc344bf6d3b404fb7d7a"></span><em class="property">const</em> std::string &amp;<code class="sig-name descname">getPlannerId</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface12getPlannerIdEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在のplanner_idを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface15setPlanningTimeEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface15setPlanningTimeEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface15setPlanningTimeEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setPlanningTime__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af4631a849c750b4c1428242475c8988d"></span>void <code class="sig-name descname">setPlanningTime</code><span class="sig-paren">(</span>double <em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface15setPlanningTimeEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニング時に適用されるタイムアウト時間を指定します。</p>
+<p>プランナーが中止する前に問題解決に利用できる時間を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface22setNumPlanningAttemptsEj">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface22setNumPlanningAttemptsEj"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface22setNumPlanningAttemptsEj"></span><span id="moveit::planning_interface::MoveGroupInterface::setNumPlanningAttempts__unsigned-i"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a4a65f96a405ab39f2e58714b7f349612"></span>void <code class="sig-name descname">setNumPlanningAttempts</code><span class="sig-paren">(</span>unsigned int <em>num_planning_attempts</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface22setNumPlanningAttemptsEj" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>最適解を得るために動作計画を繰り返す回数を設定します。デフォルト値は1です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface27setMaxVelocityScalingFactorEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface27setMaxVelocityScalingFactorEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface27setMaxVelocityScalingFactorEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setMaxVelocityScalingFactor__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a0eec941ccbfa23260196196ce7a8dd17"></span>void <code class="sig-name descname">setMaxVelocityScalingFactor</code><span class="sig-paren">(</span>double <em>max_velocity_scaling_factor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface27setMaxVelocityScalingFactorEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>最大関節速度を下げるためのスケーリング係数を設定します。許可される値は0～1です。ロボットモデルで指定された最大関節速度に係数が乗算されます。有効範囲外（係数が0.0に設定された場合を含む）の場合、係数はデフォルト値の1.0（最大関節速度）が用いられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface31setMaxAccelerationScalingFactorEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface31setMaxAccelerationScalingFactorEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface31setMaxAccelerationScalingFactorEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setMaxAccelerationScalingFactor__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a3e2bd2edccca8aa49a6bec9d039d5bf3"></span>void <code class="sig-name descname">setMaxAccelerationScalingFactor</code><span class="sig-paren">(</span>double <em>max_acceleration_scaling_factor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface31setMaxAccelerationScalingFactorEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>最大関節加速度を減らすためのスケーリング係数を設定します。許可される値は0～1です。ロボットモデルで定義された最大関節加速度に係数が乗算されます。有効範囲外（係数が0.0に設定された場合を含む）の場合、係数はデフォルト値の1.0（最大関節加速度）が用いられます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface15getPlanningTimeEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface15getPlanningTimeEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface15getPlanningTimeEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getPlanningTimeC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8ce1416ccaf06e62e51a86e1e652968b"></span>double <code class="sig-name descname">getPlanningTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface15getPlanningTimeEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>setPlanningTime関数で設定された秒数を取得します</p>
+<p>プランナーが中止する前に問題解決に利用できる時間を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface21getGoalJointToleranceEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface21getGoalJointToleranceEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface21getGoalJointToleranceEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getGoalJointToleranceC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1ab3472f4f79cc84ff31aa70f582f09b76"></span>double <code class="sig-name descname">getGoalJointTolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface21getGoalJointToleranceEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度ベースの目標に到達したと判断するために使用される許容値を取得します。これは、コンフィギュレーション空間上での各関節角の距離です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface24getGoalPositionToleranceEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface24getGoalPositionToleranceEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface24getGoalPositionToleranceEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getGoalPositionToleranceC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a4eb3a6c9c374de2fe71d2f5a8bc7629d"></span>double <code class="sig-name descname">getGoalPositionTolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface24getGoalPositionToleranceEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>位置目標に到達したと判断するために使用される許容値を取得します。これは、エンドエフェクタが到達する必要がある球体の半径です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface18MoveGroupInterface27getGoalOrientationToleranceEv">
+<span id="_CPPv3NK6moveit18planning_interface18MoveGroupInterface27getGoalOrientationToleranceEv"></span><span id="_CPPv2NK6moveit18planning_interface18MoveGroupInterface27getGoalOrientationToleranceEv"></span><span id="moveit::planning_interface::MoveGroupInterface::getGoalOrientationToleranceC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a86d58ff8269c3d23c1aa765b9ab4353c"></span>double <code class="sig-name descname">getGoalOrientationTolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface18MoveGroupInterface27getGoalOrientationToleranceEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>姿勢目標に到達したと判断するために使用される許容値を取得します。これは、ロール、ピッチ、ヨーのラジアン単位の許容値です。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface16setGoalToleranceEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface16setGoalToleranceEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface16setGoalToleranceEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setGoalTolerance__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a255288edd356098b0b16bcbac8fd5f65"></span>void <code class="sig-name descname">setGoalTolerance</code><span class="sig-paren">(</span>double <em>tolerance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface16setGoalToleranceEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>目標を達成したと判断するために使用される許容値を設定します。関節角度ベースの目標の場合、これはコンフィギュレーション空間上での各関節角の距離になります（関節の種類に応じてラジアンまたはメートル）。位置姿勢目標の場合、これはエンドエフェクタが到達する必要がある球体の半径になります。この関数は、内部的にsetGoalPositionTolerance、setGoalOrientationTolerance、およびsetGoalJointTolerance関数を呼び出します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface21setGoalJointToleranceEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface21setGoalJointToleranceEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface21setGoalJointToleranceEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setGoalJointTolerance__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a8ec9d8fa132c8d807a5e48d18c579187"></span>void <code class="sig-name descname">setGoalJointTolerance</code><span class="sig-paren">(</span>double <em>tolerance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface21setGoalJointToleranceEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度ベースの目標に移動するときにゴールに到達したと判断するために使用される角度許容値を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface24setGoalPositionToleranceEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface24setGoalPositionToleranceEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface24setGoalPositionToleranceEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setGoalPositionTolerance__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a25e58a6cc1c120409cfa5f256716ffca"></span>void <code class="sig-name descname">setGoalPositionTolerance</code><span class="sig-paren">(</span>double <em>tolerance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface24setGoalPositionToleranceEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された位置姿勢に移動するときにゴールに到達したと判断するために使用される位置許容値を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface27setGoalOrientationToleranceEd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface27setGoalOrientationToleranceEd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface27setGoalOrientationToleranceEd"></span><span id="moveit::planning_interface::MoveGroupInterface::setGoalOrientationTolerance__double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a7f803a9f365c5c37801c04611d1db933"></span>void <code class="sig-name descname">setGoalOrientationTolerance</code><span class="sig-paren">(</span>double <em>tolerance</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface27setGoalOrientationToleranceEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された位置姿勢に移動するときにゴールに到達したと判断するために使用される姿勢の許容値を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface12setWorkspaceEdddddd">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface12setWorkspaceEdddddd"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface12setWorkspaceEdddddd"></span><span id="moveit::planning_interface::MoveGroupInterface::setWorkspace__double.double.double.double.double.double"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1afdaac6aadb9aec749368dadcb0fc9fe3"></span>void <code class="sig-name descname">setWorkspace</code><span class="sig-paren">(</span>double <em>minx</em>, double <em>miny</em>, double <em>minz</em>, double <em>maxx</em>, double <em>maxy</em>, double <em>maxz</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface12setWorkspaceEdddddd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ワークスペースの境界を指定します。この境界は、プランニングで用いられる基準座標上で指定されます（つまり、ロボットのルートリンクの原点からの相対座標で指定されます）。これは、グループにロボットのルート関節が含まれる場合、例えば、ロボットのワールドに対する動きを計画する場合に役立ちます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11moveit_msgs10RobotStateE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11moveit_msgs10RobotStateE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11moveit_msgs10RobotStateE"></span><span id="moveit::planning_interface::MoveGroupInterface::setStartState__moveit_msgs::RobotStateCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1af633a8772b33720ec482490a592fafcc"></span>void <code class="sig-name descname">setStartState</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::RobotState &amp;<em>start_state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11moveit_msgs10RobotStateE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在のロボットの状態ではなく、異なる開始状態を考慮する必要がある場合、この関数はその状態を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11robot_state10RobotStateE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11robot_state10RobotStateE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11robot_state10RobotStateE"></span><span id="moveit::planning_interface::MoveGroupInterface::setStartState__robot_state::RobotStateCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1aafb855a64062163d794d6c91e88fea31"></span>void <code class="sig-name descname">setStartState</code><span class="sig-paren">(</span><em class="property">const</em> robot_state::RobotState &amp;<em>start_state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface13setStartStateERKN11robot_state10RobotStateE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>現在のロボットの状態ではなく、異なる開始状態を考慮する必要がある場合、この関数はその状態を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface27setStartStateToCurrentStateEv">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface27setStartStateToCurrentStateEv"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface27setStartStateToCurrentStateEv"></span><span id="moveit::planning_interface::MoveGroupInterface::setStartStateToCurrentState"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a34e857711a8dca3e98635f4925abaf46"></span>void <code class="sig-name descname">setStartStateToCurrentState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface27setStartStateToCurrentStateEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニングの開始状態を、ROSのjoint_stateトピックから得られた現在のロボットの状態に設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface21setSupportSurfaceNameERKNSt6stringE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface21setSupportSurfaceNameERKNSt6stringE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface21setSupportSurfaceNameERKNSt6stringE"></span><span id="moveit::planning_interface::MoveGroupInterface::setSupportSurfaceName__ssCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a42ec25f3ac294283222cbf5fe33c8907"></span>void <code class="sig-name descname">setSupportSurfaceName</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface21setSupportSurfaceNameERKNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ピック/プレース操作の場合に使われる支持平面の名前を設定します。エンドエフェクタに接続されたオブジェクトは支持平面との接触も検出されます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック静的属性</p>
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface17ROBOT_DESCRIPTIONE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface17ROBOT_DESCRIPTIONE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface17ROBOT_DESCRIPTIONE"></span><span id="moveit::planning_interface::MoveGroupInterface::ROBOT_DESCRIPTION__ssC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1a11613e2bc76eb2b956d7c6eb9357139d"></span><em class="property">const</em> std::string <code class="sig-name descname">ROBOT_DESCRIPTION</code> =
+    &quot;robot_description&quot;<a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface17ROBOT_DESCRIPTIONE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットのURDFの読み取り元のデフォルトROSパラメータ名。 「robot_description」に設定されています。</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImplE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImplE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImplE"></span><span id="moveit::planning_interface::MoveGroupInterface::MoveGroupInterfaceImpl"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1MoveGroupInterfaceImpl"></span><em class="property">class </em><code class="sig-name descname">MoveGroupInterfaceImpl</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImplE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImpl5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImpl5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImpl5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb"></span><span id="moveit::planning_interface::MoveGroupInterface::MoveGroupInterfaceImpl::place__ssCR.std::vector:geometry_msgs::PoseStamped:CR.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1MoveGroupInterfaceImpl_1a91ed64d47fc14abec8f86d55dd00a2fa"></span>MoveItErrorCode <code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>object</em>, <em class="property">const</em> std::vector&lt;geometry_msgs::PoseStamped&gt; &amp;<em>poses</em>, bool <em>plan_only</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface22MoveGroupInterfaceImpl5placeERKNSt6stringERKNSt6vectorIN13geometry_msgs11PoseStampedEEEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定された場所の候補のいずれかにオブジェクトをプレースします。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface7OptionsE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface7OptionsE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface7OptionsE"></span><span id="moveit::planning_interface::MoveGroupInterface::Options"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Options"></span><em class="property">struct </em><code class="sig-name descname">Options</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7OptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>MoveGroupInterfaceクラスを構築するときに使用するオプションの設定。</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">公開メンバー</p>
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options11group_name_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface7Options11group_name_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface7Options11group_name_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Options::group_name___ss"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Options_1a2cf3354acfc47c1708dd511be0bca347"></span>std::string <code class="sig-name descname">group_name_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options11group_name_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>クラスインスタンスを初期化したグループ名。</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options18robot_description_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface7Options18robot_description_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface7Options18robot_description_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Options::robot_description___ss"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Options_1a6d808c8691c7bb9f96ea7c586046b439"></span>std::string <code class="sig-name descname">robot_description_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options18robot_description_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットのURDFの読み取り元のROSパラメータ名（デフォルトと異なる場合）</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options12robot_model_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface7Options12robot_model_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface7Options12robot_model_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Options::robot_model___robot_model::RobotModelConstPtr"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Options_1a2e72f8b0daa9a9f7067648c9eca24b15"></span>robot_model::RobotModelConstPtr <code class="sig-name descname">robot_model_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface7Options12robot_model_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ROSパラメータ以外にも、使用するRobotModelのインスタンスも指定できます。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4PlanE">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4PlanE"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4PlanE"></span><span id="moveit::planning_interface::MoveGroupInterface::Plan"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Plan"></span><em class="property">struct </em><code class="sig-name descname">Plan</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4PlanE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>モーションプラン（ROSメッセージ形式）</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">公開メンバー</p>
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan12start_state_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4Plan12start_state_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4Plan12start_state_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Plan::start_state___moveit_msgs::RobotState"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Plan_1ac9333762e84a22da5879866413dec8c6"></span>moveit_msgs::RobotState <code class="sig-name descname">start_state_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan12start_state_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニングに使用される開始状態。</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan11trajectory_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4Plan11trajectory_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4Plan11trajectory_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Plan::trajectory___moveit_msgs::RobotTrajectory"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Plan_1af974e387daa3c09c4e19f29657a2b7cb"></span>moveit_msgs::RobotTrajectory <code class="sig-name descname">trajectory_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan11trajectory_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットの軌跡（start_state_と同じ関節が含まれていない場合があります）</p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan14planning_time_E">
+<span id="_CPPv3N6moveit18planning_interface18MoveGroupInterface4Plan14planning_time_E"></span><span id="_CPPv2N6moveit18planning_interface18MoveGroupInterface4Plan14planning_time_E"></span><span id="moveit::planning_interface::MoveGroupInterface::Plan::planning_time___double"></span><span class="target" id="structmoveit_1_1planning__interface_1_1MoveGroupInterface_1_1Plan_1ab479de7a2494a40891cc7baf51a202a8"></span>double <code class="sig-name descname">planning_time_</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface18MoveGroupInterface4Plan14planning_time_E" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>プランニングにかかった時間。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="planningsceneinterface">
+<h2>PlanningSceneInterface<a class="headerlink" href="#planningsceneinterface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterfaceE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterfaceE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterfaceE"></span><span id="moveit::planning_interface::PlanningSceneInterface"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface"></span><em class="property">class </em><code class="sig-prename descclassname">moveit::planning_interface<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">PlanningSceneInterface</code><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterfaceE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">ワールドを管理する</p>
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface19getKnownObjectNamesEb">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface19getKnownObjectNamesEb"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface19getKnownObjectNamesEb"></span><span id="moveit::planning_interface::PlanningSceneInterface::getKnownObjectNames__b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a5c1c0276df1938281836b0c172179ed0"></span>std::vector&lt;std::string&gt; <code class="sig-name descname">getKnownObjectNames</code><span class="sig-paren">(</span>bool <em>with_type</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface19getKnownObjectNamesEb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ワールドのすべての既知のオブジェクトの名前を取得します。with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddbRNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddbRNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddbRNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::getKnownObjectNamesInROI__double.double.double.double.double.double.b.std::vector:ss:R"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a7343f653b06ea8fdf17af47b344fc340"></span>std::vector&lt;std::string&gt; <code class="sig-name descname">getKnownObjectNamesInROI</code><span class="sig-paren">(</span>double <em>minx</em>, double <em>miny</em>, double <em>minz</em>, double <em>maxx</em>, double <em>maxy</em>, double <em>maxz</em>, bool <em>with_type</em>, std::vector&lt;std::string&gt; &amp;<em>types</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddbRNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定領域（getPlanningFrame関数によって設定された基準座標を使用）内にある既知のオブジェクトの名前を取得します。</p>
+<p>with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddb">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddb"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddb"></span><span id="moveit::planning_interface::PlanningSceneInterface::getKnownObjectNamesInROI__double.double.double.double.double.double.b"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a0c8bebd8964efeff69e08c674e5dc7cb"></span>std::vector&lt;std::string&gt; <code class="sig-name descname">getKnownObjectNamesInROI</code><span class="sig-paren">(</span>double <em>minx</em>, double <em>miny</em>, double <em>minz</em>, double <em>maxx</em>, double <em>maxy</em>, double <em>maxz</em>, bool <em>with_type</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface24getKnownObjectNamesInROIEddddddb" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>指定領域（getPlanningFrame関数によって設定された基準座標を使用）内にある既知のオブジェクトの名前を取得します。with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface14getObjectPosesERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface14getObjectPosesERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface14getObjectPosesERKNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::getObjectPoses__std::vector:ss:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a8c7c82de35252da3df0a58f16a43cf2f"></span>std::map&lt;std::string, geometry_msgs::Pose&gt; <code class="sig-name descname">getObjectPoses</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>object_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface14getObjectPosesERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトIDリストで指定されたオブジェクトから位置姿勢を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface10getObjectsERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface10getObjectsERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface10getObjectsERKNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::getObjects__std::vector:ss:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a1fa1e9196411ab28920f28b57f9f1add"></span>std::map&lt;std::string, moveit_msgs::CollisionObject&gt; <code class="sig-name descname">getObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>object_ids</em> = std::vector&lt;std::string&gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface10getObjectsERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトIDリストで指定されたオブジェクトを取得します。 IDが指定されない場合、すべての既知のオブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface18getAttachedObjectsERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface18getAttachedObjectsERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface18getAttachedObjectsERKNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::getAttachedObjects__std::vector:ss:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a895a23063541122071fe10fe50a169fa"></span>std::map&lt;std::string, moveit_msgs::AttachedCollisionObject&gt; <code class="sig-name descname">getAttachedObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>object_ids</em> = std::vector&lt;std::string&gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface18getAttachedObjectsERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトIDリストで指定されるロボットに接続されたオブジェクトを取得します。 IDが指定されない場合、接続されているすべてのオブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyCollisionObject__moveit_msgs::CollisionObjectCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a9f89682bc0bc4e85d3317c2f3558f075"></span>bool <code class="sig-name descname">applyCollisionObject</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::CollisionObject &amp;<em>collision_object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをplanning sceneに同期的に追加します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectERKN8std_msgs9ColorRGBAE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectERKN8std_msgs9ColorRGBAE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectERKN8std_msgs9ColorRGBAE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyCollisionObject__moveit_msgs::CollisionObjectCR.std_msgs::ColorRGBACR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a07989cebbb3ac755657397ca417b4b7e"></span>bool <code class="sig-name descname">applyCollisionObject</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::CollisionObject &amp;<em>collision_object</em>, <em class="property">const</em> std_msgs::ColorRGBA &amp;<em>object_color</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface20applyCollisionObjectERKN11moveit_msgs15CollisionObjectERKN8std_msgs9ColorRGBAE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをplanning sceneに同期的に追加します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface21applyCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface21applyCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface21applyCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyCollisionObjects__std::vector:moveit_msgs::CollisionObject:CR.std::vector:moveit_msgs::ObjectColor:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a3ade60cd4ca84e32033e6d5abdf2d8a4"></span>bool <code class="sig-name descname">applyCollisionObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;moveit_msgs::CollisionObject&gt; &amp;<em>collision_objects</em>, <em class="property">const</em> std::vector&lt;moveit_msgs::ObjectColor&gt; &amp;<em>object_colors</em> = std::vector&lt;moveit_msgs::ObjectColor&gt;()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface21applyCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>オブジェクトをplanning sceneに同期的に追加します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。object_colorsでIDが指定されていない場合、collision_objectsの対応するオブジェクトIDが使用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface28applyAttachedCollisionObjectERKN11moveit_msgs23AttachedCollisionObjectE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface28applyAttachedCollisionObjectERKN11moveit_msgs23AttachedCollisionObjectE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface28applyAttachedCollisionObjectERKN11moveit_msgs23AttachedCollisionObjectE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyAttachedCollisionObject__moveit_msgs::AttachedCollisionObjectCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a08cbe97d3d33d13f568a7659283c3137"></span>bool <code class="sig-name descname">applyAttachedCollisionObject</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::AttachedCollisionObject &amp;<em>attached_collision_object</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface28applyAttachedCollisionObjectERKN11moveit_msgs23AttachedCollisionObjectE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットに接続されたオブジェクトをplanning sceneに同期的に追加します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface29applyAttachedCollisionObjectsERKNSt6vectorIN11moveit_msgs23AttachedCollisionObjectEEE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface29applyAttachedCollisionObjectsERKNSt6vectorIN11moveit_msgs23AttachedCollisionObjectEEE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface29applyAttachedCollisionObjectsERKNSt6vectorIN11moveit_msgs23AttachedCollisionObjectEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyAttachedCollisionObjects__std::vector:moveit_msgs::AttachedCollisionObject:CR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a4dbe720103a5801a27a5c38fc50525ba"></span>bool <code class="sig-name descname">applyAttachedCollisionObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;moveit_msgs::AttachedCollisionObject&gt; &amp;<em>attached_collision_objects</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface29applyAttachedCollisionObjectsERKNSt6vectorIN11moveit_msgs23AttachedCollisionObjectEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ロボットに接続されたオブジェクトをplanning sceneに同期的に追加します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6moveit18planning_interface22PlanningSceneInterface18applyPlanningSceneERKN11moveit_msgs13PlanningSceneE">
+<span id="_CPPv3N6moveit18planning_interface22PlanningSceneInterface18applyPlanningSceneERKN11moveit_msgs13PlanningSceneE"></span><span id="_CPPv2N6moveit18planning_interface22PlanningSceneInterface18applyPlanningSceneERKN11moveit_msgs13PlanningSceneE"></span><span id="moveit::planning_interface::PlanningSceneInterface::applyPlanningScene__moveit_msgs::PlanningSceneCR"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a24cddd9ef2b62349cf036fa4fcef02a4"></span>bool <code class="sig-name descname">applyPlanningScene</code><span class="sig-paren">(</span><em class="property">const</em> moveit_msgs::PlanningScene &amp;<em>ps</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6moveit18planning_interface22PlanningSceneInterface18applyPlanningSceneERKN11moveit_msgs13PlanningSceneE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>move_groupサーバのplanning sceneを指定されたplanning scene情報で同期的に更新します。planning sceneの更新情報は、move_groupの発行するROSトピックを購読しない限り、他のPlanningSceneMonitorには送信されません。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface22PlanningSceneInterface19addCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE">
+<span id="_CPPv3NK6moveit18planning_interface22PlanningSceneInterface19addCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE"></span><span id="_CPPv2NK6moveit18planning_interface22PlanningSceneInterface19addCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::addCollisionObjects__std::vector:moveit_msgs::CollisionObject:CR.std::vector:moveit_msgs::ObjectColor:CRC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1acddd3e22d8f803fd7ba3eb8d1796b888"></span>void <code class="sig-name descname">addCollisionObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;moveit_msgs::CollisionObject&gt; &amp;<em>collision_objects</em>, <em class="property">const</em> std::vector&lt;moveit_msgs::ObjectColor&gt; &amp;<em>object_colors</em> = std::vector&lt;moveit_msgs::ObjectColor&gt;()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface22PlanningSceneInterface19addCollisionObjectsERKNSt6vectorIN11moveit_msgs15CollisionObjectEEERKNSt6vectorIN11moveit_msgs11ObjectColorEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ROSの/planning_sceneトピックを使用して、オブジェクトをワールドに追加します。 メッセージのobject.operationがobject.ADDに設定されていることを確認してください。</p>
+<p>ワールドの更新は非同期に実行されます。この関数を呼び出した直後にオブジェクトを使用可能にする必要がある場合は、代わりにapplyCollisionObjectsの使用を検討してください。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6moveit18planning_interface22PlanningSceneInterface22removeCollisionObjectsERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3NK6moveit18planning_interface22PlanningSceneInterface22removeCollisionObjectsERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2NK6moveit18planning_interface22PlanningSceneInterface22removeCollisionObjectsERKNSt6vectorINSt6stringEEE"></span><span id="moveit::planning_interface::PlanningSceneInterface::removeCollisionObjects__std::vector:ss:CRC"></span><span class="target" id="classmoveit_1_1planning__interface_1_1PlanningSceneInterface_1a1b67484924deea5d5a4111eb4a25ba76"></span>void <code class="sig-name descname">removeCollisionObjects</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>object_ids</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6moveit18planning_interface22PlanningSceneInterface22removeCollisionObjectsERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ROSの/planning_sceneトピックを使用して、ワールドからオブジェクトを削除します。</p>
+<p>ワールドの更新は非同期に実行されます。この関数を呼び出した直後にオブジェクトを削除する必要がある場合は、代わりにapplyCollisionObjectsの使用を検討してください。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="robot_model.html" class="btn btn-neutral float-right" title="URDF/SRDFとロボットモデルの仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="moveit_commander.html" class="btn btn-neutral float-left" title="Python用ユーザライブラリ（moveit_commander）の仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

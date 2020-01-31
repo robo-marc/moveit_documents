@@ -1,0 +1,1208 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="プランニングシーン（PlanningScene）の仕様" href="planning_scene.html" />
+    <link rel="prev" title="プランニングアルゴリズム基底クラス（PlannerManager）の仕様" href="planner_manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">クラス図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基底クラス</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">KinematicsBase</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#kdl">KDL運動学計算プラグイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kdlkinematicsplugin">KDLKinematicsPlugin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ikfast">IKFast運動学計算プラグイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ikfastkinematicsplugin">IKFastKinematicsPlugin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lma">LMA運動学計算プラグイン</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lmakinematicsplugin">LMAKinematicsPlugin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kinematicsbase">
+<h1>運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様<a class="headerlink" href="#kinematicsbase" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>クラス図<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p class="plantuml">
+<img src="_images/plantuml-78ef85bb7eae65732a9cbe6545292f06fbc704e9.png" alt="KinematicsBase &lt;|-- KDLKinematicsPlugin
+KinematicsBase &lt;|-- IKFastKinematicsPlugin
+KinematicsBase &lt;|-- LMAKinematicsPlugin"/>
+</p>
+<p>各運動学計算アルゴリズムは、KinematicsBaseを基底クラスとして実装されており、自由に切り替えて利用できます。</p>
+<p>既存の運動学計算アルゴリズムを使うだけでなく、独自のアルゴリズムを実装することもできます。
+MoveItでは、ROSのpluginlibの仕組みを使って独自アルゴリズムの既存システムへのプラグインを実現しています。
+詳しい方法については、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="https://ros-planning.github.io/moveit_tutorials/doc/creating_moveit_plugins/plugin_tutorial.html">https://ros-planning.github.io/moveit_tutorials/doc/creating_moveit_plugins/plugin_tutorial.html</a></p>
+<p>一般に運動学の計算に解析解を使ったアルゴリズムの方が、数値解を使ったアルゴリズム（KDLKinematicsPluginなど）よりも高速で安定した解が得られます。</p>
+<p>すでにロボットの解析解が得られている場合、それをプラグインの形で実装することを推奨します。</p>
+<p>単純な形のロボットであれば、IKFastを利用すると、解析解を自動で計算することもできます。</p>
+<p>解析解が得られていないロボットについても、数値解を使ったアルゴリズム（KDLKinematicsPluginなど）とURDF形式のロボット構造データを組み合わせることで、逆運動学が計算できます。</p>
+</div>
+<div class="section" id="id2">
+<h2>基底クラス<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id3">
+<h3>KinematicsBase<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N10kinematics14KinematicsBaseE">
+<span id="_CPPv3N10kinematics14KinematicsBaseE"></span><span id="_CPPv2N10kinematics14KinematicsBaseE"></span><span id="kinematics::KinematicsBase"></span><span class="target" id="classkinematics_1_1KinematicsBase"></span><em class="property">class </em><code class="sig-prename descclassname">kinematics<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">KinematicsBase</code><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBaseE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーのインターフェイスを提供します。</p>
+<p>Subclassed by <a class="reference internal" href="#class__NAMESPACE___1_1IKFastKinematicsPlugin"><span class="std std-ref">_NAMESPACE_::IKFastKinematicsPlugin</span></a>, <a class="reference internal" href="#classkdl__kinematics__plugin_1_1KDLKinematicsPlugin"><span class="std std-ref">kdl_kinematics_plugin::KDLKinematicsPlugin</span></a>, <a class="reference internal" href="#classlma__kinematics__plugin_1_1LMAKinematicsPlugin"><span class="std std-ref">lma_kinematics_plugin::LMAKinematicsPlugin</span></a>, pr2_arm_kinematics::PR2ArmKinematicsPlugin, srv_kinematics_plugin::SrvKinematicsPlugin</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリックタイプ</p>
+<dl class="type">
+<dt id="_CPPv4N10kinematics14KinematicsBase12IKCallbackFnE">
+<span id="_CPPv3N10kinematics14KinematicsBase12IKCallbackFnE"></span><span id="_CPPv2N10kinematics14KinematicsBase12IKCallbackFnE"></span><span id="kinematics::KinematicsBase::IKCallbackFn"></span><span class="target" id="classkinematics_1_1KinematicsBase_1ab56abb588898e9baeebc5bc67bfc74ab"></span><em class="property">typedef </em>boost::function&lt;void<span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;ik_pose, <em class="property">const</em> std::vector&lt;double&gt; &amp;ik_solution, moveit_msgs::MoveItErrorCodes &amp;error_code<span class="sig-paren">)</span>&gt; <code class="sig-name descname">IKCallbackFn</code><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase12IKCallbackFnE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>逆運動学の解を検証するコールバック関数。通常、干渉チェックに使用されます。</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::getPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a1e17be86371e1df09bfbf0273b4f4139"></span><em class="property">virtual</em> bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに実現するための関節角度を計算します。</p>
+<p>In contrast to the searchPositionIK methods, this one is expected to return the solution closest to the seed state. Randomly re-seeding is explicitly not allowed. <dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEER16KinematicsResultRKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEER16KinematicsResultRKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEER16KinematicsResultRKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::getPositionIK__std::vector:geometry_msgs::Pose:CR.std::vector:double:CR.std::vector:std::vector:double::R.KinematicsResultR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1abf6d20852d81fa499a8853a150c7b5b5"></span>bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>ik_poses</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;std::vector&lt;double&gt;&gt; &amp;<em>solutions</em>, KinematicsResult &amp;<em>result</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEER16KinematicsResultRKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>複数のエンドエフェクタの目的の位置姿勢を入力として、それに到達できる関節角度を計算します。</p>
+<p>このデフォルトの実装では、1つの解のみを返すため、結果は、ゼロで初期化された初期姿勢でgetPositionIK関数を呼び出すことと同等です。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解のセットが見つかった場合はtrue、そうでない場合はfalse。</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_poses：各エンドエフェクタの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solutions：有効な関節角を格納したベクトルのベクトル</p></li>
+<li><p>result：クエリの結果を格納する構造体</p></li>
+<li><p>options：使用される冗長性の離散化のタイプ。デフォルトの実装では、KinematicSearches::NO_DISCRETIZATIONタイプのみがサポートされており、他のタイプを設定すると失敗します。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a408f7eb9fef4e46ca38b4a08a72fd505"></span><em class="property">virtual</em> bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a37ad4bd4a8c84adfc9ee361005cea6ea"></span><em class="property">virtual</em> bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a0292dee35c9c6b68967597ac18fcad77"></span><em class="property">virtual</em> bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N10kinematics14KinematicsBase12IKCallbackFnE" title="kinematics::KinematicsBase::IKCallbackFn">IKCallbackFn</a> &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kinematics::KinematicsBase::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a1019de635acc7165e337ff4c7c11f3f9"></span><em class="property">virtual</em> bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N10kinematics14KinematicsBase12IKCallbackFnE" title="kinematics::KinematicsBase::IKCallbackFn">IKCallbackFn</a> &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsEPKN6moveit4core10RobotStateE">
+<span id="_CPPv3NK10kinematics14KinematicsBase16searchPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsEPKN6moveit4core10RobotStateE"></span><span id="_CPPv2NK10kinematics14KinematicsBase16searchPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsEPKN6moveit4core10RobotStateE"></span><span id="kinematics::KinematicsBase::searchPositionIK__std::vector:geometry_msgs::Pose:CR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCR.moveit::core::RobotStateCPC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a899767e95ce008b04c762afeb6f10e9b"></span><em class="property">virtual</em> bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>ik_poses</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N10kinematics14KinematicsBase12IKCallbackFnE" title="kinematics::KinematicsBase::IKCallbackFn">IKCallbackFn</a> &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions(), <em class="property">const</em> moveit::core::RobotState *<em>context_state</em> = NULL<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase16searchPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsEPKN6moveit4core10RobotStateE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>複数のエンドエフェクタを持つプランニンググループに必要な一連の位置姿勢が与えられたら、それらに到達するために必要な関節角度を検索します。これは、たとえば全身の逆運動学計算を実行する必要がある二足歩行ロボットに役立ちます。キネマティックチェーンを備えたほとんどのロボットには必要ありません。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_poses：各エンドエフェクタの目的の位置姿勢。getTipFrames関数で得られる名前と同じ順序で並べる</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+<li><p>context_state：（任意）このリクエストが行われているコンテキスト。関節の位置は、ik_seed_stateで与えられている位置と一致しない場合があります。逆運動学計算には、ik_seed_stateの値が使用され、このRobotStateは他の関節の値を提供するために使用します。このRobotStateは、二足歩行ロボットのバランスを考慮して計算するIKソルバーのように、コンテキストが必要な場合に使用されます。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE">
+<span id="_CPPv3NK10kinematics14KinematicsBase13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="_CPPv2NK10kinematics14KinematicsBase13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="kinematics::KinematicsBase::getPositionFK__std::vector:ss:CR.std::vector:double:CR.std::vector:geometry_msgs::Pose:RC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a0e79179c232829543345269c7e839e27"></span><em class="property">virtual</em> bool <code class="sig-name descname">getPositionFK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>link_names</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>joint_angles</em>, std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>poses</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度とリンクのリストを入力として、それらの位置姿勢を計算します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>link_names：順運動学を計算する必要があるリンクのセット</p></li>
+<li><p>joint_angles：順運動学が計算される関節状態</p></li>
+<li><p>poses：結果の位置姿勢のリスト（getBaseFrameによって返される基準座標が使用される）</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd">
+<span id="_CPPv3N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd"></span><span id="_CPPv2N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd"></span><span id="kinematics::KinematicsBase::setValues__ssCR.ssCR.ssCR.ssCR.double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a9c1a92074da23350010227819f955a72"></span>void <code class="sig-name descname">setValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>robot_description</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::string &amp;<em>tip_frame</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティックチェーンIKソルバで使用するために、ソルバのパラメータを設定します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>robot_description：このパラメーターは、計算対象のロボット運動学の識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。</p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p>tip_frame：チェーンの先端</p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd">
+<span id="_CPPv3N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="_CPPv2N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="kinematics::KinematicsBase::setValues__ssCR.ssCR.ssCR.std::vector:ss:CR.double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a382259b506544902fbf8ed4a5d8ab1ed"></span>void <code class="sig-name descname">setValues</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>robot_description</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>tip_frames</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase9setValuesERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>非チェーンIKソルバーで使用するために、ソルバーのパラメーターを設定します。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>robot_description：このパラメーターは、計算対象のロボット運動学の識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。</p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p>tip_frames：キネマティックツリーのヒントのベクトル</p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd">
+<span id="_CPPv3N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd"></span><span id="_CPPv2N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd"></span><span id="kinematics::KinematicsBase::initialize__ssCR.ssCR.ssCR.ssCR.double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a82c62958a1d422a0b5181e673f3f6f49"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>robot_description</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::string &amp;<em>tip_frame</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6stringEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティクスの初期化関数。キネマティックチェーンIKソルバーで使用します。</p>
+<p>
+Instead of this method, use the method passing in a RobotModel! Default implementation returns false, indicating that this API is not supported. <dl class="simple">
+<dt>戻り値</dt><dd><p>初期化が成功した場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>robot_description：このパラメーターは、計算対象のロボット運動学の識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。</p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p>tip_frame：チェーンの先端</p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd">
+<span id="_CPPv3N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="_CPPv2N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="kinematics::KinematicsBase::initialize__ssCR.ssCR.ssCR.std::vector:ss:CR.double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a17fc794f2ae67e0de519af167be75ab7"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>robot_description</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>tip_frames</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase10initializeERKNSt6stringERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティクスの初期化関数。非チェーンIKソルバーで使用します。</p>
+<p>
+Instead of this method, use the method passing in a RobotModel! Default implementation calls <a class="reference internal" href="#classkinematics_1_1KinematicsBase_1a82c62958a1d422a0b5181e673f3f6f49"><span class="std std-ref">initialize()</span></a> for tip_frames[0] and reports an error if tip_frames.size() != 1. <dl class="simple">
+<dt>戻り値</dt><dd><p>初期化が成功した場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>robot_description：このパラメーターは、ロボットの運動学が計算される識別子として使用できます。たとえば、ロボットの説明を含むROSパラメーターの名前。</p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p>tip_frames：キネマティックツリーのヒントのベクトル</p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd">
+<span id="_CPPv3N10kinematics14KinematicsBase10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="_CPPv2N10kinematics14KinematicsBase10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="kinematics::KinematicsBase::initialize__moveit::core::RobotModelCR.ssCR.ssCR.std::vector:ss:CR.double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1aa7a03b4f996b0814338908c36296d159"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> moveit::core::<a class="reference internal" href="robot_model.html#_CPPv4N6moveit4core10RobotModelE" title="moveit::core::RobotModel">RobotModel</a> &amp;<em>robot_model</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>tip_frames</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティクスの初期化関数。キネマティックチェーンIKソルバーで使用します。</p>
+<p>
+When returning false, the KinematicsPlugingLoader will use the old method, passing a robot_description. Default implementation returns false and issues a warning to implement this new API. TODO: Make this method purely virtual after some soaking time, replacing the fallback. <dl class="simple">
+<dt>戻り値</dt><dd><p>初期化が成功した場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot_model</span></code>: - allow the URDF to be loaded much quicker by passing in a pre-parsed model of the robot </p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tip_frames</span></code>: The tip of the chain </p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase12getGroupNameEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase12getGroupNameEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase12getGroupNameEv"></span><span id="kinematics::KinematicsBase::getGroupNameC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a505d62a64fc774a53ccfb8eaf8253ed0"></span><em class="property">virtual</em> <em class="property">const</em> std::string &amp;<code class="sig-name descname">getGroupName</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase12getGroupNameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ソルバーが動作しているグループの名前を返します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>ソルバーが動作しているグループの文字列名</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase12getBaseFrameEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase12getBaseFrameEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase12getBaseFrameEv"></span><span id="kinematics::KinematicsBase::getBaseFrameC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1afe5eb397a992fa6764fca135765bbf9e"></span><em class="property">virtual</em> <em class="property">const</em> std::string &amp;<code class="sig-name descname">getBaseFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase12getBaseFrameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ソルバーが動作しているフレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>ソルバーが動作しているフレームの文字列名</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase11getTipFrameEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase11getTipFrameEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase11getTipFrameEv"></span><span id="kinematics::KinematicsBase::getTipFrameC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1ae34ca5415b64fbe245671f18bf6b8951"></span><em class="property">virtual</em> <em class="property">const</em> std::string &amp;<code class="sig-name descname">getTipFrame</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase11getTipFrameEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ソルバーが動作しているチェーンの先端フレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>ソルバーが動作しているチェーンの先端フレームの文字列名</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase12getTipFramesEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase12getTipFramesEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase12getTipFramesEv"></span><span id="kinematics::KinematicsBase::getTipFramesC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a2a8a56e85af0a759f463cfff5ec9985a"></span><em class="property">virtual</em> <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getTipFrames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase12getTipFramesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>ソルバーが動作しているキネマティックツリーの先端フレームの名前を返します。これは通常、リンク名です。ネームスペース（「/」プレフィックスなど）は使用しないでください。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>ソルバーが動作しているキネマティックツリーの先端フレームの名前リスト</p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorIjEE">
+<span id="_CPPv3N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorIjEE"></span><span id="_CPPv2N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorIjEE"></span><span id="kinematics::KinematicsBase::setRedundantJoints__std::vector:unsigned-i:CR"></span><span class="target" id="classkinematics_1_1KinematicsBase_1aece5cc8cb89ce4f06b4923b77940a380"></span>bool <code class="sig-name descname">setRedundantJoints</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;unsigned int&gt; &amp;<em>redundant_joint_indices</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorIjEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーが使用する冗長関節のリストを設定します。 IKソルバーと冗長関節の選択によっては、設定が失敗する可能性があります。また、各冗長関節の離散化値をデフォルト値に設定します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>入力された関節インデックスのいずれかが無効である（関節の数を超えている）場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>redundant_joint_indices：冗長関節インデックスのリスト（getJointNamesで取得する関節のリストに対応）。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorINSt6stringEEE"></span><span id="kinematics::KinematicsBase::setRedundantJoints__std::vector:ss:CR"></span><span class="target" id="classkinematics_1_1KinematicsBase_1ae8596c4d8eaf32ea9d00c07629c8c00a"></span>bool <code class="sig-name descname">setRedundantJoints</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>redundant_joint_names</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase18setRedundantJointsERKNSt6vectorINSt6stringEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>運動学ソルバーが使用する冗長関節のリストを設定します。この関数は、setRedundantJointsの設定を呼び出すユーティリティ関数です</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>入力された関節インデックスのいずれかが無効である（関節の数を超えている）場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">redundant_joint_names</span></code>: The set of redundant joint names. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase18getRedundantJointsERNSt6vectorIjEE">
+<span id="_CPPv3NK10kinematics14KinematicsBase18getRedundantJointsERNSt6vectorIjEE"></span><span id="_CPPv2NK10kinematics14KinematicsBase18getRedundantJointsERNSt6vectorIjEE"></span><span id="kinematics::KinematicsBase::getRedundantJoints__std::vector:unsigned-i:RC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1adf2d16019dae95ca263831a44aa29d27"></span><em class="property">virtual</em> void <code class="sig-name descname">getRedundantJoints</code><span class="sig-paren">(</span>std::vector&lt;unsigned int&gt; &amp;<em>redundant_joint_indices</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase18getRedundantJointsERNSt6vectorIjEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>冗長関節のリストを取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase13getJointNamesEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase13getJointNamesEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase13getJointNamesEv"></span><span id="kinematics::KinematicsBase::getJointNamesC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a116303b23cc6c0b105b7aa058901a90a"></span><em class="property">virtual</em> <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase13getJointNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべての関節名を内部で使用される順序で返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase12getLinkNamesEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase12getLinkNamesEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase12getLinkNamesEv"></span><span id="kinematics::KinematicsBase::getLinkNamesC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a2b827d9a0368aea4f9e81808c267d8a9"></span><em class="property">virtual</em> <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase12getLinkNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのリンク名を内部的で使用される順序で返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase13supportsGroupEPKN6moveit4core15JointModelGroupEPNSt6stringE">
+<span id="_CPPv3NK10kinematics14KinematicsBase13supportsGroupEPKN6moveit4core15JointModelGroupEPNSt6stringE"></span><span id="_CPPv2NK10kinematics14KinematicsBase13supportsGroupEPKN6moveit4core15JointModelGroupEPNSt6stringE"></span><span id="kinematics::KinematicsBase::supportsGroup__moveit::core::JointModelGroupCP.ssPC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1af1b024fdedd9425e2d3790066ec16254"></span>bool <code class="sig-name descname">supportsGroup</code><span class="sig-paren">(</span><em class="property">const</em> moveit::core::JointModelGroup *<em>jmg</em>, std::string *<em>error_text_out</em> = NULL<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase13supportsGroupEPKN6moveit4core15JointModelGroupEPNSt6stringE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>このソルバーが特定のJointModelGroupをサポートしているかどうかを確認します。</p>
+<p>キネマティクスソルバーの実装が指定されたグループをサポートしているかどうかを確認するには、この関数をオーバーライドします。</p>
+<p>この関数が追加される前に記述されたソルバーはすべてチェーングループのみをサポートするため、デフォルトの実装ではjmg-&gt;isChain()の結果が返されます。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>グループがサポートされている場合はtrue、サポートされていない場合はfalse。</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>jmg：このIKソルバーが利用可能か問い合わせるプランニンググループ</p></li>
+<li><p>error_text_out：このポインタがnullでなかった場合、グループがサポートされていない場合、サポートされていない理由の説明が格納されます。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase23setSearchDiscretizationEd">
+<span id="_CPPv3N10kinematics14KinematicsBase23setSearchDiscretizationEd"></span><span id="_CPPv2N10kinematics14KinematicsBase23setSearchDiscretizationEd"></span><span id="kinematics::KinematicsBase::setSearchDiscretization__double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a1ab7f68c8d7d694f9dd35bd14a150c0a"></span>void <code class="sig-name descname">setSearchDiscretization</code><span class="sig-paren">(</span>double <em>sd</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase23setSearchDiscretizationEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべての冗長関節の検索離散化値を設定します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase23setSearchDiscretizationERKNSt3mapIidEE">
+<span id="_CPPv3N10kinematics14KinematicsBase23setSearchDiscretizationERKNSt3mapIidEE"></span><span id="_CPPv2N10kinematics14KinematicsBase23setSearchDiscretizationERKNSt3mapIidEE"></span><span id="kinematics::KinematicsBase::setSearchDiscretization__std::map:i.double:CR"></span><span class="target" id="classkinematics_1_1KinematicsBase_1aceee87eac8147a2f4d5f3904c2abdced"></span>void <code class="sig-name descname">setSearchDiscretization</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;int, double&gt; &amp;<em>discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase23setSearchDiscretizationERKNSt3mapIidEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>冗長関節ごとに個別の離散化値を設定します。</p>
+<p>このメソッドを呼び出すと、以前の離散化設定が置き換えられます。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>discretization：関節インデックスと離散化値のペア。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase23getSearchDiscretizationEi">
+<span id="_CPPv3NK10kinematics14KinematicsBase23getSearchDiscretizationEi"></span><span id="_CPPv2NK10kinematics14KinematicsBase23getSearchDiscretizationEi"></span><span id="kinematics::KinematicsBase::getSearchDiscretization__iC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a6b588c863d1af3647551e8ca13fe92c4"></span>double <code class="sig-name descname">getSearchDiscretization</code><span class="sig-paren">(</span>int <em>joint_index</em> = 0<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase23getSearchDiscretizationEi" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>検索の離散化の値を取得します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase33getSupportedDiscretizationMethodsEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase33getSupportedDiscretizationMethodsEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase33getSupportedDiscretizationMethodsEv"></span><span id="kinematics::KinematicsBase::getSupportedDiscretizationMethodsC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a48ce07136ebb2972d96c72be0fb77bf4"></span>std::vector&lt;DiscretizationMethod&gt; <code class="sig-name descname">getSupportedDiscretizationMethods</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase33getSupportedDiscretizationMethodsEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>サポートされている離散化検索タイプのリストを返します。この実装では、DiscretizationMethods::ONE検索のみをサポートします。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBase17setDefaultTimeoutEd">
+<span id="_CPPv3N10kinematics14KinematicsBase17setDefaultTimeoutEd"></span><span id="_CPPv2N10kinematics14KinematicsBase17setDefaultTimeoutEd"></span><span id="kinematics::KinematicsBase::setDefaultTimeout__double"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a6fffaaeb6ef4753c069e7d1d48d6cbf5"></span>void <code class="sig-name descname">setDefaultTimeout</code><span class="sig-paren">(</span>double <em>timeout</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBase17setDefaultTimeoutEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>タイムアウトが引数を使用して設定されていない関数の場合、この関数で設定された（およびKinematicsBase::DEFAULT_TIMEOUTに初期化された）デフォルトのタイムアウトが適用されます</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK10kinematics14KinematicsBase17getDefaultTimeoutEv">
+<span id="_CPPv3NK10kinematics14KinematicsBase17getDefaultTimeoutEv"></span><span id="_CPPv2NK10kinematics14KinematicsBase17getDefaultTimeoutEv"></span><span id="kinematics::KinematicsBase::getDefaultTimeoutC"></span><span class="target" id="classkinematics_1_1KinematicsBase_1ac96713d5aaf392ecb7f258f7cf69f498"></span>double <code class="sig-name descname">getDefaultTimeout</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK10kinematics14KinematicsBase17getDefaultTimeoutEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>タイムアウトが引数を使用して指定されていない関数の場合、このデフォルトのタイムアウトが適用されます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N10kinematics14KinematicsBaseD0Ev">
+<span id="_CPPv3N10kinematics14KinematicsBaseD0Ev"></span><span id="_CPPv2N10kinematics14KinematicsBaseD0Ev"></span><span id="kinematics::KinematicsBase::~KinematicsBase"></span><span class="target" id="classkinematics_1_1KinematicsBase_1a9f03dce30c715768526c4a951fc64766"></span><code class="sig-name descname">~KinematicsBase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10kinematics14KinematicsBaseD0Ev" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>インターフェイスの仮想デストラクタ。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="kdl">
+<h2>KDL運動学計算プラグイン<a class="headerlink" href="#kdl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Orocos-KDLライブラリ（<a class="reference external" href="https://www.orocos.org/kdl">https://www.orocos.org/kdl</a>）を使った逆運動学計算アルゴリズムを利用できます。</p>
+<div class="section" id="kdlkinematicsplugin">
+<h3>KDLKinematicsPlugin<a class="headerlink" href="#kdlkinematicsplugin" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPluginE">
+<span id="_CPPv3N21kdl_kinematics_plugin19KDLKinematicsPluginE"></span><span id="_CPPv2N21kdl_kinematics_plugin19KDLKinematicsPluginE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin"></span><em class="property">class </em><code class="sig-prename descclassname">kdl_kinematics_plugin<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">KDLKinematicsPlugin</code><a class="headerlink" href="#_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPluginE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>KDLを使用した運動学アルゴリズムの実装。このバージョンでは、mimic関節も含め、あらゆる運動連鎖をサポートしています。</p>
+<p>Inherits from <a class="reference internal" href="#classkinematics_1_1KinematicsBase"><span class="std std-ref">kinematics::KinematicsBase</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPlugin19KDLKinematicsPluginEv">
+<span id="_CPPv3N21kdl_kinematics_plugin19KDLKinematicsPlugin19KDLKinematicsPluginEv"></span><span id="_CPPv2N21kdl_kinematics_plugin19KDLKinematicsPlugin19KDLKinematicsPluginEv"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::KDLKinematicsPlugin"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1aa18064a90c94e000324d7dbb14a61f26"></span><code class="sig-name descname">KDLKinematicsPlugin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPlugin19KDLKinematicsPluginEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デフォルトコンストラクタ</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::getPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a0c57d84b74fd09d6226447546c305f37"></span>bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに実現するための関節角度を計算します。</p>
+<p>In contrast to the searchPositionIK methods, this one is expected to return the solution closest to the seed state. Randomly re-seeding is explicitly not allowed. <dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1abad592153d0524b4713cba4772af9e22"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a48016c78888696cdc22d670344f152f0"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1ac34a16e74f5bd2d161a12191b29fc818"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a2091b8a5a188c083d251c5067517306f"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::getPositionFK__std::vector:ss:CR.std::vector:double:CR.std::vector:geometry_msgs::Pose:RC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a45cdfe0d3e4f81d667a24b667ebab39f"></span>bool <code class="sig-name descname">getPositionFK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>link_names</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>joint_angles</em>, std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>poses</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度とリンクのリストを入力として、それらの位置姿勢を計算します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>link_names：順運動学を計算する必要があるリンクのセット</p></li>
+<li><p>joint_angles：順運動学が計算される関節状態</p></li>
+<li><p>poses：結果の位置姿勢のリスト（getBaseFrameによって返される基準座標が使用される）</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd">
+<span id="_CPPv3N21kdl_kinematics_plugin19KDLKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="_CPPv2N21kdl_kinematics_plugin19KDLKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::initialize__moveit::core::RobotModelCR.ssCR.ssCR.std::vector:ss:CR.double"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a957db69c687b258bf696587bedd0cf2c"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> moveit::core::<a class="reference internal" href="robot_model.html#_CPPv4N6moveit4core10RobotModelE" title="moveit::core::RobotModel">RobotModel</a> &amp;<em>robot_model</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>tip_frames</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N21kdl_kinematics_plugin19KDLKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティクスの初期化関数。キネマティックチェーンIKソルバーで使用します。</p>
+<p>
+When returning false, the KinematicsPlugingLoader will use the old method, passing a robot_description. Default implementation returns false and issues a warning to implement this new API. TODO: Make this method purely virtual after some soaking time, replacing the fallback. <dl class="simple">
+<dt>戻り値</dt><dd><p>初期化が成功した場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot_model</span></code>: - allow the URDF to be loaded much quicker by passing in a pre-parsed model of the robot </p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tip_frames</span></code>: The tip of the chain </p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getJointNamesEv">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getJointNamesEv"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getJointNamesEv"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::getJointNamesC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1a699ee108b70be2136d5e5de918454e8e"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin13getJointNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべての関節名を内部で使用される順序で返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin12getLinkNamesEv">
+<span id="_CPPv3NK21kdl_kinematics_plugin19KDLKinematicsPlugin12getLinkNamesEv"></span><span id="_CPPv2NK21kdl_kinematics_plugin19KDLKinematicsPlugin12getLinkNamesEv"></span><span id="kdl_kinematics_plugin::KDLKinematicsPlugin::getLinkNamesC"></span><span class="target" id="classkdl__kinematics__plugin_1_1KDLKinematicsPlugin_1aa9f87f44d55320993cfb66cf12d10829"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21kdl_kinematics_plugin19KDLKinematicsPlugin12getLinkNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのリンク名を内部的で使用される順序で返します。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="ikfast">
+<h2>IKFast運動学計算プラグイン<a class="headerlink" href="#ikfast" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>IKFastは、OpenRAVEに含まれる逆運動学の解析解を自動で求めてくれるC++コードジェネレータです。</p>
+<p>詳しい使い方は、以下の外部ドキュメントを参照してください。</p>
+<p><a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/ikfast/ikfast_tutorial.html">http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/ikfast/ikfast_tutorial.html</a></p>
+<div class="section" id="ikfastkinematicsplugin">
+<h3>IKFastKinematicsPlugin<a class="headerlink" href="#ikfastkinematicsplugin" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N11_NAMESPACE_22IKFastKinematicsPluginE">
+<span id="_CPPv3N11_NAMESPACE_22IKFastKinematicsPluginE"></span><span id="_CPPv2N11_NAMESPACE_22IKFastKinematicsPluginE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin"></span><em class="property">class </em><code class="sig-prename descclassname">_NAMESPACE_<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">IKFastKinematicsPlugin</code><a class="headerlink" href="#_CPPv4N11_NAMESPACE_22IKFastKinematicsPluginE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>Inherits from <a class="reference internal" href="#classkinematics_1_1KinematicsBase"><span class="std std-ref">kinematics::KinematicsBase</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::getPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1a3c1171df76ba59663bd022141871174e"></span>bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに実現するための関節角度を計算します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEERN10kinematics16KinematicsResultERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEERN10kinematics16KinematicsResultERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEERN10kinematics16KinematicsResultERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::getPositionIK__std::vector:geometry_msgs::Pose:CR.std::vector:double:CR.std::vector:std::vector:double::R.kinematics::KinematicsResultR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1a4cf8dfa7d17b692cb7499cd103a629c6"></span>bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>ik_poses</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;std::vector&lt;double&gt;&gt; &amp;<em>solutions</em>, kinematics::KinematicsResult &amp;<em>result</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionIKERKNSt6vectorIN13geometry_msgs4PoseEEERKNSt6vectorIdEERNSt6vectorINSt6vectorIdEEEERN10kinematics16KinematicsResultERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達できる関節角度を計算します。</p>
+<p>このデフォルトの実装では、1つの解のみを返すため、結果は、ゼロで初期化された初期姿勢でgetPositionIK関数を呼び出すことと同等です。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解のセットが見つかった場合はtrue、そうでない場合はfalse。</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_poses：各エンドエフェクタの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solutions：有効な関節角を格納したベクトルのベクトル</p></li>
+<li><p>result：クエリの結果を格納する構造体</p></li>
+<li><p>options：使用される冗長性の離散化のタイプ。デフォルトの実装では、KinmaticSearches::NO_DISCRETIZATIONメソッドのみがサポートされます。他のものを要求すると失敗します。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1a47d29041071bfd3bafc7923f5cec8c69"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドでは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1a7d6d717516e50539d0fef2f0a36770fb"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドでは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>the：冗長性を使って現在の位置から離れられる距離</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1ab378a56e4f810a65ba3cc706085b8f61"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドでは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1a8afff0bd694d127e31de91a0de776c3f"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。この特定の方法は、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。consistent_limitは、初期状態で指定された位置の周りの特定の冗長範囲のみを検索するように指定します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>consistency_limit：冗長性を使って現在の位置から離れることができる距離</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE">
+<span id="_CPPv3NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="_CPPv2NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::getPositionFK__std::vector:ss:CR.std::vector:double:CR.std::vector:geometry_msgs::Pose:RC"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1ad72417c554c17587a19be6c41d435236"></span>bool <code class="sig-name descname">getPositionFK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>link_names</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>joint_angles</em>, std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>poses</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11_NAMESPACE_22IKFastKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度とリンクのリストを入力として、それらの位置姿勢を計算します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>link_names：順運動学を計算する必要があるリンクのセット</p></li>
+<li><p>joint_angles：順運動学が計算される関節状態</p></li>
+<li><p>poses：結果の位置姿勢のリスト（getBaseFrameによって返される基準座標が使用される）</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N11_NAMESPACE_22IKFastKinematicsPlugin23setSearchDiscretizationERKNSt3mapIjdEE">
+<span id="_CPPv3N11_NAMESPACE_22IKFastKinematicsPlugin23setSearchDiscretizationERKNSt3mapIjdEE"></span><span id="_CPPv2N11_NAMESPACE_22IKFastKinematicsPlugin23setSearchDiscretizationERKNSt3mapIjdEE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::setSearchDiscretization__std::map:unsigned-i.double:CR"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1ad207f407c2f6fad900b834c64611d143"></span>void <code class="sig-name descname">setSearchDiscretization</code><span class="sig-paren">(</span><em class="property">const</em> std::map&lt;unsigned int, double&gt; &amp;<em>discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11_NAMESPACE_22IKFastKinematicsPlugin23setSearchDiscretizationERKNSt3mapIjdEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>冗長関節の離散化値を設定します。</p>
+<p>このikfast実装では1つの冗長ジョイントが許可されるため、離散化マップ内の最初のエントリのみが使用されます。このメソッドを呼び出すと、以前の離散化設定が置き換えられます。</p>
+<p><dl class="simple">
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>discretization：関節インデックスと離散化値のペア。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N11_NAMESPACE_22IKFastKinematicsPlugin18setRedundantJointsERKNSt6vectorIjEE">
+<span id="_CPPv3N11_NAMESPACE_22IKFastKinematicsPlugin18setRedundantJointsERKNSt6vectorIjEE"></span><span id="_CPPv2N11_NAMESPACE_22IKFastKinematicsPlugin18setRedundantJointsERKNSt6vectorIjEE"></span><span id="_NAMESPACE_::IKFastKinematicsPlugin::setRedundantJoints__std::vector:unsigned-i:CR"></span><span class="target" id="class__NAMESPACE___1_1IKFastKinematicsPlugin_1abccb3cead798ca5b1381f18033f1993e"></span>bool <code class="sig-name descname">setRedundantJoints</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;unsigned int&gt; &amp;<em>redundant_joint_indices</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11_NAMESPACE_22IKFastKinematicsPlugin18setRedundantJointsERKNSt6vectorIjEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デフォルトのメソッドをオーバーライドして、冗長関節への変更を防ぎます。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="lma">
+<h2>LMA運動学計算プラグイン<a class="headerlink" href="#lma" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="lmakinematicsplugin">
+<h3>LMAKinematicsPlugin<a class="headerlink" href="#lmakinematicsplugin" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="class">
+<dt id="_CPPv4N21lma_kinematics_plugin19LMAKinematicsPluginE">
+<span id="_CPPv3N21lma_kinematics_plugin19LMAKinematicsPluginE"></span><span id="_CPPv2N21lma_kinematics_plugin19LMAKinematicsPluginE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin"></span><em class="property">class </em><code class="sig-prename descclassname">lma_kinematics_plugin<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">LMAKinematicsPlugin</code><a class="headerlink" href="#_CPPv4N21lma_kinematics_plugin19LMAKinematicsPluginE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>KDLのLevenberg-Marquardt（LMA）ソルバーを使用した運動学アルゴリズムの実装。このバージョンは、mimic関節を除く、あらゆる運動連鎖をサポートします。</p>
+<p>Inherits from <a class="reference internal" href="#classkinematics_1_1KinematicsBase"><span class="std std-ref">kinematics::KinematicsBase</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">パブリック関数</p>
+<dl class="function">
+<dt id="_CPPv4N21lma_kinematics_plugin19LMAKinematicsPlugin19LMAKinematicsPluginEv">
+<span id="_CPPv3N21lma_kinematics_plugin19LMAKinematicsPlugin19LMAKinematicsPluginEv"></span><span id="_CPPv2N21lma_kinematics_plugin19LMAKinematicsPlugin19LMAKinematicsPluginEv"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::LMAKinematicsPlugin"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a40ece21dea9653ed56ac42dae024f45b"></span><code class="sig-name descname">LMAKinematicsPlugin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N21lma_kinematics_plugin19LMAKinematicsPlugin19LMAKinematicsPluginEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>デフォルトコンストラクタ</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::getPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a2723c6a0d4d85929ec38bd904f8d6149"></span>bool <code class="sig-name descname">getPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに実現するための関節角度を計算します。</p>
+<p>In contrast to the searchPositionIK methods, this one is expected to return the solution closest to the seed state. Randomly re-seeding is explicitly not allowed. <dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a89630c6dd8c233f2768745724a8b45fd"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a031943f0e3b52aada82a8ab181843eee"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1aa89b89ecaebf9bda8f18053e4ea39c35"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::searchPositionIK__geometry_msgs::PoseCR.std::vector:double:CR.double.std::vector:double:CR.std::vector:double:R.IKCallbackFnCR.moveit_msgs::MoveItErrorCodesR.kinematics::KinematicsQueryOptionsCRC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a74447c09b6506c1a6d116bf5fed95c2b"></span>bool <code class="sig-name descname">searchPositionIK</code><span class="sig-paren">(</span><em class="property">const</em> geometry_msgs::Pose &amp;<em>ik_pose</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>ik_seed_state</em>, double <em>timeout</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>consistency_limits</em>, std::vector&lt;double&gt; &amp;<em>solution</em>, <em class="property">const</em> IKCallbackFn &amp;<em>solution_callback</em>, moveit_msgs::MoveItErrorCodes &amp;<em>error_code</em>, <em class="property">const</em> kinematics::KinematicsQueryOptions &amp;<em>options</em> = kinematics::KinematicsQueryOptions()<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin16searchPositionIKERKN13geometry_msgs4PoseERKNSt6vectorIdEEdRKNSt6vectorIdEERNSt6vectorIdEERK12IKCallbackFnRN11moveit_msgs16MoveItErrorCodesERKN10kinematics22KinematicsQueryOptionsE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>エンドエフェクタの位置姿勢を入力として、それに到達するために必要な関節角度を検索します。このメソッドは、冗長性（または他の数値計算）をサンプリングすることにより、解空間を「検索」することを目的としています。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>ik_pose：リンクの位置姿勢</p></li>
+<li><p>ik_seed_state：逆運動学計算の初期値</p></li>
+<li><p>timeout：ソルバーが使用できる時間（秒単位）</p></li>
+<li><p>consistency_limits：ソリューション内の各関節が、与えられた初期状態の対応する関節から変化できる角度</p></li>
+<li><p>solution：解ベクトル</p></li>
+<li><p>solution_callback：逆運動学の解を検証するためのコールバック</p></li>
+<li><p>error_code：失敗または成功の理由を示すエラーコード</p></li>
+<li><p>options：その他のオプション。詳細については、KinematicsQueryOptionsの定義をご覧ください。</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::getPositionFK__std::vector:ss:CR.std::vector:double:CR.std::vector:geometry_msgs::Pose:RC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a4a9e5475bb39771f242370e746bb7e5d"></span>bool <code class="sig-name descname">getPositionFK</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>link_names</em>, <em class="property">const</em> std::vector&lt;double&gt; &amp;<em>joint_angles</em>, std::vector&lt;geometry_msgs::Pose&gt; &amp;<em>poses</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getPositionFKERKNSt6vectorINSt6stringEEERKNSt6vectorIdEERNSt6vectorIN13geometry_msgs4PoseEEE" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>関節角度とリンクのリストを入力として、それらの位置姿勢を計算します。</p>
+<p><dl class="simple">
+<dt>戻り値</dt><dd><p>有効な解が見つかった場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p>link_names：順運動学を計算する必要があるリンクのセット</p></li>
+<li><p>joint_angles：順運動学が計算される関節状態</p></li>
+<li><p>poses：結果の位置姿勢のリスト（getBaseFrameによって返される基準座標が使用される）</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N21lma_kinematics_plugin19LMAKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd">
+<span id="_CPPv3N21lma_kinematics_plugin19LMAKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="_CPPv2N21lma_kinematics_plugin19LMAKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::initialize__moveit::core::RobotModelCR.ssCR.ssCR.std::vector:ss:CR.double"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1adeaf836b481eab31ab26a9e21a1bcb06"></span>bool <code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="property">const</em> moveit::core::<a class="reference internal" href="robot_model.html#_CPPv4N6moveit4core10RobotModelE" title="moveit::core::RobotModel">RobotModel</a> &amp;<em>robot_model</em>, <em class="property">const</em> std::string &amp;<em>group_name</em>, <em class="property">const</em> std::string &amp;<em>base_frame</em>, <em class="property">const</em> std::vector&lt;std::string&gt; &amp;<em>tip_frames</em>, double <em>search_discretization</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N21lma_kinematics_plugin19LMAKinematicsPlugin10initializeERKN6moveit4core10RobotModelERKNSt6stringERKNSt6stringERKNSt6vectorINSt6stringEEEd" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>キネマティクスの初期化関数。キネマティックチェーンIKソルバーで使用します。</p>
+<p>
+When returning false, the KinematicsPlugingLoader will use the old method, passing a robot_description. Default implementation returns false and issues a warning to implement this new API. TODO: Make this method purely virtual after some soaking time, replacing the fallback. <dl class="simple">
+<dt>戻り値</dt><dd><p>初期化が成功した場合はtrue、そうでない場合はfalse</p>
+</dd>
+<dt>パラメータ</dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">robot_model</span></code>: - allow the URDF to be loaded much quicker by passing in a pre-parsed model of the robot </p></li>
+<li><p>group_name：このソルバーが構成されているグループ</p></li>
+<li><p>base_frame：位置姿勢を解釈するための基準座標。これは、基底座標である場合とそうでない場合があります</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tip_frames</span></code>: The tip of the chain </p></li>
+<li><p>search_discretization：ソルバーが冗長性をサンプリングするときの検索の離散化</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getJointNamesEv">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin13getJointNamesEv"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin13getJointNamesEv"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::getJointNamesC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1a05e3d763c8d89d32d7a089beef356467"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getJointNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin13getJointNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべての関節名を内部で使用される順序で返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin12getLinkNamesEv">
+<span id="_CPPv3NK21lma_kinematics_plugin19LMAKinematicsPlugin12getLinkNamesEv"></span><span id="_CPPv2NK21lma_kinematics_plugin19LMAKinematicsPlugin12getLinkNamesEv"></span><span id="lma_kinematics_plugin::LMAKinematicsPlugin::getLinkNamesC"></span><span class="target" id="classlma__kinematics__plugin_1_1LMAKinematicsPlugin_1afd24cc8593399f7c4de9dc1a4695d283"></span><em class="property">const</em> std::vector&lt;std::string&gt; &amp;<code class="sig-name descname">getLinkNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK21lma_kinematics_plugin19LMAKinematicsPlugin12getLinkNamesEv" title="この定義へのパーマリンク">¶</a><br /></dt>
+<dd><p>すべてのリンク名を内部的で使用される順序で返します。</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="planning_scene.html" class="btn btn-neutral float-right" title="プランニングシーン（PlanningScene）の仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="planner_manager.html" class="btn btn-neutral float-left" title="プランニングアルゴリズム基底クラス（PlannerManager）の仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

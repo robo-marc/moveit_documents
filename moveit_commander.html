@@ -1,0 +1,905 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python用ユーザライブラリ（moveit_commander）の仕様 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="C++用ユーザライブラリ（MoveGroupInterface）の仕様" href="move_group_interface.html" />
+    <link rel="prev" title="MoveIt!の全体構成" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python用ユーザライブラリ（moveit_commander）の仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">クラス図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">コンポーネント図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">コードサンプル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#robotcommander">RobotCommander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#movegroupcommander">MoveGroupCommander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#planningsceneinterface">PlanningSceneInterface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ros_messages.html">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Python用ユーザライブラリ（moveit_commander）の仕様</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-moveit-commander">
+<h1>Python用ユーザライブラリ（moveit_commander）の仕様<a class="headerlink" href="#python-moveit-commander" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>クラス図<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>moveit_commanderは、boost::pythonを使って、C++のMoveGroupInterfaceを呼び出します。
+その際に、MoveGroupInterfaceWrapperクラスを用います。</p>
+<p class="plantuml">
+<img src="_images/plantuml-d2f06e38ddd754df70938cd220574a59a9ac9f60.png" alt="MoveGroupInterface &lt;|-- MoveGroupInterfaceWrapper
+MoveGroupInterfaceWrapper .. moveit_commander"/>
+</p>
+<p>C++で実装されたMoveGroupInterfaceの詳細については、 <a class="reference internal" href="move_group_interface.html"><span class="doc">C++用ユーザライブラリ（MoveGroupInterface）の仕様</span></a> を参照してください。</p>
+</div>
+<div class="section" id="id2">
+<h2>コンポーネント図<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveGroupInterfaceは、ROS通信を使って、プランニング命令をROSのmove_groupサーバに送信します。</p>
+<p class="plantuml">
+<img src="_images/plantuml-5294052a4bfc1c2803cad70f63266cac64b3ad55.png" alt="[moveit_commander(MoveGroupInterface)] -right-&gt; [move_group] : ROS通信"/>
+</p>
+<p>move_groupサーバで提供されている各サービスとROS通信の詳細については、 <a class="reference internal" href="move_group.html"><span class="doc">move_groupサーバの仕様</span></a> を参照してください。</p>
+</div>
+<div class="section" id="id3">
+<h2>コードサンプル<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本文書では、クラスの仕様のみを記述します。コードサンプルについては、以下の外部ドキュメント参照してください。</p>
+<p><a class="reference external" href="http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/move_group_python_interface/move_group_python_interface_tutorial.html">http://docs.ros.org/melodic/api/moveit_tutorials/html/doc/move_group_python_interface/move_group_python_interface_tutorial.html</a></p>
+</div>
+<div class="section" id="robotcommander">
+<h2>RobotCommander<a class="headerlink" href="#robotcommander" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="moveit_commander.RobotCommander">
+<em class="property">class </em><code class="sig-prename descclassname">moveit_commander.</code><code class="sig-name descname">RobotCommander</code><span class="sig-paren">(</span><em class="sig-param">robot_description='robot_description'</em>, <em class="sig-param">ns=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="method">
+<dt id="moveit_commander.RobotCommander.get_current_state">
+<code class="sig-name descname">get_current_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_current_state" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ロボットの現在の状態をROSのRobotStateメッセージ形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_current_variable_values">
+<code class="sig-name descname">get_current_variable_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_current_variable_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節名と関節角度をマッピングさせた辞書形式で取得します。関節値は複数の変数からなる場合もあることに留意してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_default_owner_group">
+<code class="sig-name descname">get_default_owner_group</code><span class="sig-paren">(</span><em class="sig-param">joint_name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_default_owner_group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>引数として指定された関節名を含んだ最小のグループ名（最小の関節数のグループ名）を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_group">
+<code class="sig-name descname">get_group</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>str</strong> (<em>name</em>) -- 名前</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p><a class="reference internal" href="#moveit_commander.MoveGroupCommander" title="moveit_commander.MoveGroupCommander">moveit_commander.MoveGroupCommander</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_group_names">
+<code class="sig-name descname">get_group_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_group_names" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ロボットモデルに対して定義されたグループ名のリストを取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_joint">
+<code class="sig-name descname">get_joint</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_joint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>str</strong> (<em>name</em>) -- 名前</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>moveit_commander.robot.Joint</p>
+</dd>
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><strong>exception</strong> -- MoveItCommanderException</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_joint_names">
+<code class="sig-name descname">get_joint_names</code><span class="sig-paren">(</span><em class="sig-param">group=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_joint_names" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>グループを構成するすべての可動関節（mimic関節と固定関節を除く）の名前を取得します。グループ名が指定されない場合、ロボットモデル内のすべての関節（固定関節とmimic関節を含む）の名前を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_link">
+<code class="sig-name descname">get_link</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_link" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>str</strong> (<em>name</em>) -- 名前</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>moveit_commander.robot.Link</p>
+</dd>
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><strong>exception</strong> -- MoveItCommanderException</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_link_names">
+<code class="sig-name descname">get_link_names</code><span class="sig-paren">(</span><em class="sig-param">group=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_link_names" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>グループを構成するリンクを取得します。グループ名が指定されない場合、ロボットモデル内のすべてのリンクが返されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_planning_frame">
+<code class="sig-name descname">get_planning_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_planning_frame" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プランニングの実行対象となっている基準座標名を取得します</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_robot_markers">
+<code class="sig-name descname">get_robot_markers</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_robot_markers" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このロボットを構成するマーカーのMarkerArrayを取得します。</p>
+<dl class="simple">
+<dt>使用法：</dt><dd><p>（引数なし）：現在のロボットの状態に対するすべてのマーカーを取得する。
+state (RobotState形式)：stateで指定された状態に対するマーカーを取得する。
+values (辞書形式)：valuesで指定された状態に対するマーカーを取得する。
+values, links (辞書形式、リスト形式)：valuesで指定された状態に対するlinksで指定されたリンクに対応するマーカーを取得する。
+group (文字列)：groupのすべてのマーカーを取得する。
+group, values (文字列、辞書形式)：指定されたgroupに対して、valuesで指定された状態に対応するマーカーを取得する。</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.get_root_link">
+<code class="sig-name descname">get_root_link</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.get_root_link" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ロボットモデルのルートリンクの名前を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.RobotCommander.has_group">
+<code class="sig-name descname">has_group</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.RobotCommander.has_group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>str</strong> (<em>name</em>) -- 名前</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="movegroupcommander">
+<h2>MoveGroupCommander<a class="headerlink" href="#movegroupcommander" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="moveit_commander.MoveGroupCommander">
+<em class="property">class </em><code class="sig-prename descclassname">moveit_commander.</code><code class="sig-name descname">MoveGroupCommander</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">robot_description='robot_description'</em>, <em class="sig-param">ns=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定されたグループに対してコマンドを実行します。</p>
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">robot_description='robot_description'</em>, <em class="sig-param">ns=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このインターフェースを利用する対象となるグループ名を指定します。初期化に失敗した場合、例外をスローします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.allow_looking">
+<code class="sig-name descname">allow_looking</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.allow_looking" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>動作計画の中で視点を変更することを有効/無効化します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.allow_replanning">
+<code class="sig-name descname">allow_replanning</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.allow_replanning" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>再プランを有効/無効化します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.attach_object">
+<code class="sig-name descname">attach_object</code><span class="sig-paren">(</span><em class="sig-param">object_name</em>, <em class="sig-param">link_name=''</em>, <em class="sig-param">touch_links=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.attach_object" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning scene内に存在するオブジェクトの名前を指定しリンクに対して接続します。接続対象のリンクは、第2引数で指定します。対象のリンクを指定しない場合、エンドエフェクタのリンクが使用されます。エンドエフェクタのリンクが存在しない場合、グループ内の最初のリンクが使用されます。どのリンクも選択できない場合、リクエストが失敗します。要求が正常にmove_groupサーバに送信された場合、Trueが返されます。ただし、Trueが返った場合でも、move_groupによって固定が実際に適用されたかどうかは確認されません。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.clear_path_constraints">
+<code class="sig-name descname">clear_path_constraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.clear_path_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在設定されている動作計画に対する全てのパス制約をクリアします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.clear_pose_target">
+<code class="sig-name descname">clear_pose_target</code><span class="sig-paren">(</span><em class="sig-param">end_effector_link</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.clear_pose_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>end_effector_linkに対する目標姿勢をクリアします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.clear_pose_targets">
+<code class="sig-name descname">clear_pose_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.clear_pose_targets" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>すべての目標姿勢をクリアします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.clear_trajectory_constraints">
+<code class="sig-name descname">clear_trajectory_constraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.clear_trajectory_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>動作計画中に適用される全ての軌道制約をクリアします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.compute_cartesian_path">
+<code class="sig-name descname">compute_cartesian_path</code><span class="sig-paren">(</span><em class="sig-param">waypoints</em>, <em class="sig-param">eef_step</em>, <em class="sig-param">jump_threshold</em>, <em class="sig-param">avoid_collisions=True</em>, <em class="sig-param">path_constraints=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.compute_cartesian_path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定されたポーズ列（waypoints）を線形補完した動きをエンドエフェクタにさせるための動作計画を行います。eef_stepで指定された間隔（メートル単位）毎に動作が計算されます。jump_thresholdは、計画結果の軌跡を構成する連続する各点の間のコンフィギュレーション空間上での最大距離を指定します。path_constraintsによって指定された制約を軌道の全ての点で満たすように動作計画が行われます。制約を全点で満たすことができなかった場合、部分的な動作計画が返されます。関数の戻り値は、指定されたポーズ列をどれだけ忠実に追跡することができたかの評価値と、計画された軌跡（RobotTrajectory形式）のタプル形式です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.detach_object">
+<code class="sig-name descname">detach_object</code><span class="sig-paren">(</span><em class="sig-param">name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.detach_object" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>リンクの名前を指定すると、そのリンクからオブジェクト（複数可）を取り外します。指定されたリンク名が存在しない場合、指定された名前は、オブジェクト名として解釈されます。名前が指定されない場合、グループ内の全てのリンクに接続されている全てのオブジェクトが取り外されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.execute">
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param">plan_msg</em>, <em class="sig-param">wait=True</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.execute" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>計画したパスを実行します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.forget_joint_values">
+<code class="sig-name descname">forget_joint_values</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.forget_joint_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>保存された関節角を消去します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_active_joints">
+<code class="sig-name descname">get_active_joints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_active_joints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このグループの有効な関節リストを取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_current_joint_values">
+<code class="sig-name descname">get_current_joint_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_current_joint_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在の関節角度をリストとして取得します（ROSの/joint_statesトピックで公開されているのと同じ値です）。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_current_pose">
+<code class="sig-name descname">get_current_pose</code><span class="sig-paren">(</span><em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_current_pose" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの現在の姿勢を取得します。エンドエフェクタが無い場合、例外をスローします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_current_rpy">
+<code class="sig-name descname">get_current_rpy</code><span class="sig-paren">(</span><em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_current_rpy" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの姿勢を[ロール、ピッチ、ヨー]形式のリストで取得します。エンドエフェクタが無い場合、例外をスローします。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_end_effector_link">
+<code class="sig-name descname">get_end_effector_link</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_end_effector_link" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタとして定義されたリンクの名前を取得します。エンドエフェクタが無い場合、空の文字列を返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_goal_joint_tolerance">
+<code class="sig-name descname">get_goal_joint_tolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_goal_joint_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節角目標を達成したと判断する際の許容値を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_goal_orientation_tolerance">
+<code class="sig-name descname">get_goal_orientation_tolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_goal_orientation_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>姿勢目標または位置姿勢目標に移動する際の達成と判断する許容値を取得します。許容値は、エンドエフェクタの目標点までの姿勢誤差（ロール、ピッチ、ヨー）として設定されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_goal_position_tolerance">
+<code class="sig-name descname">get_goal_position_tolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_goal_position_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>位置目標または姿勢目標に移動する際の達成と判断する許容値を取得します。許容値は、エンドエフェクタのターゲット原点を中心とする球の半径として設定されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_goal_tolerance">
+<code class="sig-name descname">get_goal_tolerance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_goal_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>目標からの誤差を（関節角誤差、位置誤差、方向誤差）のタプル形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_interface_description">
+<code class="sig-name descname">get_interface_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_interface_description" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>プランナーインターフェースの説明（プランナーIDのリスト）を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_jacobian_matrix">
+<code class="sig-name descname">get_jacobian_matrix</code><span class="sig-paren">(</span><em class="sig-param">joint_values</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_jacobian_matrix" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>各関節のヤコビ行列をリスト形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_joints">
+<code class="sig-name descname">get_joints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_joints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節名をリスト形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_known_constraints">
+<code class="sig-name descname">get_known_constraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_known_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>データベース（warehouse）から、このグループに紐づけられた制約の名前リストを取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_name">
+<code class="sig-name descname">get_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_name" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>初期化の際に設定したグループ名を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_named_target_values">
+<code class="sig-name descname">get_named_target_values</code><span class="sig-paren">(</span><em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_named_target_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前付き関節角目標の関節値を辞書形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_named_targets">
+<code class="sig-name descname">get_named_targets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_named_targets" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前付き関節角目標の全ての名前リストを取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_path_constraints">
+<code class="sig-name descname">get_path_constraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_path_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在設定されているパス制約をmoveit_msgs.Constraints形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_planner_id">
+<code class="sig-name descname">get_planner_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_planner_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在設定されているプランナーのplanner_idを取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_planning_frame">
+<code class="sig-name descname">get_planning_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_planning_frame" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>計画が実行される基準座標の名前を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_planning_time">
+<code class="sig-name descname">get_planning_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_planning_time" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>動作計画のタイムアウト時間を指定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_pose_reference_frame">
+<code class="sig-name descname">get_pose_reference_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_pose_reference_frame" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの姿勢表現に使われる基準座標を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_remembered_joint_values">
+<code class="sig-name descname">get_remembered_joint_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_remembered_joint_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>remember_joint_valuesで記録された関節角目標を名前が対応付けられた辞書形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_trajectory_constraints">
+<code class="sig-name descname">get_trajectory_constraints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_trajectory_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在設定されている軌道制約をmoveit_msgs.Constraints形式で取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.get_variable_count">
+<code class="sig-name descname">get_variable_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.get_variable_count" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このグループの状態をパラメータ化する際に使用される変数の数を返します（関節の自由度数以上の値になります）。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.go">
+<code class="sig-name descname">go</code><span class="sig-paren">(</span><em class="sig-param">joints=None</em>, <em class="sig-param">wait=True</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.go" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>目標を設定し、グループを指定された目標に移動します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.has_end_effector_link">
+<code class="sig-name descname">has_end_effector_link</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.has_end_effector_link" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>このグループにエンドエフェクタして設定されたリンクがあるかどうかを確認します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.pick">
+<code class="sig-name descname">pick</code><span class="sig-paren">(</span><em class="sig-param">object_name</em>, <em class="sig-param">grasp=[]</em>, <em class="sig-param">plan_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.pick" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前で指定されたオブジェクトをピックします。Graspメッセージ、またはGraspメッセージのリストを引数として指定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.place">
+<code class="sig-name descname">place</code><span class="sig-paren">(</span><em class="sig-param">object_name</em>, <em class="sig-param">location=None</em>, <em class="sig-param">plan_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.place" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定されたオブジェクトを環境内の指定された場所に置くか、場所が指定されていない場合はワールドのどこかに安全な場所に置きます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.plan">
+<code class="sig-name descname">plan</code><span class="sig-paren">(</span><em class="sig-param">joints=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.plan" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>設定済みの目標を達成するための動作計画を行います。戻り値は、RobotTrajectory形式です。引数で関節角が指定された場合は、関節角を目標とした動作計画を行います。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.remember_joint_values">
+<code class="sig-name descname">remember_joint_values</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">values=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.remember_joint_values" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>名前で指定された関節角の状態を記録します。値が指定されない場合、グループの全体の関節角の状態が記録されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_constraints_database">
+<code class="sig-name descname">set_constraints_database</code><span class="sig-paren">(</span><em class="sig-param">host</em>, <em class="sig-param">port</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_constraints_database" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>制約をロードするために接続するデータベースのホスト名とポート番号を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_end_effector_link">
+<code class="sig-name descname">set_end_effector_link</code><span class="sig-paren">(</span><em class="sig-param">link_name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_end_effector_link" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタと見なすリンクの名前を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_goal_joint_tolerance">
+<code class="sig-name descname">set_goal_joint_tolerance</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_goal_joint_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>目標関節角を達成と判断する際の許容値を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_goal_orientation_tolerance">
+<code class="sig-name descname">set_goal_orientation_tolerance</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_goal_orientation_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの目標姿勢を達成と判断する際の許容値を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_goal_position_tolerance">
+<code class="sig-name descname">set_goal_position_tolerance</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_goal_position_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの目標位置を達成と判断する際の許容値を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_goal_tolerance">
+<code class="sig-name descname">set_goal_tolerance</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_goal_tolerance" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節角、位置、および姿勢を達成と判断する際の許容値を同時に設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_joint_value_target">
+<code class="sig-name descname">set_joint_value_target</code><span class="sig-paren">(</span><em class="sig-param">arg1</em>, <em class="sig-param">arg2=None</em>, <em class="sig-param">arg3=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_joint_value_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節角目標を指定します。 第一引数の型がdict、list、JointStateメッセージのいずれかである場合、他の引数は設定できません。 dict型の場合、関節名とその目標角度のペアを指定する必要があります。list型の場合、グループのすべての関節の角度値を指定する必要があります。 JointStateメッセージの場合は、関節角度を選択的に指定できます。 第一引数の型が文字列の場合、第二引数には、関節角度または関節角度のリストのいずれかを設定します。これは、特定の関節を特定の角度に設定する命令として解釈されます。第一引数の型がPoseまたはPoseStampedの場合、第二引数と第三引数の両方を定義できます。第二引数または第三引数が定義されている場合、それらの型は文字列またはbool型でなければなりません。文字列型の引数は、Pose目標が指定されたエンドエフェクタの名前です（指定されない場合、デフォルトのエンドエフェクタが使用されます）。第三引数のboolは、指定されたPoseが近似であるかどうかを決定するために使用されます（デフォルトはfalse）。Pose目標を用いると、逆運動学を用いるて関節目標を設定できます。ここでは、プランナーを用いて逆運動学の計算を複数試行するわけではありません。Poseから計算されたある1つの逆運動学の解がプランナーに送信されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_max_acceleration_scaling_factor">
+<code class="sig-name descname">set_max_acceleration_scaling_factor</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_max_acceleration_scaling_factor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最大関節加速度を減らすためのスケーリング係数を設定します。許可される値は0～1です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_max_velocity_scaling_factor">
+<code class="sig-name descname">set_max_velocity_scaling_factor</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_max_velocity_scaling_factor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最大関節速度を下げるためのスケーリング係数を設定します。許可される値は0～1です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_named_target">
+<code class="sig-name descname">set_named_target</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_named_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>関節角目標を名前で設定します。あらかじめremember_joint_valuesで記憶された名前、またはSRDFファイルに記述された名前を指定できます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_num_planning_attempts">
+<code class="sig-name descname">set_num_planning_attempts</code><span class="sig-paren">(</span><em class="sig-param">num_planning_attempts</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_num_planning_attempts" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最適解を計算するために動作計画を繰り返す回数を設定します。デフォルト値は1回です。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_orientation_target">
+<code class="sig-name descname">set_orientation_target</code><span class="sig-paren">(</span><em class="sig-param">q</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_orientation_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの目標姿勢を指定します。姿勢のみが指定され、位置については任意の位置が許容されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_path_constraints">
+<code class="sig-name descname">set_path_constraints</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_path_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>使用するパス制約を指定します（制約はデータベースから読み取られます）。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_planner_id">
+<code class="sig-name descname">set_planner_id</code><span class="sig-paren">(</span><em class="sig-param">planner_id</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_planner_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>動作計画時に使用するプランナーを指定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_planning_time">
+<code class="sig-name descname">set_planning_time</code><span class="sig-paren">(</span><em class="sig-param">seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_planning_time" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>動作計画のタイムアウト時間を指定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_pose_reference_frame">
+<code class="sig-name descname">set_pose_reference_frame</code><span class="sig-paren">(</span><em class="sig-param">reference_frame</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_pose_reference_frame" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの位置姿勢を設定する際に用いられる基準座標を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_pose_target">
+<code class="sig-name descname">set_pose_target</code><span class="sig-paren">(</span><em class="sig-param">pose</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_pose_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの位置姿勢を設定します。Poseメッセージ、PoseStampedメッセージ、または6次元のリスト形式で指定してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_pose_targets">
+<code class="sig-name descname">set_pose_targets</code><span class="sig-paren">(</span><em class="sig-param">poses</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_pose_targets" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの位置姿勢を設定します。予想される入力は位置姿勢のリストです。Poseメッセージ、[x、y、z、rot_x、rot_y、rot_z]の6次元のリスト形式、または[x、y、z、qx、qy、qz、qw]の7次元のリスト形式で指定してください。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_position_target">
+<code class="sig-name descname">set_position_target</code><span class="sig-paren">(</span><em class="sig-param">xyz</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_position_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの目標位置を指定します。位置のみが指定され、姿勢については任意として解釈されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_random_target">
+<code class="sig-name descname">set_random_target</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_random_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>目標関節角度をランダムに設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_rpy_target">
+<code class="sig-name descname">set_rpy_target</code><span class="sig-paren">(</span><em class="sig-param">rpy</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_rpy_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの目標姿勢を指定します。姿勢のみが指定され、位置については任意の位置が許容されます。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_start_state">
+<code class="sig-name descname">set_start_state</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_start_state" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>開始状態を指定します。</p>
+<p>msg ： moveit_msgs/RobotState</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">moveit_msgs.msg</span> <span class="kn">import</span> <span class="n">RobotState</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">JointState</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joint_state</span> <span class="o">=</span> <span class="n">JointState</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joint_state</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joint_state</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joint_state</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;joint_a&#39;</span><span class="p">,</span> <span class="s1">&#39;joint_b&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">joint_state</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.34</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">moveit_robot_state</span> <span class="o">=</span> <span class="n">RobotState</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">moveit_robot_state</span><span class="o">.</span><span class="n">joint_state</span> <span class="o">=</span> <span class="n">joint_state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">group</span><span class="o">.</span><span class="n">set_start_state</span><span class="p">(</span><span class="n">moveit_robot_state</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_support_surface_name">
+<code class="sig-name descname">set_support_surface_name</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_support_surface_name" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ピックアンドプレース命令を実行する際の支持平面名を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_trajectory_constraints">
+<code class="sig-name descname">set_trajectory_constraints</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_trajectory_constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>軌道制約を設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.set_workspace">
+<code class="sig-name descname">set_workspace</code><span class="sig-paren">(</span><em class="sig-param">ws</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.set_workspace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ロボットのワークスペースを[]、[minX、minY、maxX、maxY]、または[minX、minY、minZ、maxX、maxY、maxZ]形式で設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.shift_pose_target">
+<code class="sig-name descname">shift_pose_target</code><span class="sig-paren">(</span><em class="sig-param">axis</em>, <em class="sig-param">value</em>, <em class="sig-param">end_effector_link=''</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.shift_pose_target" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>エンドエフェクタの現在の位置姿勢を取得し、[X、Y、Z、R、P、Y]の6次元の形式で指定された差分値を適用し、新しい目標姿勢として設定します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.MoveGroupCommander.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.MoveGroupCommander.stop" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>現在の実行を停止します。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="planningsceneinterface">
+<h2>PlanningSceneInterface<a class="headerlink" href="#planningsceneinterface" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="class">
+<dt id="moveit_commander.PlanningSceneInterface">
+<em class="property">class </em><code class="sig-prename descclassname">moveit_commander.</code><code class="sig-name descname">PlanningSceneInterface</code><span class="sig-paren">(</span><em class="sig-param">ns=''</em>, <em class="sig-param">synchronous=False</em>, <em class="sig-param">service_timeout=5.0</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneを更新するためのインターフェース</p>
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">ns=''</em>, <em class="sig-param">synchronous=False</em>, <em class="sig-param">service_timeout=5.0</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneを更新するためのインターフェースを作成します。C++クラスの呼び出しとROSトピックの発行の両者を使います。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.add_box">
+<code class="sig-name descname">add_box</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">pose</em>, <em class="sig-param">size=(1</em>, <em class="sig-param">1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.add_box" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneに箱型を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.add_cylinder">
+<code class="sig-name descname">add_cylinder</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">pose</em>, <em class="sig-param">height</em>, <em class="sig-param">radius</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.add_cylinder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneに円柱を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.add_mesh">
+<code class="sig-name descname">add_mesh</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">pose</em>, <em class="sig-param">filename</em>, <em class="sig-param">size=(1</em>, <em class="sig-param">1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.add_mesh" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneにメッシュ形状を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.add_plane">
+<code class="sig-name descname">add_plane</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">pose</em>, <em class="sig-param">normal=(0</em>, <em class="sig-param">0</em>, <em class="sig-param">1)</em>, <em class="sig-param">offset=0</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.add_plane" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneに平面を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.add_sphere">
+<code class="sig-name descname">add_sphere</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">pose</em>, <em class="sig-param">radius=1</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.add_sphere" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneに球体を追加します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.get_attached_objects">
+<code class="sig-name descname">get_attached_objects</code><span class="sig-paren">(</span><em class="sig-param">object_ids=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.get_attached_objects" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定されたオブジェクトIDリストで指定されるロボットに接続されたオブジェクトを取得します。 IDが指定されていない場合、ロボットに接続されているすべてのオブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.get_known_object_names">
+<code class="sig-name descname">get_known_object_names</code><span class="sig-paren">(</span><em class="sig-param">with_type=False</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.get_known_object_names" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ワールドの全てのオブジェクトの名前を取得します。 with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.get_known_object_names_in_roi">
+<code class="sig-name descname">get_known_object_names_in_roi</code><span class="sig-paren">(</span><em class="sig-param">minx</em>, <em class="sig-param">miny</em>, <em class="sig-param">minz</em>, <em class="sig-param">maxx</em>, <em class="sig-param">maxy</em>, <em class="sig-param">maxz</em>, <em class="sig-param">with_type=False</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.get_known_object_names_in_roi" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定範囲内にあるオブジェクトの名前を取得します。 範囲指定は、get_planning_frameによって設定される基準座標上で解釈されます。with_typeがtrueに設定されている場合、既知のタイプを持つオブジェクトのみを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.get_object_poses">
+<code class="sig-name descname">get_object_poses</code><span class="sig-paren">(</span><em class="sig-param">object_ids</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.get_object_poses" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>オブジェクトIDリストで指定されたオブジェクトの位置姿勢を取得します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.get_objects">
+<code class="sig-name descname">get_objects</code><span class="sig-paren">(</span><em class="sig-param">object_ids=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.get_objects" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>指定されたオブジェクトIDリストで識別されるオブジェクトを取得します。 IDが指定されない場合、すべての既知のオブジェクトを返します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.remove_attached_object">
+<code class="sig-name descname">remove_attached_object</code><span class="sig-paren">(</span><em class="sig-param">link</em>, <em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.remove_attached_object" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneからロボットに接続されたオブジェクトを削除します。名前が指定されていない場合、リンクに接続されているすべてのオブジェクトを削除します。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="moveit_commander.PlanningSceneInterface.remove_world_object">
+<code class="sig-name descname">remove_world_object</code><span class="sig-paren">(</span><em class="sig-param">name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#moveit_commander.PlanningSceneInterface.remove_world_object" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>planning sceneからオブジェクトを削除します。名前が指定されていない場合はすべてのオブジェクトを削除します。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="move_group_interface.html" class="btn btn-neutral float-right" title="C++用ユーザライブラリ（MoveGroupInterface）の仕様" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral float-left" title="MoveIt!の全体構成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

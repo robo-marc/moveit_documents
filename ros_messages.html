@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ROSメッセージ一覧 &mdash; MoveIt! Documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="move_groupサーバの仕様" href="move_group.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> NEDO ROBO-MARC MoveIt! Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">MoveIt!の全体構成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moveit_commander.html">Python用ユーザライブラリ（moveit_commander）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group_interface.html">C++用ユーザライブラリ（MoveGroupInterface）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robot_model.html">URDF/SRDFとロボットモデルの仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planner_manager.html">プランニングアルゴリズム基底クラス（PlannerManager）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kinematics_base.html">運動学計算アルゴリズム基底クラス（KinematicsBase）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planning_scene.html">プランニングシーン（PlanningScene）の仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="move_group.html">move_groupサーバの仕様</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROSメッセージ一覧</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">NEDO ROBO-MARC MoveIt! Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>ROSメッセージ一覧</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/robo-marc/moveit_documents" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ros">
+<h1>ROSメッセージ一覧<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="message">
+<dt id="message-moveit_msgs/AllowedCollisionEntry">
+<code class="sig-name descname">moveit_msgs/AllowedCollisionEntry</code><a class="headerlink" href="#message-moveit_msgs/AllowedCollisionEntry" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enabled[]</strong> (<em>bool</em>) -- 干渉チェックが有効かどうか</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/AllowedCollisionMatrix">
+<code class="sig-name descname">moveit_msgs/AllowedCollisionMatrix</code><a class="headerlink" href="#message-moveit_msgs/AllowedCollisionMatrix" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entry_names[]</strong> (<em>string</em>) -- ACM（Allowed Collision Matrix）内のエントリ名のリスト</p></li>
+<li><p><strong>entry_values[]</strong> (<a class="reference internal" href="#message-moveit_msgs/AllowedCollisionEntry" title="moveit_msgs/AllowedCollisionEntry"><em>moveit_msgs/AllowedCollisionEntry</em></a>) -- ACMの個々のエントリ。entry_names x entry_namesの大きさのentry_namesと同じ順序で並んだ正方・対称行列を格納します。</p></li>
+<li><p><strong>default_entry_names[]</strong> (<em>string</em>) -- ACMにない名前のペア（n1、n2）に対して干渉フラグが照会された場合、干渉フラグの値はこのリストで指定されたエントリ（n1またはn2）の値と見なされます。デフォルトのリストにn1とn2の両方が見つかった場合、結果はANDで計算されます</p></li>
+<li><p><strong>default_entry_values[]</strong> (<em>bool</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/AttachedCollisionObject">
+<code class="sig-name descname">moveit_msgs/AttachedCollisionObject</code><a class="headerlink" href="#message-moveit_msgs/AttachedCollisionObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link_name</strong> (<em>string</em>) -- CollisionObjectは、このリンクに固定関節を使って接続されます</p></li>
+<li><p><strong>object</strong> (<a class="reference internal" href="#message-moveit_msgs/CollisionObject" title="moveit_msgs/CollisionObject"><em>moveit_msgs/CollisionObject</em></a>) -- このフィールドにはリンクに接続されるCollisionObjectの形状とポーズが含まれます。アクションが「削除」で、object.idが設定されていない場合、link_nameで示されるリンクに接続されたすべてのオブジェクトが削除されます</p></li>
+<li><p><strong>touch_links[]</strong> (<em>string</em>) -- 接続したオブジェクトが接触判定されるリンクのセット-link_nameはデフォルトですでに追加されています</p></li>
+<li><p><strong>detach_posture</strong> (<em>trajectory_msgs/JointTrajectory</em>) -- 特定の姿勢に指定したリンクが置かれた場合（たとえば、エンドエフェクタがオブジェクトの周りを囲った場合）このオブジェクトの接続が維持されます。オブジェクトを解放するために必要な姿勢がここに格納されます</p></li>
+<li><p><strong>weight</strong> (<em>float64</em>) -- 接続されているオブジェクトの重量（既知の場合）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/BoundingVolume">
+<code class="sig-name descname">moveit_msgs/BoundingVolume</code><a class="headerlink" href="#message-moveit_msgs/BoundingVolume" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>primitives[]</strong> (<em>shape_msgs/SolidPrimitive</em>) -- ボリュームを構成するプリミティブ形状のセット（重なる場合は融合されます）</p></li>
+<li><p><strong>primitive_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- プリミティブ形状の位置姿勢</p></li>
+<li><p><strong>meshes[]</strong> (<em>shape_msgs/Mesh</em>) -- プリミティブ形状に加えて、メッシュ形状を指定してボリュームに追加することができます（重なる場合は融合されます）</p></li>
+<li><p><strong>mesh_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- メッシュ形状の位置姿勢</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/CollisionObject">
+<code class="sig-name descname">moveit_msgs/CollisionObject</code><a class="headerlink" href="#message-moveit_msgs/CollisionObject" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- 位置姿勢の基準座標を定義するヘッダー</p></li>
+<li><p><strong>id</strong> (<em>string</em>) -- オブジェクトのID（MoveItで使用される名前）</p></li>
+<li><p><strong>type</strong> (<em>object_recognition_msgs/ObjectType</em>) -- データベース内の既知のオブジェクトタイプ</p></li>
+<li><p><strong>primitives[]</strong> (<em>shape_msgs/SolidPrimitive</em>) -- プリミティブ形状</p></li>
+<li><p><strong>primitive_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- </p></li>
+<li><p><strong>meshes[]</strong> (<em>shape_msgs/Mesh</em>) -- メッシュ形状</p></li>
+<li><p><strong>mesh_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- </p></li>
+<li><p><strong>planes[]</strong> (<em>shape_msgs/Plane</em>) -- 境界面（poseを使用して面を方向付けることができます）</p></li>
+<li><p><strong>plane_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- </p></li>
+<li><p><strong>subframe_names[]</strong> (<em>string</em>) -- オブジェクトの名前付きサブフレーム。これらを使用して、計画するオブジェクト上の関心のある部分に名前を付けられます（例： &quot;tip&quot;, &quot;spout&quot;, &quot;handle&quot;）。オブジェクトのIDはサブフレームの先頭に追加されます。 idが「driver」でサブフレームが「tip」であるオブジェクトがシーンにある場合、プランニングに座標「screwdriver/tip」として使用できます。 subframe_namesとsubframe_posesの長さは同じでなければなりません。</p></li>
+<li><p><strong>subframe_poses[]</strong> (<em>geometry_msgs/Pose</em>) -- </p></li>
+<li><p><strong>operation</strong> (<em>byte</em>) -- 実行する操作</p></li>
+</ul>
+</dd>
+<dt class="field-even">定数</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ADD</strong> (<em>byte</em>):<code class="docutils literal notranslate"><span class="pre">0</span></code> -- オブジェクトをplanning sceneに追加します。オブジェクトがすでに存在していた場合は、置き換えられます。</p></li>
+<li><p><strong>REMOVE</strong> (<em>byte</em>):<code class="docutils literal notranslate"><span class="pre">1</span></code> -- オブジェクトを環境から完全に削除します（指定されたIDに一致するものすべて）</p></li>
+<li><p><strong>APPEND</strong> (<em>byte</em>):<code class="docutils literal notranslate"><span class="pre">2</span></code> -- planning sceneにすでにオブジェクトが存在する場合、追加します。オブジェクトが存在しない場合も追加されます。</p></li>
+<li><p><strong>MOVE</strong> (<em>byte</em>):<code class="docutils literal notranslate"><span class="pre">3</span></code> -- オブジェクトがシーンに既に存在する場合に、新しい位置姿勢を送信できます（ジオメトリ配列は空のままにする必要があります）。オブジェクトの移動のみが必要な場合に使ってください。</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/ConstraintEvalResult">
+<code class="sig-name descname">moveit_msgs/ConstraintEvalResult</code><a class="headerlink" href="#message-moveit_msgs/ConstraintEvalResult" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> (<em>bool</em>) -- 制約評価の結果を返します（trueは状態が制約を満たすことを示し、falseは状態が制約に違反することを示します）。distanceは制約からの状態の距離の尺度です。falseの場合、制約評価の結果を返します。trueの場合、ゼロになります。</p></li>
+<li><p><strong>distance</strong> (<em>float64</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/Constraints">
+<code class="sig-name descname">moveit_msgs/Constraints</code><a class="headerlink" href="#message-moveit_msgs/Constraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- このメッセージには、運動計画の制約のリストを格納します。プランニングが有効と見なされるには、すべての制約が満たされる必要があります</p></li>
+<li><p><strong>joint_constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/JointConstraint" title="moveit_msgs/JointConstraint"><em>moveit_msgs/JointConstraint</em></a>) -- </p></li>
+<li><p><strong>position_constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/PositionConstraint" title="moveit_msgs/PositionConstraint"><em>moveit_msgs/PositionConstraint</em></a>) -- </p></li>
+<li><p><strong>orientation_constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/OrientationConstraint" title="moveit_msgs/OrientationConstraint"><em>moveit_msgs/OrientationConstraint</em></a>) -- </p></li>
+<li><p><strong>visibility_constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/VisibilityConstraint" title="moveit_msgs/VisibilityConstraint"><em>moveit_msgs/VisibilityConstraint</em></a>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/ContactInformation">
+<code class="sig-name descname">moveit_msgs/ContactInformation</code><a class="headerlink" href="#message-moveit_msgs/ContactInformation" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- 標準ROSヘッダーです。この接触情報を解釈するのに用いられる基準座標が含まれています</p></li>
+<li><p><strong>position</strong> (<em>geometry_msgs/Point</em>) -- 接点の位置</p></li>
+<li><p><strong>normal</strong> (<em>geometry_msgs/Vector3</em>) -- 接点に対応する法線</p></li>
+<li><p><strong>depth</strong> (<em>float64</em>) -- 接触点の深さ</p></li>
+<li><p><strong>contact_body_1</strong> (<em>string</em>) -- 接触している最初の剛体の名前。これは、剛体を表すリンク名または名前空間です</p></li>
+<li><p><strong>body_type_1</strong> (<em>uint32</em>) -- </p></li>
+<li><p><strong>contact_body_2</strong> (<em>string</em>) -- 接触している2番目の剛体の名前。これは、剛体を表すリンク名または名前空間です。</p></li>
+<li><p><strong>body_type_2</strong> (<em>uint32</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">定数</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ROBOT_LINK</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">0</span></code> -- </p></li>
+<li><p><strong>WORLD_OBJECT</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">1</span></code> -- </p></li>
+<li><p><strong>ROBOT_ATTACHED</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">2</span></code> -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/CostSource">
+<code class="sig-name descname">moveit_msgs/CostSource</code><a class="headerlink" href="#message-moveit_msgs/CostSource" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cost_density</strong> (<em>float64</em>) -- コストソースの密度</p></li>
+<li><p><strong>aabb_min</strong> (<em>geometry_msgs/Vector3</em>) -- コストソースの領域は、境界ボックス（AABB）として表されます。AABBは、対角線上の2点の座標で表されます。</p></li>
+<li><p><strong>aabb_max</strong> (<em>geometry_msgs/Vector3</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/DisplayRobotState">
+<code class="sig-name descname">moveit_msgs/DisplayRobotState</code><a class="headerlink" href="#message-moveit_msgs/DisplayRobotState" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 表示するロボットの状態</p></li>
+<li><p><strong>highlight_links[]</strong> (<a class="reference internal" href="#message-moveit_msgs/ObjectColor" title="moveit_msgs/ObjectColor"><em>moveit_msgs/ObjectColor</em></a>) -- オプションで、さまざまなリンクを強調表示できます</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/DisplayTrajectory">
+<code class="sig-name descname">moveit_msgs/DisplayTrajectory</code><a class="headerlink" href="#message-moveit_msgs/DisplayTrajectory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<em>string</em>) -- このパスが生成されたモデルID</p></li>
+<li><p><strong>trajectory[]</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- パスの表現には、パスに沿って移動する各関節の角度値が含まれます。複数の軌跡を指定できます</p></li>
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- RobotStateは、ロボットのすべて/一部の関節の位置を取得するために使用されます。これは、上記のパスで指定されていない関節の位置を推定するために使用されます。RobotStateメッセージに、パスにも記載されている関節の位置情報が含まれている場合、パスメッセージの位置は、RobotStateで指定された位置を上書きします。</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/Grasp">
+<code class="sig-name descname">moveit_msgs/Grasp</code><a class="headerlink" href="#message-moveit_msgs/Grasp" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- この把握の名前</p></li>
+<li><p><strong>pre_grasp_posture</strong> (<em>trajectory_msgs/JointTrajectory</em>) -- 把持前の手の姿勢です。位置のみが使用されます</p></li>
+<li><p><strong>grasp_posture</strong> (<em>trajectory_msgs/JointTrajectory</em>) -- 把持時の手の姿勢です。位置とトルクのみが使用されます</p></li>
+<li><p><strong>grasp_pose</strong> (<em>geometry_msgs/PoseStamped</em>) -- 把握のためのエンドエフェクタの位置です。これは実際はエンドエフェクタの「親リンク」の位置姿勢であり、「エンドエフェクタ自身のリンク」の位置姿勢ではありません。これは通常、エンドエフェクタリンクから最も遠い手首リンクの位置姿勢です。</p></li>
+<li><p><strong>grasp_quality</strong> (<em>float64</em>) -- この把握の推定成功確率、またはそれがどの程度「良い」かを示す他の尺度。</p></li>
+<li><p><strong>pre_grasp_approach</strong> (<a class="reference internal" href="#message-moveit_msgs/GripperTranslation" title="moveit_msgs/GripperTranslation"><em>moveit_msgs/GripperTranslation</em></a>) -- オブジェクトを選ぶ前に取るアプローチ方向</p></li>
+<li><p><strong>post_grasp_retreat</strong> (<a class="reference internal" href="#message-moveit_msgs/GripperTranslation" title="moveit_msgs/GripperTranslation"><em>moveit_msgs/GripperTranslation</em></a>) -- 把握が完了した後に取る後退方向（この際、オブジェクトは手に接続されています）</p></li>
+<li><p><strong>post_place_retreat</strong> (<a class="reference internal" href="#message-moveit_msgs/GripperTranslation" title="moveit_msgs/GripperTranslation"><em>moveit_msgs/GripperTranslation</em></a>) -- オブジェクトを放すときに実行する後退動作。この情報は把握自体には必要ありませんが、オブジェクトを放すときに必要になります。ピックアップの実行に使用された把握姿勢は結果の一部として返されるため、それを利用できます。</p></li>
+<li><p><strong>max_contact_force</strong> (<em>float32</em>) -- 把持中に使用する最大接触力（&lt;=0の場合は無効）</p></li>
+<li><p><strong>allowed_touch_objects[]</strong> (<em>string</em>) -- 付加情報を持っている障害物のリスト（任意）。把握の過程で触って/押して/移動できる障害物のリストです。</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/GripperTranslation">
+<code class="sig-name descname">moveit_msgs/GripperTranslation</code><a class="headerlink" href="#message-moveit_msgs/GripperTranslation" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>geometry_msgs/Vector3Stamped</em>) -- 移動の方向</p></li>
+<li><p><strong>desired_distance</strong> (<em>float32</em>) -- 希望する移動距離</p></li>
+<li><p><strong>min_distance</strong> (<em>float32</em>) -- 把握が試行されたと判断するのに必要と見なされる最小距離</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/JointConstraint">
+<code class="sig-name descname">moveit_msgs/JointConstraint</code><a class="headerlink" href="#message-moveit_msgs/JointConstraint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_name</strong> (<em>string</em>) -- 関節の位置を特定の範囲内に制限する</p></li>
+<li><p><strong>position</strong> (<em>float64</em>) -- 制限される範囲は、[position - tolerance_below, position + tolerance_above]</p></li>
+<li><p><strong>tolerance_above</strong> (<em>float64</em>) -- </p></li>
+<li><p><strong>tolerance_below</strong> (<em>float64</em>) -- </p></li>
+<li><p><strong>weight</strong> (<em>float64</em>) -- この制約の重み係数（他の制約に対する相対的な重要度を示します。ゼロに近いほど重要度は低くなります）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/JointLimits">
+<code class="sig-name descname">moveit_msgs/JointLimits</code><a class="headerlink" href="#message-moveit_msgs/JointLimits" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_name</strong> (<em>string</em>) -- 指定した関節の可動制限（または制御寸法）を保存するメッセージ</p></li>
+<li><p><strong>has_position_limits</strong> (<em>bool</em>) -- 関節に位置制限がある場合はtrue</p></li>
+<li><p><strong>min_position</strong> (<em>float64</em>) -- 最小および最大位置制限</p></li>
+<li><p><strong>max_position</strong> (<em>float64</em>) -- </p></li>
+<li><p><strong>has_velocity_limits</strong> (<em>bool</em>) -- 関節に速度制限がある場合はtrue</p></li>
+<li><p><strong>max_velocity</strong> (<em>float64</em>) -- 最大速度制限</p></li>
+<li><p><strong>has_acceleration_limits</strong> (<em>bool</em>) -- 関節に加速制限がある場合はtrue</p></li>
+<li><p><strong>max_acceleration</strong> (<em>float64</em>) -- 最大加速限界</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/KinematicSolverInfo">
+<code class="sig-name descname">moveit_msgs/KinematicSolverInfo</code><a class="headerlink" href="#message-moveit_msgs/KinematicSolverInfo" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_names[]</strong> (<em>string</em>) -- キネマティックツリーの関節リスト</p></li>
+<li><p><strong>limits[]</strong> (<a class="reference internal" href="#message-moveit_msgs/JointLimits" title="moveit_msgs/JointLimits"><em>moveit_msgs/JointLimits</em></a>) -- 関節名に対応する制限のリスト</p></li>
+<li><p><strong>link_names[]</strong> (<em>string</em>) -- 運動学サーバが解を提供するリンク名のリスト</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/LinkPadding">
+<code class="sig-name descname">moveit_msgs/LinkPadding</code><a class="headerlink" href="#message-moveit_msgs/LinkPadding" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link_name</strong> (<em>string</em>) -- リンクの名前</p></li>
+<li><p><strong>padding</strong> (<em>float64</em>) -- リンクに適用するパディング</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/LinkScale">
+<code class="sig-name descname">moveit_msgs/LinkScale</code><a class="headerlink" href="#message-moveit_msgs/LinkScale" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link_name</strong> (<em>string</em>) -- リンクの名前</p></li>
+<li><p><strong>scale</strong> (<em>float64</em>) -- リンクに適用するスケーリング</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/MotionPlanDetailedResponse">
+<code class="sig-name descname">moveit_msgs/MotionPlanDetailedResponse</code><a class="headerlink" href="#message-moveit_msgs/MotionPlanDetailedResponse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- ロボットの開始状態</p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- プランニングに使用されるグループ名（通常はリクエスト時と同じ）</p></li>
+<li><p><strong>trajectory[]</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 計算された軌跡のリスト</p></li>
+<li><p><strong>description[]</strong> (<em>string</em>) -- 計算された軌跡の説明（処理ステップの名前）</p></li>
+<li><p><strong>processing_time[]</strong> (<em>float64</em>) -- モーションプランの各ステップの計算にかかった時間</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- このプランの最終ステータス</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/MotionPlanRequest">
+<code class="sig-name descname">moveit_msgs/MotionPlanRequest</code><a class="headerlink" href="#message-moveit_msgs/MotionPlanRequest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workspace_parameters</strong> (<a class="reference internal" href="#message-moveit_msgs/WorkspaceParameters" title="moveit_msgs/WorkspaceParameters"><em>moveit_msgs/WorkspaceParameters</em></a>) -- プランナーがプラン範囲として利用するワークスペースのパラメータ</p></li>
+<li><p><strong>start_state</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- ロボットの開始状態。現在のロボットの関節角度以外からプランニングする必要がある場合、角度をここで設定する必要があります</p></li>
+<li><p><strong>goal_constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- プランの対象となる目標状態候補。配列の各要素は、目標領域を定義します。いずれかの制約が満たされると、目標が達成されたと見なされます。</p></li>
+<li><p><strong>path_constraints</strong> (<a class="reference internal" href="#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- モーションプラン結果、全ての点が、ここで設定された制約に違反しないようにします（この制約はウェイポイントだけでなく、すべての点に適用されます）</p></li>
+<li><p><strong>trajectory_constraints</strong> (<a class="reference internal" href="#message-moveit_msgs/TrajectoryConstraints" title="moveit_msgs/TrajectoryConstraints"><em>moveit_msgs/TrajectoryConstraints</em></a>) -- 結果の軌道が満たさなければならない制約</p></li>
+<li><p><strong>planner_id</strong> (<em>string</em>) -- 使用するモーションプランナーの名前。名前が指定されていない場合、デフォルトのモーションプランナーが使用されます</p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- このプランナーが動作している関節グループの名前</p></li>
+<li><p><strong>num_planning_attempts</strong> (<em>int32</em>) -- このプランが計算される回数。複数試行した上で、最短の解が返されます。</p></li>
+<li><p><strong>allowed_planning_time</strong> (<em>float64</em>) -- モーションプランナーのタイムアウト時間（秒単位）</p></li>
+<li><p><strong>max_velocity_scaling_factor</strong> (<em>float64</em>) -- 最大関節速度と加速度を減らすためのスケーリング係数（任意）。許容値は0～1です。ロボットモデルで指定された最大関節速度と加速度にそれぞれの係数が乗算されます。いずれかが有効範囲外の場合（重要：係数が0.0に設定された場合も含まれます）、係数は内部でデフォルト値の1.0（つまり、最大関節速度または最大関節加速度）に設定されます。</p></li>
+<li><p><strong>max_acceleration_scaling_factor</strong> (<em>float64</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/MotionPlanResponse">
+<code class="sig-name descname">moveit_msgs/MotionPlanResponse</code><a class="headerlink" href="#message-moveit_msgs/MotionPlanResponse" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory_start</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- ロボットの状態</p></li>
+<li><p><strong>group_name</strong> (<em>string</em>) -- プランニングに使用されるグループ名（通常はリクエスト時と同じ）</p></li>
+<li><p><strong>trajectory</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotTrajectory" title="moveit_msgs/RobotTrajectory"><em>moveit_msgs/RobotTrajectory</em></a>) -- 軌跡（解が見つかった場合）</p></li>
+<li><p><strong>planning_time</strong> (<em>float64</em>) -- プランニングにかかった時間（秒）</p></li>
+<li><p><strong>error_code</strong> (<a class="reference internal" href="#message-moveit_msgs/MoveItErrorCodes" title="moveit_msgs/MoveItErrorCodes"><em>moveit_msgs/MoveItErrorCodes</em></a>) -- エラーコード-失敗の理由をエンコードします</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/MoveItErrorCodes">
+<code class="sig-name descname">moveit_msgs/MoveItErrorCodes</code><a class="headerlink" href="#message-moveit_msgs/MoveItErrorCodes" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> (<em>int32</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">定数</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SUCCESS</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">1</span></code> -- 全般</p></li>
+<li><p><strong>FAILURE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">99999</span></code> -- </p></li>
+<li><p><strong>PLANNING_FAILED</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-1</span></code> -- </p></li>
+<li><p><strong>INVALID_MOTION_PLAN</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-2</span></code> -- </p></li>
+<li><p><strong>MOTION_PLAN_INVALIDATED_BY_ENVIRONMENT_CHANGE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-3</span></code> -- </p></li>
+<li><p><strong>CONTROL_FAILED</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-4</span></code> -- </p></li>
+<li><p><strong>UNABLE_TO_AQUIRE_SENSOR_DATA</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-5</span></code> -- </p></li>
+<li><p><strong>TIMED_OUT</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-6</span></code> -- </p></li>
+<li><p><strong>PREEMPTED</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-7</span></code> -- </p></li>
+<li><p><strong>START_STATE_IN_COLLISION</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-10</span></code> -- プランニングと運動学のリクエストエラー</p></li>
+<li><p><strong>START_STATE_VIOLATES_PATH_CONSTRAINTS</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-11</span></code> -- </p></li>
+<li><p><strong>GOAL_IN_COLLISION</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-12</span></code> -- </p></li>
+<li><p><strong>GOAL_VIOLATES_PATH_CONSTRAINTS</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-13</span></code> -- </p></li>
+<li><p><strong>GOAL_CONSTRAINTS_VIOLATED</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-14</span></code> -- </p></li>
+<li><p><strong>INVALID_GROUP_NAME</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-15</span></code> -- </p></li>
+<li><p><strong>INVALID_GOAL_CONSTRAINTS</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-16</span></code> -- </p></li>
+<li><p><strong>INVALID_ROBOT_STATE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-17</span></code> -- </p></li>
+<li><p><strong>INVALID_LINK_NAME</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-18</span></code> -- </p></li>
+<li><p><strong>INVALID_OBJECT_NAME</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-19</span></code> -- </p></li>
+<li><p><strong>FRAME_TRANSFORM_FAILURE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-21</span></code> -- システムエラー</p></li>
+<li><p><strong>COLLISION_CHECKING_UNAVAILABLE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-22</span></code> -- </p></li>
+<li><p><strong>ROBOT_STATE_STALE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-23</span></code> -- </p></li>
+<li><p><strong>SENSOR_INFO_STALE</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-24</span></code> -- </p></li>
+<li><p><strong>NO_IK_SOLUTION</strong> (<em>int32</em>):<code class="docutils literal notranslate"><span class="pre">-31</span></code> -- 運動学エラー</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/ObjectColor">
+<code class="sig-name descname">moveit_msgs/ObjectColor</code><a class="headerlink" href="#message-moveit_msgs/ObjectColor" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- 色を指定するオブジェクトID</p></li>
+<li><p><strong>color</strong> (<em>std_msgs/ColorRGBA</em>) -- 色の値</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/OrientationConstraint">
+<code class="sig-name descname">moveit_msgs/OrientationConstraint</code><a class="headerlink" href="#message-moveit_msgs/OrientationConstraint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- このメッセージでは、姿勢制約の定義を格納します。</p></li>
+<li><p><strong>orientation</strong> (<em>geometry_msgs/Quaternion</em>) -- クォータニオンとして指定されたロボットリンクの望ましい姿勢</p></li>
+<li><p><strong>link_name</strong> (<em>string</em>) -- この制約が適用されるロボットリンク名</p></li>
+<li><p><strong>absolute_x_axis_tolerance</strong> (<em>float64</em>) -- 軸角度ベースの誤差許容値（任意）</p></li>
+<li><p><strong>absolute_y_axis_tolerance</strong> (<em>float64</em>) -- </p></li>
+<li><p><strong>absolute_z_axis_tolerance</strong> (<em>float64</em>) -- </p></li>
+<li><p><strong>weight</strong> (<em>float64</em>) -- この制約の重み係数（他の制約に対する相対的な重要度を示します。ゼロに近いほど重要度は低くなります）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/OrientedBoundingBox">
+<code class="sig-name descname">moveit_msgs/OrientedBoundingBox</code><a class="headerlink" href="#message-moveit_msgs/OrientedBoundingBox" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pose</strong> (<em>geometry_msgs/Pose</em>) -- 境界の位置姿勢</p></li>
+<li><p><strong>extents</strong> (<em>geometry_msgs/Point32</em>) -- 中心が原点にあると仮定した場合の境界の範囲</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlaceLocation">
+<code class="sig-name descname">moveit_msgs/PlaceLocation</code><a class="headerlink" href="#message-moveit_msgs/PlaceLocation" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) -- この把握の名前</p></li>
+<li><p><strong>post_place_posture</strong> (<em>trajectory_msgs/JointTrajectory</em>) -- 把持時の手の姿勢です。位置とトルクのみが使用されます</p></li>
+<li><p><strong>place_pose</strong> (<em>geometry_msgs/PoseStamped</em>) -- 基準座標に対する把持時のエンドエフェクタの位置（基準座標はこのメッセージではなく、他の場所で指定されます）</p></li>
+<li><p><strong>pre_place_approach</strong> (<a class="reference internal" href="#message-moveit_msgs/GripperTranslation" title="moveit_msgs/GripperTranslation"><em>moveit_msgs/GripperTranslation</em></a>) -- アプローチモーション</p></li>
+<li><p><strong>post_place_retreat</strong> (<a class="reference internal" href="#message-moveit_msgs/GripperTranslation" title="moveit_msgs/GripperTranslation"><em>moveit_msgs/GripperTranslation</em></a>) -- 後退モーション</p></li>
+<li><p><strong>allowed_touch_objects[]</strong> (<em>string</em>) -- 付加情報を持っている障害物のリスト（任意）。把握の過程で触って/押して/移動できる障害物のリストです。</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlannerInterfaceDescription">
+<code class="sig-name descname">moveit_msgs/PlannerInterfaceDescription</code><a class="headerlink" href="#message-moveit_msgs/PlannerInterfaceDescription" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- プランナーインターフェースの名前</p></li>
+<li><p><strong>planner_ids[]</strong> (<em>string</em>) -- インターフェース内で定義されるプランナーIDの名前</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlannerParams">
+<code class="sig-name descname">moveit_msgs/PlannerParams</code><a class="headerlink" href="#message-moveit_msgs/PlannerParams" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys[]</strong> (<em>string</em>) -- パラメーター名（配列のサイズはパラメータ値と同じ）</p></li>
+<li><p><strong>values[]</strong> (<em>string</em>) -- パラメータ値（配列のサイズはパラメータ名と同じ）</p></li>
+<li><p><strong>descriptions[]</strong> (<em>string</em>) -- パラメーターの説明（空でも可）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlanningOptions">
+<code class="sig-name descname">moveit_msgs/PlanningOptions</code><a class="headerlink" href="#message-moveit_msgs/PlanningOptions" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planning_scene_diff</strong> (<a class="reference internal" href="#message-moveit_msgs/PlanningScene" title="moveit_msgs/PlanningScene"><em>moveit_msgs/PlanningScene</em></a>) -- planning sceneで考慮する差分（任意）</p></li>
+<li><p><strong>plan_only</strong> (<em>bool</em>) -- このフラグがtrueに設定された場合、実行可能なプランを応答として返しますが、実行はしません</p></li>
+<li><p><strong>look_around</strong> (<em>bool</em>) -- このフラグがtrueに設定された場合、環境に関する十分な情報が利用できないと思われる場合は、周囲を見回す（センサーを移動する）計画と実行を行うことが許可されます</p></li>
+<li><p><strong>look_around_attempts</strong> (<em>int32</em>) -- この値が正の場合、周囲を見回す最大試行回数を設定します。値を0のままにすると、dynamic_reconfigureで設定されたデフォルト値が使用されます</p></li>
+<li><p><strong>max_safe_execution_cost</strong> (<em>float64</em>) -- この値が設定され、look_aroundがtrueの場合、パスが実行可能と見なされるために許容される最大コストとして使用されます。パスのコストがこの値よりも高い場合は、より多くの環境に関する情報収集または新しいプランニングが必要です。0.0のままにして、look_aroundがtrueの場合、dynamic_reconfigureで設定されたデフォルト値が使用されます</p></li>
+<li><p><strong>replan</strong> (<em>bool</em>) -- 実行中にプランが無効になった場合、そのプランを再計算して実行を再開することができます。このフラグはこの機能を有効にします</p></li>
+<li><p><strong>replan_attempts</strong> (<em>int32</em>) -- 再計画の最大試行回数</p></li>
+<li><p><strong>replan_delay</strong> (<em>float64</em>) -- 再計画の試行間の待機時間（秒）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlanningScene">
+<code class="sig-name descname">moveit_msgs/PlanningScene</code><a class="headerlink" href="#message-moveit_msgs/PlanningScene" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em>) -- planning sceneの名前</p></li>
+<li><p><strong>robot_state</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- ロボット状態</p></li>
+<li><p><strong>robot_model_name</strong> (<em>string</em>) -- このplanning sceneの対象となるロボットモデルの名前</p></li>
+<li><p><strong>fixed_frame_transforms[]</strong> (<em>geometry_msgs/TransformStamped</em>) -- 補助的に利用する基準座標のリスト（プランニング用の基準座標を基準に定義する）</p></li>
+<li><p><strong>allowed_collision_matrix</strong> (<a class="reference internal" href="#message-moveit_msgs/AllowedCollisionMatrix" title="moveit_msgs/AllowedCollisionMatrix"><em>moveit_msgs/AllowedCollisionMatrix</em></a>) -- 干渉行列（ACM）</p></li>
+<li><p><strong>link_padding[]</strong> (<a class="reference internal" href="#message-moveit_msgs/LinkPadding" title="moveit_msgs/LinkPadding"><em>moveit_msgs/LinkPadding</em></a>) -- 各リンクのパディング情報</p></li>
+<li><p><strong>link_scale[]</strong> (<a class="reference internal" href="#message-moveit_msgs/LinkScale" title="moveit_msgs/LinkScale"><em>moveit_msgs/LinkScale</em></a>) -- 各リンクのスケール情報</p></li>
+<li><p><strong>object_colors[]</strong> (<a class="reference internal" href="#message-moveit_msgs/ObjectColor" title="moveit_msgs/ObjectColor"><em>moveit_msgs/ObjectColor</em></a>) -- ロボットに接続されたオブジェクト、干渉オブジェクト、オクトマップや干渉マップに色を付けることができます。この配列はそれらを指定します。</p></li>
+<li><p><strong>world</strong> (<a class="reference internal" href="#message-moveit_msgs/PlanningSceneWorld" title="moveit_msgs/PlanningSceneWorld"><em>moveit_msgs/PlanningSceneWorld</em></a>) -- 干渉マップ</p></li>
+<li><p><strong>is_diff</strong> (<em>bool</em>) -- このシーンが他のシーンとの差分として解釈されるかどうかを示すフラグ</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlanningSceneComponents">
+<code class="sig-name descname">moveit_msgs/PlanningSceneComponents</code><a class="headerlink" href="#message-moveit_msgs/PlanningSceneComponents" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">定数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>SCENE_SETTINGS</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">1</span></code> -- シーン名、モデル名、モデルルート</p></li>
+<li><p><strong>ROBOT_STATE</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">2</span></code> -- ロボット状態を表す各関節角度</p></li>
+<li><p><strong>ROBOT_STATE_ATTACHED_OBJECTS</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">4</span></code> -- 接続されたオブジェクト（ジオメトリを含む）</p></li>
+<li><p><strong>WORLD_OBJECT_NAMES</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">8</span></code> -- ワールドオブジェクトの名前</p></li>
+<li><p><strong>WORLD_OBJECT_GEOMETRY</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">16</span></code> -- ワールドオブジェクトのジオメトリ</p></li>
+<li><p><strong>OCTOMAP</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">32</span></code> -- オクトマップ</p></li>
+<li><p><strong>TRANSFORMS</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">64</span></code> -- 変換のリスト</p></li>
+<li><p><strong>ALLOWED_COLLISION_MATRIX</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">128</span></code> -- ACM</p></li>
+<li><p><strong>LINK_PADDING_AND_SCALING</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">256</span></code> -- デフォルトのリンクパディングとリンクスケーリング</p></li>
+<li><p><strong>OBJECT_COLORS</strong> (<em>uint32</em>):<code class="docutils literal notranslate"><span class="pre">512</span></code> -- 保存されたオブジェクトの色</p></li>
+</ul>
+</dd>
+<dt class="field-even">フィールド</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>components</strong> (<em>uint32</em>) -- 上記のビットフィールド結合オプション</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PlanningSceneWorld">
+<code class="sig-name descname">moveit_msgs/PlanningSceneWorld</code><a class="headerlink" href="#message-moveit_msgs/PlanningSceneWorld" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collision_objects[]</strong> (<a class="reference internal" href="#message-moveit_msgs/CollisionObject" title="moveit_msgs/CollisionObject"><em>moveit_msgs/CollisionObject</em></a>) -- 干渉オブジェクト</p></li>
+<li><p><strong>octomap</strong> (<em>octomap_msgs/OctomapWithPose</em>) -- 追加の干渉データを表すオクトマップ</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PositionConstraint">
+<code class="sig-name descname">moveit_msgs/PositionConstraint</code><a class="headerlink" href="#message-moveit_msgs/PositionConstraint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- このメッセージには、位置制約の定義が格納されます。</p></li>
+<li><p><strong>link_name</strong> (<em>string</em>) -- この制約が適用されるロボットリンク名</p></li>
+<li><p><strong>target_point_offset</strong> (<em>geometry_msgs/Vector3</em>) -- リンク上のターゲットポイントに適用するオフセット値（リンク座標を使用）</p></li>
+<li><p><strong>constraint_region</strong> (<a class="reference internal" href="#message-moveit_msgs/BoundingVolume" title="moveit_msgs/BoundingVolume"><em>moveit_msgs/BoundingVolume</em></a>) -- この制約が適用される領域</p></li>
+<li><p><strong>weight</strong> (<em>float64</em>) -- この制約の重み係数（他の制約に対する相対的な重要度を示します。ゼロに近いほど重要度は低くなります）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/PositionIKRequest">
+<code class="sig-name descname">moveit_msgs/PositionIKRequest</code><a class="headerlink" href="#message-moveit_msgs/PositionIKRequest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_name</strong> (<em>string</em>) -- 逆運動学の計算に使用されるグループ名。たとえば、「right_arm」「arms」- 複数グループの逆運動学については以下の仕様を参照してください。ik_link_nameが指定されていない場合、SRDFからの情報が逆運動学を計算するリンクを自動的で決定するために使用されます</p></li>
+<li><p><strong>robot_state</strong> (<a class="reference internal" href="#message-moveit_msgs/RobotState" title="moveit_msgs/RobotState"><em>moveit_msgs/RobotState</em></a>) -- 逆運動学計算のシード位置として用いられるとともに、ロボット内の他のすべての関節角度で構成されるRobotState。ここで提供される追加の状態情報は、ロボット上の他の関節/リンクの開始位置を指定するために使用されます。この状態には、逆運動学ソルバーが逆運動学を計算する際に使用するすべての関節の状態を含む必要があります。逆運動学ソルバーが処理する関節のリストは、SRDF内で定義された対応するグループを使用します</p></li>
+<li><p><strong>constraints</strong> (<a class="reference internal" href="#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- 逆運動学が従わなければならない制約のセット。デフォルトでは空です</p></li>
+<li><p><strong>avoid_collisions</strong> (<em>bool</em>) -- 干渉を回避する逆運動学解を見つけます。デフォルトではfalseです</p></li>
+<li><p><strong>ik_link_name</strong> (<em>string</em>) -- （任意）逆運動学を計算するリンクの名前。指定されていない場合、リンク名はグループ名とSRDFの組み合わせから推測されます。 ik_link_namesに値が指定されている場合、この値は無視されます</p></li>
+<li><p><strong>pose_stamped</strong> (<em>geometry_msgs/PoseStamped</em>) -- 逆運動学ソルバーがグループ内のすべての関節の角度値を計算するときの各リンクの位置姿勢。 pose_stamped_vectorが設定されている場合、この値は無視されます。</p></li>
+<li><p><strong>ik_link_names[]</strong> (<em>string</em>) -- （任意）逆運動学を計算しているリンクの名前。指定されていない場合、リンク名はSRDF上のグループ名から推測されます</p></li>
+<li><p><strong>pose_stamped_vector[]</strong> (<em>geometry_msgs/PoseStamped</em>) -- （任意）逆運動学を計算する複数のリンクの位置姿勢（グループに複数のエンドエフェクタがある場合）。たとえば、「arms」グループは、「right_arm」と「left_arm」の両方で構成される場合があります。参照されるグループの順序は、SRDFの設定と同じです</p></li>
+<li><p><strong>timeout</strong> (<em>duration</em>) -- 逆運動学計算の最大許容時間</p></li>
+<li><p><strong>attempts</strong> (<em>int32</em>) -- 逆運動学の最大試行回数（ランダムシードを使用する場合）（0に設定された場合、paramサーバーで指定された値が使われます）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/RobotState">
+<code class="sig-name descname">moveit_msgs/RobotState</code><a class="headerlink" href="#message-moveit_msgs/RobotState" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_state</strong> (<em>sensor_msgs/JointState</em>) -- このメッセージには、ロボットの状態、つまり関節とリンクの位置に関する情報が格納されます</p></li>
+<li><p><strong>multi_dof_joint_state</strong> (<em>sensor_msgs/MultiDOFJointState</em>) -- 複数の自由度を持つ関節はここに格納されます</p></li>
+<li><p><strong>attached_collision_objects[]</strong> (<a class="reference internal" href="#message-moveit_msgs/AttachedCollisionObject" title="moveit_msgs/AttachedCollisionObject"><em>moveit_msgs/AttachedCollisionObject</em></a>) -- ロボットのリンクに接続された干渉オブジェクトのリスト</p></li>
+<li><p><strong>is_diff</strong> (<em>bool</em>) -- このシーンを他のシーンとの差分として解釈するかどうかを示すフラグ。接続されたオブジェクトを処理するために主に使われます（更新する前にmoveit::core::RobotStateの接続されたオブジェクトをクリアするかどうか判断します）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/RobotTrajectory">
+<code class="sig-name descname">moveit_msgs/RobotTrajectory</code><a class="headerlink" href="#message-moveit_msgs/RobotTrajectory" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_trajectory</strong> (<em>trajectory_msgs/JointTrajectory</em>) -- </p></li>
+<li><p><strong>multi_dof_joint_trajectory</strong> (<em>trajectory_msgs/MultiDOFJointTrajectory</em>) -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/TrajectoryConstraints">
+<code class="sig-name descname">moveit_msgs/TrajectoryConstraints</code><a class="headerlink" href="#message-moveit_msgs/TrajectoryConstraints" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constraints[]</strong> (<a class="reference internal" href="#message-moveit_msgs/Constraints" title="moveit_msgs/Constraints"><em>moveit_msgs/Constraints</em></a>) -- 軌道に沿って考慮する制約のリスト</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/VisibilityConstraint">
+<code class="sig-name descname">moveit_msgs/VisibilityConstraint</code><a class="headerlink" href="#message-moveit_msgs/VisibilityConstraint" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_radius</strong> (<em>float64</em>) -- 可視状態を維持する必要がある範囲の半径</p></li>
+<li><p><strong>target_pose</strong> (<em>geometry_msgs/PoseStamped</em>) -- 範囲の位置姿勢。ロボットが動くと、範囲の位置姿勢も変わる場合があります。この位置姿勢は、たとえば、あるロボットリンク座標上で定義される可能性があります。</p></li>
+<li><p><strong>cone_sides</strong> (<em>int32</em>) -- 可視範囲は、センサーの原点からターゲットに向かってコーンを形成します。このコーンは複数の側面を使用して近似されます。たとえば、4辺を使用する場合、範囲はピラミッド形状になります。この値は常に3以上でなければなりません。</p></li>
+<li><p><strong>sensor_pose</strong> (<em>geometry_msgs/PoseStamped</em>) -- 可視性を維持する位置姿勢。基準座標IDは、センサーが接続されているロボットリンクを指す必要があります。センサーは、あらゆる方向からターゲットを直接見ることができると仮定されています。通常、この仮定は正しくありませんが、追加のPositionConstraintsによりこの問題を解決できます。</p></li>
+<li><p><strong>max_view_angle</strong> (<em>float64</em>) -- たとえ範囲が見えるように維持されていても、センサーに対する範囲の向きによっては、可視コーンは非常に小さくなります。たとえば、範囲を真横から見たとすると、可視コーンの体積は0に近くなります。ビュー角度は、可視範囲の法線とセンサーの原点からの方向ベクトルの間の角度になるように定義されます。以下の値は、必要な最小ビュー角度を表します。完全なビューの場合、この値は0になります（2つのベクトルは対向します）。完全に遮られたビューの場合、この値はPi/2になります（ベクトルは垂直です）。この値は、維持される最大視野角を定義します。これは、開角度（0, Pi/2）の値でなければなりません。 0が設定されている場合、視野角は強制されません。</p></li>
+<li><p><strong>max_range_angle</strong> (<em>float64</em>) -- この角度はmax_view_angleと同様に使用されますが、センサー原点の方向ベクトルとセンサー原点をターゲット座標原点に接続する軸の間の最大角度を制限します。値は（0、Pi/2）の範囲に設定でき、0に設定されている場合は強制されません。</p></li>
+<li><p><strong>sensor_view_direction</strong> (<em>uint8</em>) -- </p></li>
+<li><p><strong>weight</strong> (<em>float64</em>) -- この制約の重み係数（他の制約に対する相対的な重要度を示します。ゼロに近いほど重要度は低くなります）</p></li>
+</ul>
+</dd>
+<dt class="field-even">定数</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>SENSOR_Z</strong> (<em>uint8</em>):<code class="docutils literal notranslate"><span class="pre">0</span></code> -- センサーのビューの方向を示すと想定される軸 X = 2, Y = 1, Z = 0</p></li>
+<li><p><strong>SENSOR_Y</strong> (<em>uint8</em>):<code class="docutils literal notranslate"><span class="pre">1</span></code> -- </p></li>
+<li><p><strong>SENSOR_X</strong> (<em>uint8</em>):<code class="docutils literal notranslate"><span class="pre">2</span></code> -- </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="message">
+<dt id="message-moveit_msgs/WorkspaceParameters">
+<code class="sig-name descname">moveit_msgs/WorkspaceParameters</code><a class="headerlink" href="#message-moveit_msgs/WorkspaceParameters" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">フィールド</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<em>std_msgs/Header</em>) -- ワークスペースの範囲を定義する際の基準座標を設定する</p></li>
+<li><p><strong>min_corner</strong> (<em>geometry_msgs/Vector3</em>) -- ロボットの開始位置から相対的に定義されるワークスペースの対角点（最小コーナー）</p></li>
+<li><p><strong>max_corner</strong> (<em>geometry_msgs/Vector3</em>) -- ロボットの開始位置から相対的に定義されるワークスペースの対角点（最大コーナー）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="move_group.html" class="btn btn-neutral float-left" title="move_groupサーバの仕様" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, National Institute of Advanced Industrial Science and Technology
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
