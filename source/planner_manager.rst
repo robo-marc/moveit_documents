@@ -68,8 +68,8 @@ PlanningContext
    :members:
 
 .. -----------------
-プラン実行クラス
------------------
+.. プラン実行クラス
+.. -----------------
 
 .. .. doxygenclass:: planning_pipeline::PlanningPipeline
 

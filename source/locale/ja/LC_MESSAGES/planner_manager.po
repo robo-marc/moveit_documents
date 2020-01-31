@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NEDO ROBO-MARC MoveIt! Documentation 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-24 21:58+0900\n"
+"POT-Creation-Date: 2020-01-29 19:12+0900\n"
 "PO-Revision-Date: 2020-01-28 13:23+0900\n"
 "Last-Translator: Yosuke Matsusaka <yosuke.matsusaka@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,66 +19,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../../source/planner_manager.rst:2
+#: /home/yosuke/moveit_document/source/planner_manager.rst:2
 msgid "プランニングアルゴリズム基底クラス（PlannerManager）の仕様"
 msgstr ""
 
-#: ../../source/planner_manager.rst:6
+#: /home/yosuke/moveit_document/source/planner_manager.rst:6
 msgid "クラス図"
 msgstr ""
 
-#: ../../source/planner_manager.rst:21
+#: /home/yosuke/moveit_document/source/planner_manager.rst:21
 msgid "基底クラス"
 msgstr ""
 
-#: ../../source/planner_manager.rst:24
+#: /home/yosuke/moveit_document/source/planner_manager.rst:24
 msgid "PlannerManager"
 msgstr "PlannerManager"
 
 msgid "Base class for a MoveIt! planner."
 msgstr "MoveIt!プランナーの基底クラス。"
 
+msgid ""
+"Subclassed by chomp_interface::CHOMPPlannerManager, "
+"ompl_interface::OMPLPlannerManager"
+msgstr ""
+
 msgid "Public Functions"
 msgstr "パブリック関数"
 
 msgid ""
-"Initialize a planner. This function will be called after the construction of"
-" the plugin, before any other call is made. It is assumed that motion plans "
-"will be computed for the robot described by model and that any exposed ROS "
-"functionality or required ROS parameters are namespaced by ns"
-msgstr ""
-"プランナーを初期化します。"
-"この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。"
-"model引数に指定されたロボットモデルに対してモーションプランが計算されます。"
-"ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。"
+"Initialize a planner. This function will be called after the construction"
+" of the plugin, before any other call is made. It is assumed that motion "
+"plans will be computed for the robot described by model and that any "
+"exposed ROS functionality or required ROS parameters are namespaced by ns"
+msgstr "プランナーを初期化します。この関数は、プラグインの読み込み後、他の関数呼び出しが行われる前に呼び出されます。model引数に指定されたロボットモデルに対してモーションプランが計算されます。ns引数は、ROS機能または必要なROSパラメータを読み込む際の名前空間として利用されます。"
 
 msgid "Get."
-msgstr "。"
+msgstr ""
 
 msgid "a short string that identifies the planning interface"
-msgstr "プランニングインターフェースを識別する短い文字列を取得する。"
+msgstr "このプランニングインターフェースを識別する短い文字列を取得する。"
 
 msgid ""
-"Get the names of the known planning algorithms (values that can be filled as"
-" planner_id in the planning request)"
-msgstr "既知のプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します"
+"Get the names of the known planning algorithms (values that can be filled"
+" as planner_id in the planning request)"
+msgstr "登録されたプランニングアルゴリズムの名前（プランニング要求でplanner_idとして入力できる値）を取得します"
 
 msgid ""
-"Construct a planning context given the current scene and a planning request."
-" If a problem is encountered, error code is set and empty ptr is returned. "
-"The returned motion planner context is clean  the motion planner will start "
-"from scratch every time a context is constructed."
+"Construct a planning context given the current scene and a planning "
+"request. If a problem is encountered, error code is set and empty ptr is "
+"returned. The returned motion planner context is clean  the motion "
+"planner will start from scratch every time a context is constructed."
 msgstr ""
-"planning sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。"
-"問題が発生した場合、エラーコードが設定され、空のポインタが返されます。"
-"返されるモーションプランナーコンテキストは初期化された状態です。"
-"モーションプランナーは、コンテキストが構築されるたびにゼロから開始します。"
+"planning "
+"sceneとプランニングリクエストを入力として、プランニングコンテキストを生成します。問題が発生した場合、エラーコードが設定され、空のポインタが返されます。返されるモーションプランナーコンテキストは初期化された状態です。モーションプランは、コンテキストが構築されるたびにゼロから開始します。"
+
+msgid ""
+"Parameters  planning_scene: A const planning scene to use for planning   "
+"req: The representation of the planning request   error_code: This is "
+"where the error is set if constructing the planning context fails"
+msgstr ""
 
 msgid "Parameters"
 msgstr "パラメータ"
 
 msgid "planning_scene: A const planning scene to use for planning"
-msgstr "planning_scene：プランニングに使用するconst planning scene"
+msgstr "planning_scene：プランニングに使用するplanning scene"
 
 msgid "req: The representation of the planning request"
 msgstr "req： プランニングリクエスト"
@@ -92,8 +97,8 @@ msgid "Calls the function above but ignores the error_code."
 msgstr "上記の関数を呼び出しますが、error_codeを無視します。"
 
 msgid ""
-"Determine whether this plugin instance is able to represent this planning "
-"request."
+"Determine whether this plugin instance is able to represent this planning"
+" request."
 msgstr "このプラグインインスタンスが指定されたプランニングリクエストを扱うことができるか判定します。"
 
 msgid "Specify the settings to be used for specific algorithms."
@@ -102,18 +107,22 @@ msgstr "このアルゴリズムに適用される設定を設定します。"
 msgid "Get the settings for a specific algorithm."
 msgstr "このアルゴリズムに適用されている設定を取得します。"
 
-msgid ""
-"Request termination, if a solve() function is currently computing plans."
+msgid "Request termination, if a solve() function is currently computing plans."
 msgstr "solve関数が現在プランニングを計算している場合、中断を要求します。"
 
-#: ../../source/planner_manager.rst:30
+#: /home/yosuke/moveit_document/source/planner_manager.rst:30
 msgid "PlanningContext"
 msgstr "PlanningContext"
 
 msgid ""
-"Representation of a particular planning context  the planning scene and the "
-"request are known, solution is not yet computed."
-msgstr "特定の計画コンテキストの表現、計画シーンと要求は既知であり、解決策はまだ計算されていません。"
+"Representation of a particular planning context  the planning scene and "
+"the request are known, solution is not yet computed."
+msgstr "プランニングコンテキスト。planning sceneとプランニングリクエストを入力として、解を計算するのがこのコンテキストの役割です。"
+
+msgid ""
+"Subclassed by chomp_interface::CHOMPPlanningContext, "
+"ompl_interface::ModelBasedPlanningContext"
+msgstr ""
 
 msgid "Construct a planning context named name for the group group."
 msgstr "グループ名groupに対するnameという名前のプランニングコンテキストを生成します。"
@@ -137,22 +146,16 @@ msgid "Set the planning request for this context."
 msgstr "このコンテキストのプランニングリクエストを設定します。"
 
 msgid ""
-"Solve the motion planning problem and store the result in res. This function"
-" should not clear data structures before computing. The constructor and "
-"clear() do that."
-msgstr ""
-"モーションプランニングの問題を解決し、結果をresに保存します。"
-"この関数は、計算の前にデータ構造を初期化しません。"
-"コンストラクタとclear関数はデータ構造を初期化します。"
+"Solve the motion planning problem and store the result in res. This "
+"function should not clear data structures before computing. The "
+"constructor and clear() do that."
+msgstr "モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。"
 
 msgid ""
-"Solve the motion planning problem and store the detailed result in res. This"
-" function should not clear data structures before computing. The constructor"
-" and clear() do that."
-msgstr ""
-"モーションプランニングの問題を解決し、結果をresに保存します。"
-"この関数は、計算の前にデータ構造を初期化しません。"
-"コンストラクタとclear関数はデータ構造を初期化します。"
+"Solve the motion planning problem and store the detailed result in res. "
+"This function should not clear data structures before computing. The "
+"constructor and clear() do that."
+msgstr "モーションプランニングを実行し、結果をresに保存します。この関数は、計算の前にデータを初期化しません。データを初期化するには、コンストラクタかclear関数を使います。"
 
 msgid ""
 "If solve() is running, terminate the computation. Return false if "
@@ -164,26 +167,40 @@ msgstr ""
 msgid "Clear the data structures used by the planner."
 msgstr "プランナーが使用するデータ構造を初期化します。"
 
-#: ../../source/planner_manager.rst:37
+#: /home/yosuke/moveit_document/source/planner_manager.rst:37
+msgid "プラン実行クラス"
+msgstr ""
+
+#: /home/yosuke/moveit_document/source/planner_manager.rst:43
 msgid "OMPLプランナー"
 msgstr ""
 
-#: ../../source/planner_manager.rst:40
+#: /home/yosuke/moveit_document/source/planner_manager.rst:46
 msgid "OMPLPlannerManager"
 msgstr "OMPLPlannerManager"
 
-#: ../../source/planner_manager.rst:46
-msgid "OMPLPlanningContext"
-msgstr "OMPLPlanningContext"
+msgid "Inherits from planning_interface::PlannerManager"
+msgstr ""
 
-#: ../../source/planner_manager.rst:53
+#: /home/yosuke/moveit_document/source/planner_manager.rst:52
+#, fuzzy
+msgid "ModelBasedPlanningContext"
+msgstr "PlanningContext"
+
+msgid "Inherits from planning_interface::PlanningContext"
+msgstr ""
+
+msgid "Get the minimum number of waypoints along the solution path."
+msgstr ""
+
+#: /home/yosuke/moveit_document/source/planner_manager.rst:59
 msgid "CHOMPプランナー"
 msgstr ""
 
-#: ../../source/planner_manager.rst:56
+#: /home/yosuke/moveit_document/source/planner_manager.rst:62
 msgid "CHOMPPlannerManager"
 msgstr "CHOMPPlannerManager"
 
-#: ../../source/planner_manager.rst:62
+#: /home/yosuke/moveit_document/source/planner_manager.rst:68
 msgid "CHOMPPlanningContext"
 msgstr "CHOMPPlanningContext"
